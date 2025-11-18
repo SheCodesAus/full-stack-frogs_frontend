@@ -1,0 +1,36 @@
+
+.welcoming-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.tagline{
+    padding: 35% 5% 9% 10%;
+    text-align: center;
+    font-size: var(--text-xl);
+}
+
+.direct-btns{
+}
+
+.login-btn,
+.signup-btn {
+    width: 18vh;
+    height: 5vh;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    font-family: var(--font-body);
+    border-radius: 8px;
+    border: none;
+    color: var(--primary);
+    background: var(--background);
+    box-shadow:
+        6px 6px 12px #c5c5c5, 
+        -6px -6px 12px #ffffff;
+    
+    
+}
+
