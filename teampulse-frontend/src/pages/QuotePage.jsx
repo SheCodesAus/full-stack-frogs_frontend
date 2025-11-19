@@ -2,14 +2,14 @@ import './QuotePage.css'
 
 const mood = {
 		"id": 3,
-		"value": 1,
+		"value": 10,
 		"description": "I feel stressed",
 		"image_url": "//unsplash/it/100/100"
 };
 
 const workflow = {
 		"id": 3,
-		"value": 4,
+		"value": 3,
 		"description": "I have too much work",
 		"image_url": "//unsplash/it/100/100"
 }
@@ -29,10 +29,10 @@ const workflowQuotes = {
 function QuotePage() {
     let moodKey;
     let workflowKey;
-    if( mood.value<5){
+    if(mood.value<5){
         moodKey = 'low';
     } 
-    if(5<mood.value<10){
+    if(mood.value>5 && mood.value<10){
         moodKey = 'medium';
     } 
     if(mood.value==10){
@@ -41,10 +41,10 @@ function QuotePage() {
     if(workflow.value<5){
         workflowKey = 'low';
     } 
-    if(5<workflow.value<10){
+    if(workflow.value>5&&workflow.value<10){
         workflowKey = 'medium';
     } 
-    if(workflow.value==10 && mood.value==10){
+    if(workflow.value==10){
         workflowKey = 'high';
     } 
     
