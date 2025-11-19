@@ -1,0 +1,12 @@
+.quoteContainer {
+    padding: 40% 20%;
+}
+
+
+
+.quote{
+    -webkit-text-fill-color: transparent;
+    background-image: var(--text-gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
