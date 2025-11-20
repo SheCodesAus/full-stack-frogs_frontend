@@ -1,35 +1,43 @@
-
-.welcoming-content {
-    display: flex;
+.landing {
+    background-image: var(--background-gradient);
+    min-height: 100vh;
     flex-direction: column;
     align-items: center;
+    display: flex;
+    background: linear-gradient(120deg, #FCE7C8,#CFE8FF);
+    background-size: 200% 200%;
+    animation: breatheBackground 12s ease-in-out infinite;
 
 }
 
-.tagline{
-    padding: 35% 5% 9% 10%;
+@keyframes breatheBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.tagline {
+    padding: 20vh 5% 9% 10%;
     text-align: center;
     font-size: var(--text-xl);
+    text-shadow:
+        0 0 10px rgba(249, 209, 162, 0.2),
+        0 0 10px rgba(209, 218, 227, 0.3);
 }
-
-.direct-btns{
-}
-
-.login-btn,
-.signup-btn {
-    width: 18vh;
-    height: 5vh;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    margin: 0.5rem;
-    font-family: var(--font-body);
-    border-radius: 8px;
-    border: none;
-    color: var(--primary);
-    background: var(--background);
-    box-shadow:
-        6px 6px 12px #c5c5c5, 
-        -6px -6px 12px #ffffff;
-    
-}
-

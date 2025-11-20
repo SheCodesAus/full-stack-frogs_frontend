@@ -1,0 +1,34 @@
+.btn {
+    height: 6vh;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    margin: var(--text-xs);
+    font-family: var(--font-body);
+    border-radius: 40px;
+    color: var(--text-dark);
+    background-color: var(--background);
+    letter-spacing: 1.5px;
+    transition: all 0.5s;
+    cursor: pointer;
+    border: none;
+}
+
+.btn:hover {
+    letter-spacing: 2.8px;
+    color: var(--background);
+    background-color: #bae7da;
+    ;
+    background-image: none;
+    box-shadow:
+        0 20px 20px var(--primary);
+
+}
+
+.btn:active {
+    letter-spacing: 3px;
+    background-color:var(--primary);
+    color: hsl(0, 0%, 100%);
+    box-shadow:  0px 0px 0px var(--primary);
+    transform: translateY(8px);
+    transition: 200ms;
+}
