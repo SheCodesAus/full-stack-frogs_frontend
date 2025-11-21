@@ -1,5 +1,6 @@
 .btn {
     height: 6vh;
+    max-width: 460px;
     font-weight: 600;
     padding: 0.5rem 1rem;
     margin: var(--text-xs);
