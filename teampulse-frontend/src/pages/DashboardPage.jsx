@@ -1,5 +1,11 @@
+import WeeklyComparison from '../components/WeeklyComparison'
+
 function DashboardPage() {
-    return <h1>This is a dashboard.</h1>;
-}
+    return (
+        <section>
+            <WeeklyComparison />
+        </section>
+    )
+};
 
 export default DashboardPage;

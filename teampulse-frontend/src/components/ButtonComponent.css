@@ -2,6 +2,7 @@
     height: 6vh;
     max-width: 460px;
     font-weight: 600;
+    font-size:0.75em;
     padding: 0.5rem 1rem;
     margin: var(--text-xs);
     font-family: var(--font-body);
