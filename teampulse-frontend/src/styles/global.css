@@ -3,7 +3,7 @@
 *::after {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 }
 
 :root {
@@ -18,6 +18,7 @@
     /* GRADIENTS */
     --text-gradient-1: linear-gradient(0deg, #f19a5c, #f9db6f);
     --text-gradient-2: radial-gradient(circle at 0% 0%, #62bfd4, #f1dd76);
+    --background-gradient: linear-gradient(0deg, rgb(254, 237, 226), #fbf1cb);
 
     /*TYPOGRAPHY*/
     --font-display: "Cormorant Garamond", sans-serif;
@@ -57,13 +58,16 @@
 
 body {
     font-family: var(--font-body);
-    background: var(--background);
     color: var(--secondary-text);
+    min-height: 100vh;
+    background-image: var(--background-gradient);
 
 }
 
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: var(--font-display);
     font-weight: 550;
 
@@ -78,6 +82,4 @@ p {
 /* Utilities Classes */
 
 
-@media only screen and (min-width: 700px){
-
-}
+@media only screen and (min-width: 700px) {}
