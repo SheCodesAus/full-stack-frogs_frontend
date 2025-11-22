@@ -23,10 +23,7 @@ function LoginPage() {
                     boxShadow: "0 4px 12px rgba(0,0,0,.1)",
                 }}
             >
-                <h2 style={{ textAlign: "center", color: "color: #555", marginBottom: "10px" }}>Welcome to your team's wellness hub 💓</h2>
-                <p style={{ textAlign: "center", color: "#555", marginBottom: "30px" }}>
-                    Login
-                </p>
+                <h2 style={{ textAlign: "center", color: "color: #555", marginBottom: "10px" }}>Welcome — we're here for you</h2>
                 <LoginForm />
             </div>
         </div>
