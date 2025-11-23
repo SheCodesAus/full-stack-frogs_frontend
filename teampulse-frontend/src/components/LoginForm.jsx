@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./loginform.css"; 
-import AuthToggle from "./AuthToggle.jsx";
 
 function LoginForm() {
     const [email, setEmail] = useState("");
@@ -42,7 +41,6 @@ function LoginForm() {
 
     return (
         <div className="login-page">
-            <AuthToggle current="login" />
 
             <form className="login-form" onSubmit={handleSubmit}>
                 {error && <div className="error-box">{error}</div>}

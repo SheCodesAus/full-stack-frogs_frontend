@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./signupform.css";
-import AuthToggle from "./AuthToggle.jsx";
 
 function SignupForm() {
 
@@ -35,7 +34,6 @@ function SignupForm() {
 
     return (
         <div className="signup-page">
-            <AuthToggle current="signup" />
 
             <form className="signup-form" onSubmit={handleSubmit}>
                 {error && <div className="error-box">{error}</div>}
