@@ -16,41 +16,62 @@ function LoginForm() {
         }
 
         try {
-            console.log("Logging in with:", { email, password });
-        } catch (err) {
-            setError("Login failed. Please try again.");
+        // API call
+        const response = await fetch("https://your-api.com/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }), // send email & password
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log("Login successful:", data);
+        
+        } else {
+            setError(data.message || "Login failed. Please try again.");
         }
-    };
+    } catch (err) {
+        setError("Login failed. Please try again.");
+        console.error(err);
+    }
+};
 
     return (
-        <form className="login-form" onSubmit={handleSubmit}>
-            {error && <div className="error-box">{error}</div>}
+        <div className="login-page">
 
-            <div className="input-group">
-                <label>Email</label>
-                <input
-                    type="email"
-                    placeholder="you@mail.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </div>
+            <form className="login-form" onSubmit={handleSubmit}>
+                {error && <div className="error-box">{error}</div>}
 
-            <div className="input-group">
-                <label>Password</label>
-                <input
-                    type="password"
-                    placeholder="******"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
+                <div className="input-group">
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        placeholder="you@mail.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
 
-            <button type="submit" className="login-button">
-                Login
-            </button>
-        </form>
+                <div className="input-group">
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        placeholder="******"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+
+                <button type="submit" className="login-button">
+                    Login
+                </button>
+            </form>
+        </div>
     );
 }
 
 export default LoginForm;
+
