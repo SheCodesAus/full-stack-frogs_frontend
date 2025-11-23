@@ -5,10 +5,10 @@ import Button from './ButtonComponent';
 
 // #Data simulation
 const moodData = [
-    { week: 'Week 1', mood: 4.3, prevPeriod: 5.0 },
-    { week: 'Week 2', mood: 7.6, prevPeriod: 6.5 },
-    { week: 'Week 3', mood: 5.8, prevPeriod: 6.0 },
-    { week: 'Current Week', mood: 7.9, prevPeriod: 7.0 },
+    { week: 'Week 1', mood: 1.72, prevPeriod: 3 },
+    { week: 'Week 2', mood: 3.04, prevPeriod: 3.5 },
+    { week: 'Week 3', mood: 2.32, prevPeriod: 1.8 },
+    { week: 'Current Week', mood: 3.16, prevPeriod: 2.9 },
 ];
 
 const workflowData = [
@@ -41,7 +41,7 @@ const LineChartExample = ({ isAnimationActive = true }) => (
         >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="week" />
-            <YAxis width="auto" domain={[0, 10]} />
+            <YAxis width="auto" domain={[0, 4]} />
             <Tooltip />
             <Legend />
             <Line type="monotone" dataKey="mood" stroke="#82ca9d" strokeWidth={2} dot={{ r: 5, strokeWidth: 2, fill: '#fff' }} isAnimationActive={isAnimationActive} />
