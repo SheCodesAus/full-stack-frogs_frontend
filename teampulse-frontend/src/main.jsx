@@ -2,6 +2,7 @@ import React from "react";
 import './styles/global.css'
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { AuthProvider } from "./components/AuthProvider.jsx";
 
 import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
@@ -9,6 +10,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import UserFormPage from "./pages/UserFormPage.jsx";
 import QuotePage from "./pages/QuotePage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
+
 
 const router = createBrowserRouter([
     { path: "/", element: <HomePage /> },
@@ -21,6 +23,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
   </React.StrictMode>
 );
