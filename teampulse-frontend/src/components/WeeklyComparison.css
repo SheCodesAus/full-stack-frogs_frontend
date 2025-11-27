@@ -1,8 +1,23 @@
 .weeklyComparisonContainer{
-    width: 70vw;
-    height: 100%;
-    background-color: whitesmoke;
-    border-radius: 5%;
-    display: 'flex',
+    width: 80 vw;
+    height: auto;
+    background-color: #fffffd;
+    border-radius: 4%;
+    display: 'flex';
+    color:var(--text-dark);
+    
+}
 
+.headline{
+    padding:5% 5% 0 5% ;
+    font-weight: 350;
+    font-size: var( --text-lg);
+
+}
+
+@media only screen and (min-width: 800px) {
+    .weeklyComparisonContainer{
+        width: 32vw;
+    }
+    
 }

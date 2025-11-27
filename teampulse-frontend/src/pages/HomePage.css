@@ -3,23 +3,6 @@
     flex-direction: column;
     align-items: center;
     display: flex;
-    background: linear-gradient(120deg, #FCE7C8, #CFE8FF);
-    background-size: 200% 200%;
-    animation: breatheBackground 8s ease-in-out infinite;
-}
-
-@keyframes breatheBackground {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
 }
 
 
@@ -32,7 +15,7 @@
 }
 
 .tagline {
-    padding: 15vh 5% 1% 5%;
+    padding: 20vh 5% 5% 5%;
     text-align: center;
     font-size: var(--text-xl);
     text-shadow:
