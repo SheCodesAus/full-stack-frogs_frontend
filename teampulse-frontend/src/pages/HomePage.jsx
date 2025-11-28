@@ -14,7 +14,7 @@ function HomePage() {
                 <p className='tagline-2'>Check in, reflect, and feel supported</p>
             </div>
             <Button text={'LOGIN'} width={'52vw'} to="/login" />
-            <Button text={'SIGNUP'} width={'52vw'} to="/login" />
+            <Button text={'SIGNUP'} width={'52vw'} to="/signup" />
 
         </section >
     )

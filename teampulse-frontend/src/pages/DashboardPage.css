@@ -1,0 +1,40 @@
+.header-right {
+    display: none;
+}
+
+.teampulse-logo {
+    width: clamp(265px, 20vw, 320px);
+
+}
+
+.header-left {
+    padding-left: 0.8rem;
+    padding-top: 0.5rem;
+}
+
+.dashboard-chooseteam {
+    gap: 0.8rem;
+}
+
+@media only screen and (min-width: 800px) {
+    .dashboard-header {
+        width: 100%;
+    }
+
+    .header-left {
+        padding-left: 1rem;
+    }
+
+
+    .header-right {
+        display: flex;
+        gap: 0.8rem;
+        padding-right: 2rem;
+    }
+
+    .dashboard-chooseteam {
+        gap: 2rem;
+    }
+
+
+}
