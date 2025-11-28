@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./loginform.css"; 
 
 function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -29,6 +31,7 @@ function LoginForm() {
 
         if (response.ok) {
             console.log("Login successful:", data);
+            navigate("/checkin"); 
         
         } else {
             setError(data.message || "Login failed. Please try again.");
@@ -46,10 +49,10 @@ function LoginForm() {
                 {error && <div className="error-box">{error}</div>}
 
                 <div className="input-group">
-                    <label>Email</label>
+                    <label>Username</label>
                     <input
-                        type="email"
-                        placeholder="you@mail.com"
+                        type="text"
+                        placeholder="Your username"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
