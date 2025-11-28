@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./signupform.css";
-import { getTeams } from "../api/teams";
+import { getTeams } from "../api/get-teams";
+import postSignup from "../api/post-signup";
 
 function SignupForm() {
 
-    const [name, setName] = useState("");
+    const [username, setUsername] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [surname, setSurname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [teamId, setTeamId] = useState("");
@@ -31,22 +34,32 @@ function SignupForm() {
         event.preventDefault();
         setError("");
 
-        if (!name || !email || !password || !teamId) {
+        if (!username || !firstName || !surname || !email || !password || !teamId) {
             setError("Please fill in all fields.");
             return;
         }
 
-        try { // future API call  
-            console.log("SIGNUP SENDING:", { name, email, password, teamId });
+        try {
+            const createdUser = await postSignup({
+                username,
+                firstName,
+                surname,
+                email,
+                password,
+                teamId,
+            });
+
+            console.log("SIGNUP SUCCESS:", createdUser);
             navigate("/checkin");
+
         } catch (err) {
-            setError("Oops! We need all the info to get you started");
+            setError(err.message || "Signup failed.");
         }
     };
 
+
     return (
         <div className="signup-page">
-
             <form className="signup-form" onSubmit={handleSubmit}>
                 {error && <div className="error-box">{error}</div>}
 
@@ -55,18 +68,18 @@ function SignupForm() {
                     <input
                         type="text"
                         placeholder="Create your username"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
 
                 <div className="input-group">
-                    <label>Fisrt Name</label>
+                    <label>First Name</label>
                     <input
                         type="text"
                         placeholder="Your awesome name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
                     />
                 </div>
 
@@ -75,8 +88,8 @@ function SignupForm() {
                     <input
                         type="text"
                         placeholder="Your awesome surname"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={surname}
+                        onChange={(e) => setSurname(e.target.value)}
                     />
                 </div>
 
