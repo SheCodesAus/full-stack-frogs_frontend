@@ -8,17 +8,15 @@ import './styles/global.css'
 import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import UserFormPage from "./pages/UserFormPage.jsx";
+import CheckInPage from "./pages/CheckInPage.jsx";
 import QuotePage from "./pages/QuotePage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
-import LandingAnimation from "./components/LandingAnimation";
-
 
 const router = createBrowserRouter([
     { path: "/", element: <HomePage /> },
     { path: "/signup", element: <SignupPage /> },
     { path: "/login", element: <LoginPage /> },
-    { path: "/checkin", element: <UserFormPage /> },
+    { path: "/checkin", element: <CheckInPage /> },
     { path: "/quote", element: <QuotePage /> },
     { path: "/dashboard", element: <DashboardPage /> },
 ]);
