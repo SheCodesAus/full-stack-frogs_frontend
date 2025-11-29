@@ -8,6 +8,7 @@ import './styles/global.css'
 import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import CheckInPage from "./pages/CheckInPage.jsx";
 import QuotePage from "./pages/QuotePage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 
