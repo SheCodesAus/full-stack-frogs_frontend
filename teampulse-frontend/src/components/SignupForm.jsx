@@ -1,50 +1,95 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./signupform.css";
+import { getTeams } from "../api/get-teams";
+import postSignup from "../api/post-signup";
 
 function SignupForm() {
 
-    const [name, setName] = useState("");
+    const [username, setUsername] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [surname, setSurname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [teamId, setTeamId] = useState("");
     const [error, setError] = useState("");
+    const [teams, setTeams] = useState([]);
+    const navigate = useNavigate();
 
 
-    const teams = [
-        { id: "1", name: "Team A" },
-        { id: "2", name: "Team B" },
-        { id: "3", name: "Team C" },
-    ];
+    useEffect(() => {
+        async function loadTeams() {
+            try {
+                const data = await getTeams();
+                setTeams(data);
+            } catch (err) {
+                console.error("Failed to load teams:", err);
+            }
+        }
+
+        loadTeams();
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setError("");
 
-        if (!name || !email || !password || !teamId) {
+        if (!username || !firstName || !surname || !email || !password || !teamId) {
             setError("Please fill in all fields.");
             return;
         }
 
-        try { // future API call  
-            console.log("SIGNUP SENDING:", { name, email, password, teamId });
+        try {
+            const createdUser = await postSignup({
+                username,
+                firstName,
+                surname,
+                email,
+                password,
+                teamId,
+            });
+
+            console.log("SIGNUP SUCCESS:", createdUser);
+            navigate("/checkin");
+
         } catch (err) {
-            setError("Oops! We need all the info to get you started");
+            setError(err.message || "Signup failed.");
         }
     };
 
+
     return (
         <div className="signup-page">
-
             <form className="signup-form" onSubmit={handleSubmit}>
                 {error && <div className="error-box">{error}</div>}
 
                 <div className="input-group">
-                    <label>Name</label>
+                    <label>Username</label>
+                    <input
+                        type="text"
+                        placeholder="Create your username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </div>
+
+                <div className="input-group">
+                    <label>First Name</label>
                     <input
                         type="text"
                         placeholder="Your awesome name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                    />
+                </div>
+
+                <div className="input-group">
+                    <label>Surname</label>
+                    <input
+                        type="text"
+                        placeholder="Your awesome surname"
+                        value={surname}
+                        onChange={(e) => setSurname(e.target.value)}
                     />
                 </div>
 
@@ -84,7 +129,7 @@ function SignupForm() {
                 </div>
 
                 <button type="submit" className="signup-button">
-                    Join TeamPulse
+                    Join teampulse
                 </button>
             </form>
         </div>
