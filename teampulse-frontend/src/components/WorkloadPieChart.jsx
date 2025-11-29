@@ -7,7 +7,7 @@ import {
   Legend
 } from "chart.js";
 
-import { mockWorkloads } from "../mocks/mockWorkloads";
+import { mockWorkloads } from "../mocks/mockWorkload";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -16,8 +16,8 @@ export default function WorkloadPieChart() {
 
   useEffect(() => {
     function loadMockData() {
-      const workloads = mockWorkloads;        // [{ value:1, description:"..." }, ...]
-      const logs = mockPulseLogs;            // [{ workload:2, ... }, ...]
+      const workloads = mockWorkloads;      
+      const logs = mockPulseLogs;            
 
       const counts = [0, 0, 0, 0];
 
