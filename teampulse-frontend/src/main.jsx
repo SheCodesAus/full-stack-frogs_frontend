@@ -17,6 +17,7 @@ const router = createBrowserRouter([
     { path: "/signup", element: <SignupPage /> },
     { path: "/login", element: <LoginPage /> },
     { path: "/checkin", element: <CheckInPage /> },
+    { path: "/checkin", element: <CheckInPage /> },
     { path: "/quote", element: <QuotePage /> },
     { path: "/dashboard", element: <DashboardPage /> },
 ]);
@@ -40,3 +41,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       </AuthProvider>
   </React.StrictMode>
 );
+
