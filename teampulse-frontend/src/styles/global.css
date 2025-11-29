@@ -18,12 +18,14 @@
     /* GRADIENTS */
     --text-gradient-1: linear-gradient(0deg, #f19a5c, #f9db6f);
     --text-gradient-2: radial-gradient(circle at 0% 0%, #62bfd4, #f1dd76);
-    --background-gradient: linear-gradient(0deg, rgb(254, 237, 226), #fbf1cb);
+    --background-gradient: linear-gradient(120deg, #FCE7C8, #CFE8FF);
+
 
     /*TYPOGRAPHY*/
     --font-display: "Cormorant Garamond", sans-serif;
     --font-body: "Quicksand", sans-serif;
     --font-lore: "Cormorant Garamond", sans-serif;
+    --text-xss: 0.68rem;
     --text-xs: 0.75rem;
     --text-sm: 0.875rem;
     --text-base: 1rem;
@@ -59,9 +61,25 @@
 body {
     font-family: var(--font-body);
     color: var(--secondary-text);
-    min-height: 100vh;
-    background-image: var(--background-gradient);
+    min-height: 100vh; 
+    background: linear-gradient(120deg, #FCE7C8, #CFE8FF);
+    background-size: 200% 200%;
+    animation: breatheBackground 8s ease-in-out infinite;
 
+}
+
+@keyframes breatheBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 
@@ -80,6 +98,29 @@ p {
 
 
 /* Utilities Classes */
+.flex{
+    display: flex;
+}    
 
+.space-between{
+    justify-content:space-between;
+}    
 
-@media only screen and (min-width: 700px) {}
+.column{
+    flex-direction: column;
+}
+
+.justify-right{
+    justify-content:flex-end;
+}
+.justify-center{
+    justify-content:center;
+}
+
+.align-center{
+    align-items:center;
+}
+
+@media only screen and (min-width: 700px) {
+    
+}

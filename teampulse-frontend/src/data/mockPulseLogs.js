@@ -1,0 +1,197 @@
+export const mockPulseLogs = [
+    {
+        "id": 1,
+        "user": 101,
+        "mood": 4,
+        "workload": 3,
+        "comment": "Feeling positive this week!",
+        "timestamp": "2025-01-06T10:24:00Z",
+        "timestamp_local": "2025-01-06T18:24:00+08:00",
+        "team": 1,
+        "year": 2025,
+        "week_index": 2
+    },
+    {
+        "id": 2,
+        "user": 102,
+        "mood": 3,
+        "workload": 2,
+        "comment": "",
+        "timestamp": "2025-01-06T11:05:00Z",
+        "timestamp_local": "2025-01-06T19:05:00+08:00",
+        "team": 1,
+        "year": 2025,
+        "week_index": 2
+    },
+    {
+        "id": 3,
+        "user": 103,
+        "mood": 2,
+        "workload": 3,
+        "comment": "Some stress but manageable.",
+        "timestamp": "2025-01-06T13:40:00Z",
+        "timestamp_local": "2025-01-06T21:40:00+08:00",
+        "team": 1,
+        "year": 2025,
+        "week_index": 2
+    },
+    {
+        "id": 4,
+        "user": 104,
+        "mood": 1,
+        "workload": 2,
+        "comment": "Feeling overwhelmed.",
+        "timestamp": "2025-01-06T15:10:00Z",
+        "timestamp_local": "2025-01-06T23:10:00+08:00",
+        "team": 1,
+        "year": 2025,
+        "week_index": 2
+    },
+
+    {
+        "id": 5,
+        "user": 101,
+        "mood": 3,
+        "workload": 3,
+        "comment": "",
+        "timestamp": "2025-01-13T10:45:00Z",
+        "timestamp_local": "2025-01-13T18:45:00+08:00",
+        "team": 1,
+        "year": 2025,
+        "week_index": 3
+    },
+    {
+        "id": 6,
+        "user": 102,
+        "mood": 2,
+        "workload": 1,
+        "comment": "Workload spiked this week.",
+        "timestamp": "2025-01-13T11:12:00Z",
+        "timestamp_local": "2025-01-13T19:12:00+08:00",
+        "team": 1,
+        "year": 2025,
+        "week_index": 3
+    },
+    {
+        "id": 7,
+        "user": 103,
+        "mood": 4,
+        "workload": 4,
+        "comment": "Great progress!",
+        "timestamp": "2025-01-13T14:02:00Z",
+        "timestamp_local": "2025-01-13T22:02:00+08:00",
+        "team": 1,
+        "year": 2025,
+        "week_index": 3
+    },
+    {
+        "id": 8,
+        "user": 104,
+        "mood": 1,
+        "workload": 1,
+        "comment": "Really struggling.",
+        "timestamp": "2025-01-13T15:52:00Z",
+        "timestamp_local": "2025-01-13T23:52:00+08:00",
+        "team": 1,
+        "year": 2025,
+        "week_index": 3
+    },
+
+    {
+        "id": 9,
+        "user": 201,
+        "mood": 3,
+        "workload": 3,
+        "comment": "Solid week.",
+        "timestamp": "2025-01-07T09:10:00Z",
+        "timestamp_local": "2025-01-07T17:10:00+08:00",
+        "team": 2,
+        "year": 2025,
+        "week_index": 2
+    },
+    {
+        "id": 10,
+        "user": 202,
+        "mood": 2,
+        "workload": 2,
+        "comment": "",
+        "timestamp": "2025-01-07T10:18:00Z",
+        "timestamp_local": "2025-01-07T18:18:00+08:00",
+        "team": 2,
+        "year": 2025,
+        "week_index": 2
+    },
+    {
+        "id": 11,
+        "user": 203,
+        "mood": 4,
+        "workload": 3,
+        "comment": "",
+        "timestamp": "2025-01-07T11:40:00Z",
+        "timestamp_local": "2025-01-07T19:40:00+08:00",
+        "team": 2,
+        "year": 2025,
+        "week_index": 2
+    },
+    {
+        "id": 12,
+        "user": 204,
+        "mood": 1,
+        "workload": 1,
+        "comment": "Feeling burnt out.",
+        "timestamp": "2025-01-07T13:22:00Z",
+        "timestamp_local": "2025-01-07T21:22:00+08:00",
+        "team": 2,
+        "year": 2025,
+        "week_index": 2
+    },
+
+    {
+        "id": 13,
+        "user": 301,
+        "mood": 4,
+        "workload": 4,
+        "comment": "Everything is smooth.",
+        "timestamp": "2025-01-08T09:55:00Z",
+        "timestamp_local": "2025-01-08T17:55:00+08:00",
+        "team": 3,
+        "year": 2025,
+        "week_index": 2
+    },
+    {
+        "id": 14,
+        "user": 302,
+        "mood": 3,
+        "workload": 2,
+        "comment": "",
+        "timestamp": "2025-01-08T11:10:00Z",
+        "timestamp_local": "2025-01-08T19:10:00+08:00",
+        "team": 3,
+        "year": 2025,
+        "week_index": 2
+    },
+    {
+        "id": 15,
+        "user": 303,
+        "mood": 2,
+        "workload": 1,
+        "comment": "",
+        "timestamp": "2025-01-08T12:32:00Z",
+        "timestamp_local": "2025-01-08T20:32:00+08:00",
+        "team": 3,
+        "year": 2025,
+        "week_index": 2
+    },
+    {
+        "id": 16,
+        "user": 304,
+        "mood": 1,
+        "workload": 2,
+        "comment": "Need time to rest.",
+        "timestamp": "2025-01-08T13:45:00Z",
+        "timestamp_local": "2025-01-08T21:45:00+08:00",
+        "team": 3,
+        "year": 2025,
+        "week_index": 2
+    }
+]
