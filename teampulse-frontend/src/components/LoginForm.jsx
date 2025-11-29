@@ -1,43 +1,45 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./loginform.css"; 
 
 function LoginForm() {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setError("");
 
-        if (!email || !password) {
+        if (!username || !password) {
             setError("Please fill in all fields.");
             return;
         }
 
         try {
-        // API call
-        const response = await fetch("https://your-api.com/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email, password }), // send email & password
-        });
+            // FUTURE API CALL (username + password)
+            const response = await fetch("https://your-api.com/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password }),
+            });
 
-        const data = await response.json();
+            const data = await response.json();
 
-        if (response.ok) {
-            console.log("Login successful:", data);
-        
-        } else {
-            setError(data.message || "Login failed. Please try again.");
+            if (response.ok) {
+                console.log("Login successful:", data);
+                navigate("/checkin");
+            } else {
+                setError(data.message || "Login failed. Please try again.");
+            }
+        } catch (err) {
+            setError("Login failed. Please try again.");
+            console.error(err);
         }
-    } catch (err) {
-        setError("Login failed. Please try again.");
-        console.error(err);
-    }
-};
+    };
 
     return (
         <div className="login-page">
@@ -46,12 +48,12 @@ function LoginForm() {
                 {error && <div className="error-box">{error}</div>}
 
                 <div className="input-group">
-                    <label>Email</label>
+                    <label>Username</label>
                     <input
-                        type="email"
-                        placeholder="you@mail.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        type="text"
+                        placeholder="Your username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
 
@@ -74,4 +76,3 @@ function LoginForm() {
 }
 
 export default LoginForm;
-
