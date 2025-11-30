@@ -6,6 +6,7 @@ import { mockPulseLogs } from "../data/mockPulseLogs";
 import DashboardButton from '../components/DashboardButton';
 import Logo from '../components/Logo'
 import DashboardView from '../components/DashboardView';
+import AllCheckinsView from '../components/AllCheckinView';
 
 
 const lowPerson = {
@@ -60,7 +61,7 @@ function DashboardPage() {
             <div className='dashboard-overview'>
 
             </div>
-            {/* {view === "checkins" && <AllCheckinsView />} */}
+            {view === "checkins" && <AllCheckinsView />}
             {view === "dashboard" && <DashboardView />}
         </section>
     )
