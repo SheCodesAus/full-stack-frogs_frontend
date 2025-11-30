@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./signupform.css";
-import { getTeams } from "../api/get-teams";
+import  getTeams  from "../api/get-teams";
 import postSignup from "../api/post-signup";
 
 function SignupForm() {
