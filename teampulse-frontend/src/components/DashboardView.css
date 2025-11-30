@@ -1,0 +1,24 @@
+.dashboardView-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.dashboardOverview {
+    padding: 2.5rem;
+    gap: 3rem;
+    background: linear-gradient(to right,
+            rgba(168, 216, 196, 0.2),
+            rgba(207, 232, 255, 0.2));
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(101, 168, 140, 0.5);
+    margin-top: 2rem;
+}
+
+.line-graphs {
+    gap: 3rem;
+    margin-top: 2rem;
+}

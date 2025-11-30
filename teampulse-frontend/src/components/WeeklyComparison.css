@@ -1,5 +1,5 @@
 .weeklyComparisonContainer{
-    width: 80 vw;
+    width: 70vw;
     height: auto;
     background-color: #fffffd;
     border-radius: 4%;
@@ -17,7 +17,7 @@
 
 @media only screen and (min-width: 800px) {
     .weeklyComparisonContainer{
-        width: 32vw;
+        width: 50%;
     }
     
 }

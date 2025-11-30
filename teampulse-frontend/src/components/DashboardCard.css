@@ -1,0 +1,15 @@
+.card {
+    background: radial-gradient(178.94% 106.41% at 26.42% 106.41%,
+            rgba(252, 231, 200, 0.4) 0%,
+            rgba(255, 255, 255, 0) 71.88%), #F7F9FB;
+    width: 14vw;
+    padding: var(--text-base) var(--text-lg);
+    color: var(--text-dark);
+    border-radius: 15px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
+
+}
+
+.card-nunmber {
+    font-size: var(--text-xl);
+}
