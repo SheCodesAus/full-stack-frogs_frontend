@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './DashboardPage.css'
 import { mockPulseLogs } from "../data/mockPulseLogs";
@@ -16,10 +17,17 @@ const lowPerson = {
 
 function DashboardPage() {
     const { teams } = useTeams();
+    const navigate = useNavigate();
     const [view, setView] = useState("dashboard");
     const [selectedTeam, setSelectedTeam] = useState(teams[0].id);
     const [pulseLogs, setPulseLogs] = useState([]);
-    // const [teams, setTeams] = useState([]);
+
+
+    const handleLogout = () => {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
+        navigate('/login');
+    };
 
     useEffect(() => {
         setPulseLogs(mockPulseLogs);
@@ -27,23 +35,25 @@ function DashboardPage() {
 
     return (
         <section className='dashboard-container'>
-            <div className='dashboard-header flex space-between'>
+            <div className='dashboard-header flex space-between align-center'>
                 <div className='header-left flex align-center'>
                     <Logo size={290} />
-
                 </div>
-                <div className='header-right flex align-center'>
-                    <DashboardButton
-                        text='Dashboard'
-                        isActive={view === "dashboard"}
-                        onClick={() => setView("dashboard")}
-                    />
-                    <DashboardButton
-                        text='All Check-ins'
-                        isActive={view === "checkins"}
-                        onClick={() => setView("checkins")}
-                    />
-                </div>
+                <span onClick={handleLogout} className='logout-text'>
+                    Logout
+                </span>
+            </div>
+            <div className='dashboard-nav flex justify-center'>
+                <DashboardButton
+                    text='Dashboard'
+                    isActive={view === "dashboard"}
+                    onClick={() => setView("dashboard")}
+                />
+                <DashboardButton
+                    text='All Check-ins'
+                    isActive={view === "checkins"}
+                    onClick={() => setView("checkins")}
+                />
             </div>
             <div className='dashboard-chooseteam flex justify-center'>
                 {teams.map((team) => (

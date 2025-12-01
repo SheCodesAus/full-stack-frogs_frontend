@@ -127,3 +127,15 @@ p {
 @media only screen and (min-width: 700px) {
     
 }
+
+.logout-text {
+    color: var(--text-dark);
+    font-size: var(--text-base);
+    cursor: pointer;
+    font-weight: 500;
+    padding-right: var(--space-6);
+}
+
+.logout-text:hover {
+    text-decoration: underline;
+}

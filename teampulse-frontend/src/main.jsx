@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./components/AuthProvider.jsx";
 import './styles/global.css'
 
+
 import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
@@ -17,9 +18,8 @@ const router = createBrowserRouter([
     { path: "/signup", element: <SignupPage /> },
     { path: "/login", element: <LoginPage /> },
     { path: "/checkin", element: <CheckInPage /> },
-    { path: "/checkin", element: <CheckInPage /> },
     { path: "/quote", element: <QuotePage /> },
-    { path: "/dashboard", element: <DashboardPage /> },
+    { path: "/dashboard", element: <DashboardPage />},
 ]);
 
 // function AppRoot() {
@@ -33,12 +33,17 @@ const router = createBrowserRouter([
 // }
 
 
+
+function AppRoot() {
+  return (
+    <RouterProvider router={router} />
+  );
+}
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
       <AuthProvider>
-        {/* <AppRoot /> */}
-        <RouterProvider router={router} />
+        <AppRoot />
       </AuthProvider>
   </React.StrictMode>
 );
-

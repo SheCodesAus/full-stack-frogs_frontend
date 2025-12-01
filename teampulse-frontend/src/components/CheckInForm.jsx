@@ -37,7 +37,7 @@ export default function CheckInForm() {
 
         setIsSubmitting(true);
 
-        const payload = { mood, workload, notes };
+        const payload = { mood, workload, notes, timestamp: new Date().toISOString() };
 
         try {
             await createCheckIn(payload);
@@ -57,13 +57,12 @@ export default function CheckInForm() {
 
     return (
         <div className="survey-container">
-            <h2>How are you feeling today?</h2>
-            <p className="subtitle">So we can help build a better workplace together..</p>
+            <h2>Share where you are at, so we can help build a better workplace together</h2>
 
             <form onSubmit={handleSubmit} className="survey-form">
                 {/* Mood Selection */}
                 <section>
-                    <h3>Your Mood</h3>
+                    <h3>How is your mood?</h3>
                     <div className="options-grid">
                         {moodOptions.map((option) => (
                             <motion.button
@@ -82,7 +81,7 @@ export default function CheckInForm() {
 
                 {/* Workload Selection */}
                 <section>
-                    <h3>Workload</h3>
+                    <h3>Where is your workload at?</h3>
                     <div className="options-grid">
                         {workloadOptions.map((option) => (
                             <motion.button
