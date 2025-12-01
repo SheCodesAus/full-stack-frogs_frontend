@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import './DashboardPage.css'
-import { mockTeams } from "../data/mockTeams";
 import { mockPulseLogs } from "../data/mockPulseLogs";
 
 import DashboardButton from '../components/DashboardButton';
