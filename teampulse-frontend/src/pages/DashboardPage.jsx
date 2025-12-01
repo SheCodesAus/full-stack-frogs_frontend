@@ -19,7 +19,7 @@ function DashboardPage() {
     const { teams } = useTeams();
     const navigate = useNavigate();
     const [view, setView] = useState("dashboard");
-    const [selectedTeam, setSelectedTeam] = useState(teams[0].id);
+    const [selectedTeam, setSelectedTeam] = useState(null);
     const [pulseLogs, setPulseLogs] = useState([]);
 
 
@@ -31,7 +31,15 @@ function DashboardPage() {
 
     useEffect(() => {
         setPulseLogs(mockPulseLogs);
+
     }, []);
+
+
+    useEffect(() => {
+        if (teams.length > 0) {
+            setSelectedTeam(teams[0].id);  // preselect first team
+        }
+    }, [teams]);
 
     return (
         <section className='dashboard-container'>
