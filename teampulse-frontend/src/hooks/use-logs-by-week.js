@@ -1,12 +1,12 @@
 import {useState, useEffect} from 'react';
-import getLogsByTeamId from '../api/get-logs-by-team';
+import getLogsByWeekIndex from '../api/get-logs-by-week';
 
-export default function useLogsByUser(teamId){
+export default function useLogsByUser(weekIndex){
     const [logs, setLogs] = useState(null);
     const [userisLoading, setIsLoading] = useState(true);
     const [userError, setError] = useState();
     useEffect(() =>{
-        getLogsByTeamId(teamId)
+        getLogsByWeekIndex(weekIndex)
         .then((logs) => {
             setLogs(logs);
             setIsLoading(false);
@@ -14,7 +14,7 @@ export default function useLogsByUser(teamId){
             setError(error);
             setIsLoading(false);
         })
-    },[id])
+    },[weekIndex])
 
     return {logs, logsisLoading, userError}
 }

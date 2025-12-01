@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import './DashboardPage.css'
-import { mockTeams } from "../data/mockTeams";
 import { mockPulseLogs } from "../data/mockPulseLogs";
 
 import DashboardButton from '../components/DashboardButton';
 import Logo from '../components/Logo'
 import DashboardView from '../components/DashboardView';
 import AllCheckinsView from '../components/AllCheckinView';
-
+import useTeams from '../hooks/use-teams';
 
 const lowPerson = {
     name: "Sara",
@@ -16,15 +15,13 @@ const lowPerson = {
 
 
 function DashboardPage() {
+    const { teams } = useTeams();
     const [view, setView] = useState("dashboard");
-    const [selectedTeam, setSelectedTeam] = useState(null);
+    const [selectedTeam, setSelectedTeam] = useState(teams[0].id);
     const [pulseLogs, setPulseLogs] = useState([]);
-    const [teams, setTeams] = useState([]);
-
+    // const [teams, setTeams] = useState([]);
 
     useEffect(() => {
-        // Pretend this is an API call
-        setTeams(mockTeams);
         setPulseLogs(mockPulseLogs);
     }, []);
 
