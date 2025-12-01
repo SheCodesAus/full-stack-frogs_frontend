@@ -14,17 +14,14 @@ const lowPerson = {
 };
 
 
-
-
 function DashboardPage() {
+    const { teams } = useTeams();
     const [view, setView] = useState("dashboard");
-    const [selectedTeam, setSelectedTeam] = useState(null);
+    const [selectedTeam, setSelectedTeam] = useState(teams[0].id);
     const [pulseLogs, setPulseLogs] = useState([]);
     // const [teams, setTeams] = useState([]);
-    const { teams } = useTeams();
 
     useEffect(() => {
-        // Pretend this is an API call
         setPulseLogs(mockPulseLogs);
     }, []);
 
