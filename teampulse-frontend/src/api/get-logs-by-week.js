@@ -1,5 +1,5 @@
-async function getLogsByTeamId(id){
-    const url = `${import.meta.env.VITE_API_URL}/logs/teams/${id}`;
+async function getLogsByWeekIndex(week_index){
+    const url = `${import.meta.env.VITE_API_URL}/logs/teams/weeks/${week_index}`;
     const response = await fetch(url, { method: 'GET' });
     if(!response.ok){
         const fallbackError = 'Error fetching fundraiser';

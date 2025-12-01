@@ -7,7 +7,7 @@ import DashboardButton from '../components/DashboardButton';
 import Logo from '../components/Logo'
 import DashboardView from '../components/DashboardView';
 import AllCheckinsView from '../components/AllCheckinView';
-
+import useTeams from '../hooks/use-teams';
 
 const lowPerson = {
     name: "Sara",
@@ -15,16 +15,17 @@ const lowPerson = {
 };
 
 
+
+
 function DashboardPage() {
     const [view, setView] = useState("dashboard");
     const [selectedTeam, setSelectedTeam] = useState(null);
     const [pulseLogs, setPulseLogs] = useState([]);
-    const [teams, setTeams] = useState([]);
-
+    // const [teams, setTeams] = useState([]);
+    const { teams } = useTeams();
 
     useEffect(() => {
         // Pretend this is an API call
-        setTeams(mockTeams);
         setPulseLogs(mockPulseLogs);
     }, []);
 

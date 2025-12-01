@@ -16,7 +16,6 @@ function SignupForm() {
     const [teams, setTeams] = useState([]);
     const navigate = useNavigate();
 
-
     useEffect(() => {
         async function loadTeams() {
             try {
