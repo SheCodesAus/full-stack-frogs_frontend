@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import './DashboardPage.css'
 import { mockPulseLogs } from "../data/mockPulseLogs";
 
@@ -36,22 +36,29 @@ function DashboardPage() {
 
 
     useEffect(() => {
-        if (teams.length > 0) {
-            setSelectedTeam(teams[0].id);  // preselect first team
+        if (teams.length > 0 && !selectedTeam) {
+            setSelectedTeam(teams[0].id);
         }
     }, [teams]);
+
+    const teamLogs = useMemo(() => {
+        if (!selectedTeam) return [];
+        return pulseLogs.filter(log => log.team === selectedTeam);
+    }, [pulseLogs, selectedTeam]);
+
+    if (teams.length === 0) {
+        return <div className="loading">Loading teams…</div>;
+    }
 
     return (
         <section className='dashboard-container'>
             <div className='dashboard-header flex space-between align-center'>
-                <div className='header-left flex align-center'>
-                    <Logo size={290} />
-                </div>
+                <Logo size={200} />
                 <span onClick={handleLogout} className='logout-text'>
                     Logout
                 </span>
             </div>
-            <div className='dashboard-nav flex justify-center'>
+            <div className='dashboard-switchview'>
                 <DashboardButton
                     text='Dashboard'
                     isActive={view === "dashboard"}
@@ -77,7 +84,7 @@ function DashboardPage() {
 
             </div>
             {view === "checkins" && <AllCheckinsView />}
-            {view === "dashboard" && <DashboardView />}
+            {view === "dashboard" && <DashboardView logs={teamLogs} />}
         </section>
     )
 };

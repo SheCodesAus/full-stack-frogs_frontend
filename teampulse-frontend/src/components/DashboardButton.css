@@ -44,7 +44,7 @@
     min-width: 8rem;
     font-weight: 600;
     font-size: var(--text-base);
-    padding: 1rem 3.5rem;
+    padding: 1rem 3.2rem;
     margin: var(--text-xxs);
     font-family: var(--font-body);
     border-radius: 40px;
@@ -54,6 +54,7 @@
     transition: all 0.5s;
     cursor: pointer;
     border: none;
+    text-align: center;
 }
 
 }

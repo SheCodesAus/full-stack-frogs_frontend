@@ -1,18 +1,17 @@
 import './Logo.css';
 
-export default function Logo({ size = 110 }) {
+export default function Logo({ size = 100 }) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width={size}
-            height={size * 0.35}
-            viewBox="0 0 1200 300"
+            viewBox="0 0 1200 200"
             className="teampulse-logo"
         >
             {/* Logo Text */}
             <text
                 x='5%'
-                y="25%"
+                y="70%"
                 textAnchor="start"
                 dominantBaseline="middle"
                 fontFamily="var(--font-body)"
@@ -27,7 +26,7 @@ export default function Logo({ size = 110 }) {
             {/* Pulse Dot */}
             <circle
                 cx="435"
-                cy="75"
+                cy="140"
                 r="22"
                 className="pulse-dot"
             />
