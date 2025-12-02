@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./signupform.css";
+import "./SignupForm.css";
 import  getTeams  from "../api/get-teams";
 import postSignup from "../api/post-signup";
 
