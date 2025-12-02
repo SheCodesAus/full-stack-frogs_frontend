@@ -1,5 +1,5 @@
 import LoginForm from "../components/LoginForm";
-import "./loginpage.css";
+import "./LoginPage.css";
 import Logo from "../components/Logo";
 
 function LoginPage() {
