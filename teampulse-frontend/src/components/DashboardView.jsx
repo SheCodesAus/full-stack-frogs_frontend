@@ -1,6 +1,6 @@
 import './DashboardView.css'
-import DashboardCard from './DashboardCard'
-import WeeklyComparison from '../components/WeeklyComparison'
+import DashboardCard from './DashboardCard';
+import WeeklyComparison from '../components/WeeklyComparison';
 
 export default function DashboardView({ logs }) {
     const avgMood = logs.length > 0

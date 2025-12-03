@@ -13,3 +13,7 @@
 .card-nunmber {
     font-size: var(--text-xl);
 }
+
+.card-icon{
+    padding-right: var(--space-1);
+}
