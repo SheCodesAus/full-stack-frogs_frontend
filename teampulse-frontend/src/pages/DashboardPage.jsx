@@ -47,18 +47,12 @@ function DashboardPage() {
     }, [pulseLogs, selectedTeam]);
 
     if (teams.length === 0) {
-        return <div className="loading">Loading teams…</div>;
+        return <></>;
     }
 
 
     return (
         <section className='dashboard-container'>
-            <div className='dashboard-header flex space-between align-center'>
-                <Logo size={200} />
-                <span onClick={handleLogout} className='logout-text'>
-                    Logout
-                </span>
-            </div>
             <div className='dashboard-switchview'>
                 <DashboardButton
                     text='Dashboard'
