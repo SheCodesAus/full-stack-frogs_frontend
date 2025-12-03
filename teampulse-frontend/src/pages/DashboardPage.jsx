@@ -50,6 +50,7 @@ function DashboardPage() {
         return <div className="loading">Loading teams…</div>;
     }
 
+
     return (
         <section className='dashboard-container'>
             <div className='dashboard-header flex space-between align-center'>
