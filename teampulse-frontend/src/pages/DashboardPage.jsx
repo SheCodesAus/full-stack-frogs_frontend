@@ -76,7 +76,7 @@ function DashboardPage() {
             <div className='dashboard-overview'>
 
             </div>
-            {view === "checkins" && <AllCheckinsView />}
+            {view === "checkins" && (<AllCheckinsView selectedTeam={selectedTeam} />)}
             {view === "dashboard" && <DashboardView />}
         </section>
     )

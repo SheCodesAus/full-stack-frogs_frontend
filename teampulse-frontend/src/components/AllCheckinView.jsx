@@ -1,11 +1,16 @@
 import React from "react";
 import useCheckIns from "../hooks/use-checkins";
 
-export default function AllCheckinsView() {
+export default function AllCheckinsView({ selectedTeam }) {
     const { checkins, isLoading, error } = useCheckIns();
+
 
     if (isLoading) return <p>Loading check-ins...</p>;
     if (error) return <p>Error loading check-ins 😕</p>;
+
+    const filtered = checkins.filter(
+        item => item.team_id === selectedTeam
+    );
 
     return (
         <div className="raw-data-container">
