@@ -1,33 +1,21 @@
-import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
 import './DashboardPage.css'
 import { mockPulseLogs } from "../data/mockPulseLogs";
 
 import DashboardButton from '../components/DashboardButton';
-import Logo from '../components/Logo'
 import DashboardView from '../components/DashboardView';
 import AllCheckinsView from '../components/AllCheckinView';
 import useTeams from '../hooks/use-teams';
 
-const lowPerson = {
-    name: "Sara",
-    type: "Mood",
-};
 
 
 function DashboardPage() {
     const { teams } = useTeams();
-    const navigate = useNavigate();
     const [view, setView] = useState("dashboard");
     const [selectedTeam, setSelectedTeam] = useState(null);
     const [pulseLogs, setPulseLogs] = useState([]);
+    const [showPlaceholder, setShowPlaceholder] = useState(true);
 
-
-    const handleLogout = () => {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('user');
-        navigate('/login');
-    };
 
     useEffect(() => {
         setPulseLogs(mockPulseLogs);
@@ -53,7 +41,7 @@ function DashboardPage() {
 
     return (
         <section className='dashboard-container'>
-            <div className='dashboard-switchview'>
+            <div className='dashboard-switchview justify-center flex'>
                 <DashboardButton
                     text='Dashboard'
                     isActive={view === "dashboard"}
@@ -65,7 +53,41 @@ function DashboardPage() {
                     onClick={() => setView("checkins")}
                 />
             </div>
-            <div className='dashboard-chooseteam flex justify-center'>
+            <div className='dashboard-selects flex justify-center'>
+                <select
+                    className='dashboard-chooseteam-select'
+                    value={showPlaceholder ? '' : selectedTeam}
+                    onChange={(e) => {
+                        setSelectedTeam(Number(e.target.value));
+                        setShowPlaceholder(false);
+                    }}
+                >
+                    <option value="" disabled hidden>Choose team</option>
+
+                    {teams.map((team) => (
+                        <option key={team.id} value={team.id}>
+                            {team.team_name}
+                        </option>
+                    ))}
+                </select>
+                                <select
+                    className='dashboard-chooseteam-select'
+                    value={showPlaceholder ? '' : selectedTeam}
+                    onChange={(e) => {
+                        setSelectedTeam(Number(e.target.value));
+                        setShowPlaceholder(false);
+                    }}
+                >
+                    <option value="" disabled hidden>Choose team</option>
+
+                    {teams.map((team) => (
+                        <option key={team.id} value={team.id}>
+                            {team.team_name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <div className='dashboard-chooseteam-buttons justify-center'>
                 {teams.map((team) => (
                     <DashboardButton
                         key={team.id}

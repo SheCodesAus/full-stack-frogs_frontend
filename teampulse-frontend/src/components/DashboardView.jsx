@@ -19,7 +19,7 @@ export default function DashboardView({ logs }) {
                 <DashboardCard title='Average Mood' number={avgMood} detail='Out of 4.0' />
                 <DashboardCard title='Average Workflow' number={avgWorkflow} detail='Out of 4.0' />
             </section>
-            <section className='line-graphs flex justify-center'>
+            <section className='graphs flex justify-center'>
                 <WeeklyComparison />
                 <WeeklyComparison />
             </section>
