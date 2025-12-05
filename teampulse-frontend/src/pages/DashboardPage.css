@@ -1,39 +1,50 @@
-.header-right {
+.dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.dashboard-switchview {
+    gap: 1rem;
+    padding: 2rem 0 1rem 0;
+
+}
+
+.dashboard-chooseteam-select {
+    border: solid 2px var(--primary);
+    border-radius: 20px;
+    padding: var(--space-1);
+}
+
+
+.dashboard-chooseteam-buttons {
     display: none;
 }
 
-.teampulse-logo {
-    width: clamp(265px, 20vw, 320px);
 
-}
-
-.header-left {
-    padding-left: 0.8rem;
-    padding-top: 0.5rem;
-}
-
-.dashboard-chooseteam {
-    gap: 0.8rem;
+.dashboard-selects {
+    gap: 1rem;
 }
 
 @media only screen and (min-width: 800px) {
-    .dashboard-header {
-        width: 100%;
+    .dashboard-container {
+        padding: 0 20px;
     }
 
-    .header-left {
-        padding-left: 1rem;
-    }
-
-
-    .header-right {
+    .dashboard-switchview {
+        justify-content: flex-end;
+        padding: 0 1rem 2rem 0;
         display: flex;
-        gap: 0.8rem;
-        padding-right: 2rem;
     }
 
-    .dashboard-chooseteam {
+    .dashboard-chooseteam-buttons {
         gap: 2rem;
+        display: flex;
+
+    }
+
+    .dashboard-chooseteam-select {
+        display: none;
     }
 
 

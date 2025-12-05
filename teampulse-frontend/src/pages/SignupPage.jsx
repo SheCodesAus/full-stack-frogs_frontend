@@ -6,8 +6,6 @@ function SignupPage({ onNavigateToLogin }) {
     return (
         <div className="signup-page-wrapper">
             <div className="signup-card">
-                <header className='header'><Logo size={290} /></header>
-
                 <h2 className="signup-title">
                     Create your account ✨
                 </h2>
