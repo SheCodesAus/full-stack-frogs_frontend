@@ -45,14 +45,14 @@ const LineChartExample = ({ isAnimationActive = true }) => (
                 verticalAlign="top"
                 align="right"
                 height={34}
-                iconType="circle"
+                iconType="line"
                 wrapperStyle={{
                     top: 35,
                     right: 15
                 }}
             />
-            <Line type="monotone" name="Current Period" dataKey="currentPeriod" stroke="#82ca9d" strokeWidth={2} dot={{ r: 5, strokeWidth: 2, fill: '#fff' }} isAnimationActive={isAnimationActive} />
-            <Line type="monotone" name="Previous Period" dataKey="prevPeriod" stroke="#8884d8" strokeWidth={2} strokeDasharray="3 3" dot={{ r: 2, strokeWidth: 1 }}
+            <Line type="monotone" name="Current Period" dataKey="currentPeriod" stroke="#f9db6fff" strokeWidth={2} dot={{ r: 5, strokeWidth: 2, fill: '#fff' }} isAnimationActive={isAnimationActive} />
+            <Line type="monotone" name="Previous Period" dataKey="prevPeriod" stroke="#f9db6fff" strokeWidth={2} strokeDasharray="3 3" dot={{ r: 2, strokeWidth: 1 }}
                 isAnimationActive={isAnimationActive} />
         </LineChart>
 
