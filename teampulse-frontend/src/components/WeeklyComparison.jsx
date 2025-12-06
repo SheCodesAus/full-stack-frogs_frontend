@@ -32,7 +32,7 @@ const moodLabels = {
     1: "Angry",
     2: "Anxious",
     3: "Calm",
-    4: "Motivated",
+    4: "Empowered",
 };
 const LineChartExample = ({ isAnimationActive = true }) => (
 

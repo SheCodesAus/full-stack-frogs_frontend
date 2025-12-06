@@ -6,6 +6,7 @@
 
 .checkin-header {
     padding: 1rem;
+    font-family: var(--font-body);
 }
 
 .checkin-header .header-left {
@@ -26,15 +27,18 @@
 
 .survey-container h2 {
     padding: 0;
-    font-weight: 450;
-    font-size: var(--text-lg);
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.4;
     color: var(--text-dark);
     margin-bottom: 2rem;
+    font-family: var(--font-body);
 }
 
 .survey-container .subtitle {
     color: var(--secondary-text);
     margin-bottom: 2rem;
+    font-size: 1rem;
 }
 
 .survey-form section:first-of-type {
@@ -44,11 +48,16 @@
 .survey-form h3 {
     color: var(--text-dark);
     margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-style: italic;
+    font-family: var(--font-body);
+    letter-spacing: 0.3px;
 }
 
 /* Modern Button Styling */
 button {
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 1rem;
     border: none;
     border-radius: 8px;
     font-size: 1rem;
@@ -56,6 +65,7 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: var(--font-body);
 }
 
 button:hover {
@@ -96,6 +106,8 @@ button.secondary-btn:hover {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-family: var(--font-body);
+    font-weight: 500;
 }
 
 .mood-option:hover,
@@ -145,6 +157,7 @@ button.secondary-btn:hover {
     color: white;
     font-weight: 600;
     margin-top: 1rem;
+    font-family: var(--font-body);
 }
 
 .submit-btn:hover:not(:disabled) {
@@ -163,6 +176,7 @@ button.secondary-btn:hover {
     background-color: rgba(220, 53, 69, 0.1);
     border-radius: 8px;
     margin: 1rem 0;
+    font-family: var(--font-body);
 }
 
 .success-msg {
@@ -171,6 +185,7 @@ button.secondary-btn:hover {
     background-color: rgba(40, 167, 69, 0.1);
     border-radius: 8px;
     margin: 1rem 0;
+    font-family: var(--font-body);
 }
 
 /* Option Cards */
@@ -186,6 +201,8 @@ button.secondary-btn:hover {
     align-items: center;
     gap: 1rem;
     color: var(--text-dark);
+    font-family: var(--font-body);
+    font-weight: 500;
 }
 
 .option-card:hover {
@@ -229,12 +246,14 @@ button.secondary-btn:hover {
     }
 
     .survey-container h2 {
-        font-size: 1.25rem;
+        font-size: 1.75rem;
+        line-height: 1.3;
         margin-bottom: 1.5rem;
     }
 
     .survey-form h3 {
-        font-size: 1rem;
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
     }
 
     .options-grid {
@@ -249,6 +268,11 @@ button.secondary-btn:hover {
     .notes-box {
         min-height: 80px;
     }
+
+    button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.95rem;
+    }
 }
 
 @media only screen and (max-width: 480px) {
@@ -258,8 +282,14 @@ button.secondary-btn:hover {
     }
 
     .survey-container h2 {
-        font-size: 1.1rem;
+        font-size: 1.5rem;
+        line-height: 1.2;
         margin-bottom: 1rem;
+    }
+
+    .survey-form h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
     }
 
     .options-grid {

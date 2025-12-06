@@ -2,6 +2,7 @@ import './DashboardView.css'
 import DashboardCard from './DashboardCard'
 import WeeklyComparison from '../components/WeeklyComparison'
 import WorkloadPieChart from '../components/WorkloadPieChart'
+import NeedsAttentionBox from './NeedsAttention'
 
 export default function DashboardView({ logs }) {
     const avgMood = logs.length > 0
@@ -20,6 +21,7 @@ export default function DashboardView({ logs }) {
                 <DashboardCard title='Average Mood' number={avgMood} detail='Out of 4.0' />
                 <DashboardCard title='Average Workflow' number={avgWorkflow} detail='Out of 4.0' />
             </section>
+            <NeedsAttentionBox logs={logs} />
             <section className='charts-section flex justify-center gap-4'>
                 <WeeklyComparison />
                 <WorkloadPieChart />
@@ -28,4 +30,3 @@ export default function DashboardView({ logs }) {
 
     )
 }
-
