@@ -7,7 +7,7 @@ function HomePage() {
     return (
         <section className='landing'>
             <header className='header'>
-                <Logo size={290} />
+                <Logo size={220} />
             </header>
             <div className='tagline'>
                 <h3 className='tagline-1'>Take a pause — your feelings matter.</h3>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import  React from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./components/AuthProvider.jsx";
@@ -12,14 +12,25 @@ import LoginPage from "./pages/LoginPage.jsx";
 import CheckInPage from "./pages/CheckInPage.jsx";
 import QuotePage from "./pages/QuotePage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
+import NavBar from './components/NavBar.jsx';
 
 const router = createBrowserRouter([
-    { path: "/", element: <HomePage /> },
-    { path: "/signup", element: <SignupPage /> },
-    { path: "/login", element: <LoginPage /> },
-    { path: "/checkin", element: <CheckInPage /> },
-    { path: "/quote", element: <QuotePage /> },
-    { path: "/dashboard", element: <DashboardPage />},
+  {
+    path: "/",
+    element: <HomePage />,
+  },
+
+  {
+    path: '/',
+    element: <NavBar />,
+    children: [
+      { path: "/signup", element: <SignupPage /> },
+      { path: "/login", element: <LoginPage /> },
+      { path: "/checkin", element: <CheckInPage /> },
+      { path: "/quote", element: <QuotePage /> },
+      { path: "/dashboard", element: <DashboardPage /> },
+    ],
+  }
 ]);
 
 // function AppRoot() {
@@ -42,8 +53,8 @@ function AppRoot() {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-      <AuthProvider>
-        <AppRoot />
-      </AuthProvider>
+    <AuthProvider>
+      <AppRoot />
+    </AuthProvider>
   </React.StrictMode>
 );
