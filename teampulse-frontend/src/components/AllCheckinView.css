@@ -48,3 +48,43 @@
 .raw-table td {
     vertical-align: middle;
 }
+
+.checkin-card {
+    background: radial-gradient(178.94% 106.41% at 26.42% 106.41%,
+            rgba(252, 231, 200, 0.4) 0%,
+            rgba(255, 255, 255, 0) 71.88%), #F7F9FB;
+    padding: 1rem 1.5rem;
+    color: var(--text-dark);
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: space-between; /* coloca os campos lado a lado */
+    align-items: center;
+    width: 80%;
+    margin: 0.5rem auto; /* centraliza e dá espaçamento entre cards */
+    transition: all 0.2s ease;
+}
+
+.checkin-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.checkin-field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 100px;
+    padding: 0 0.5rem;
+}
+
+.checkin-field strong {
+    font-weight: 500;
+    color: #555;
+}
+
+.timestamp {
+    font-size: 0.875rem;
+    color: #888;
+    text-align: right;
+}
