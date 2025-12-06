@@ -18,7 +18,7 @@ const iconColorMap = {
 
 export default function DashboardCard({ title, number, detail }) {
     const iconStyle = iconStyleMap[title] || faUserGroup;
-    const iconColor = iconColorMap[title] || 'var(--prima;ry)'
+    const iconColor = iconColorMap[title] || 'var(--primary)'
     return (
 
         <div className='card'>
@@ -29,7 +29,6 @@ export default function DashboardCard({ title, number, detail }) {
                 <span className='card-detail'>{detail}</span><br />
             </div>
             <div className='card-right'></div>
-
         </div>
     )
 }

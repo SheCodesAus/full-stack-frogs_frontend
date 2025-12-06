@@ -12,9 +12,11 @@
     min-height: 0;
     min-width: 0;
 }
-
+.card-title{
+    font-weight: 550;
+}
 .card-nunmber {
-    font-size: clamp(1.5rem, 2vw, var(--text-xl));
+    font-size: clamp(1.65rem, 2vw, 2rem);
 
 }
 
@@ -24,7 +26,7 @@
 
 @media only screen and (min-width: 800px) {
     .card {
-        width: 14.5vw;
+        width: 15.5vw;
         height: 83px;
     }
 }
