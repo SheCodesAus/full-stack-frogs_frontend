@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./LoginForm.css"; 
+import "./LoginForm.css";
+import { useAuth } from '../hooks/use-auth';
 
 function LoginForm() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const { setAuth } = useAuth();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -31,6 +33,8 @@ function LoginForm() {
 
             if (response.ok) {
                 console.log("Login successful:", data);
+                window.localStorage.setItem("token", data.token);
+                setAuth({ token: data.token });
                 navigate("/checkin");
 
             } else {
