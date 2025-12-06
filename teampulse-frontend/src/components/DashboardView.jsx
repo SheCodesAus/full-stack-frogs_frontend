@@ -1,6 +1,7 @@
 import './DashboardView.css'
 import DashboardCard from './DashboardCard'
 import WeeklyComparison from '../components/WeeklyComparison'
+import WorkloadPieChart from '../components/WorkloadPieChart'
 
 export default function DashboardView() {
     return(
@@ -11,9 +12,9 @@ export default function DashboardView() {
                 <DashboardCard title='Average Mood' number='3.2' detail='Out of 4.0'/>
                 <DashboardCard title='Average Workflow' number='3.6' detail='Out of 4.0'/>
             </section>
-            <section className='line-graphs flex justify-center'>
+            <section className='charts-section flex justify-center gap-4'>
                 <WeeklyComparison />
-                <WeeklyComparison />
+                <WorkloadPieChart />
             </section>
         </div>
 

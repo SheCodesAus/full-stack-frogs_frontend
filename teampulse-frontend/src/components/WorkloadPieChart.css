@@ -1,22 +1,21 @@
-.weeklyComparisonContainer {
-    width: 70vw;
-    height: auto;
+.workload-chart-container {
+    width: 30vw;
+    height: 400px;
     background-color: #fffffd;
     border-radius: 4%;
-    display: 'flex';
+    display: flex;
+    flex-direction: column;
     color: var(--text-dark);
-
 }
 
-.headline {
+.workload-chart-container h3 {
     padding: 5% 5% 0 5%;
     font-weight: 350;
     font-size: var(--text-lg);
 }
 
 @media only screen and (min-width: 800px) {
-    .weeklyComparisonContainer {
-        width: 50%;
+    .workload-chart-container {
+        width: 25vw;
     }
-
 }
