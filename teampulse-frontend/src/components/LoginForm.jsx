@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./loginform.css"; 
+import "./LoginForm.css"; 
 
 function LoginForm() {
     const [username, setUsername] = useState("");
@@ -19,7 +19,7 @@ function LoginForm() {
 
         try {
             // FUTURE API CALL (username + password)
-            const response = await fetch("https://your-api.com/login", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api-token-auth/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -32,6 +32,7 @@ function LoginForm() {
             if (response.ok) {
                 console.log("Login successful:", data);
                 navigate("/checkin");
+
             } else {
                 setError(data.message || "Login failed. Please try again.");
             }

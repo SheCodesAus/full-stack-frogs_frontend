@@ -1,12 +1,9 @@
 import LoginForm from "../components/LoginForm";
-import "./loginpage.css";
-import Logo from "../components/Logo";
+import "./LoginPage.css";
 
 function LoginPage() {
     return (
         <div className="login-background">
-            <header className='header'><Logo size={290} /></header>
-
             <div className="login-card">
                 <h2 className="login-title">Welcome! We're here for you</h2>
 

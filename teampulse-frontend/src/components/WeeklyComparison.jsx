@@ -1,8 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './WeeklyComparison.css'
 import Button from './ButtonComponent';
 
+function useIsDesktop(minWidth = 800) {
+    const [isDesktop, setIsDesktop] = useState(window.innerWidth >= minWidth);
+
+    useEffect(() => {
+        const onResize = () => setIsDesktop(window.innerWidth >= minWidth);
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+    }, [minWidth]);
+
+    return isDesktop;
+}
 // #Data simulation
 const moodData = [
     { week: 'Current', currentPeriod: 3.16, prevPeriod: 2.9 },
@@ -45,14 +56,14 @@ const LineChartExample = ({ isAnimationActive = true }) => (
                 verticalAlign="top"
                 align="right"
                 height={34}
-                iconType="line"
+                iconType="circle"
                 wrapperStyle={{
                     top: 35,
                     right: 15
                 }}
             />
-            <Line type="monotone" name="Current Period" dataKey="currentPeriod" stroke="#f9db6fff" strokeWidth={2} dot={{ r: 5, strokeWidth: 2, fill: '#fff' }} isAnimationActive={isAnimationActive} />
-            <Line type="monotone" name="Previous Period" dataKey="prevPeriod" stroke="#f9db6fff" strokeWidth={2} strokeDasharray="3 3" dot={{ r: 2, strokeWidth: 1 }}
+            <Line type="monotone" name="Current Period" dataKey="currentPeriod" stroke="#82ca9d" strokeWidth={2} dot={{ r: 5, strokeWidth: 2, fill: '#fff' }} isAnimationActive={isAnimationActive} />
+            <Line type="monotone" name="Previous Period" dataKey="prevPeriod" stroke="#8884d8" strokeWidth={2} strokeDasharray="3 3" dot={{ r: 2, strokeWidth: 1 }}
                 isAnimationActive={isAnimationActive} />
         </LineChart>
 

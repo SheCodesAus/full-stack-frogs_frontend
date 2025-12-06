@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./signupform.css";
-import  getTeams  from "../api/get-teams";
+import "./SignupForm.css";
+import useTeams from "../hooks/use-teams";
 import postSignup from "../api/post-signup";
 
 function SignupForm() {
@@ -13,21 +13,9 @@ function SignupForm() {
     const [password, setPassword] = useState("");
     const [teamId, setTeamId] = useState("");
     const [error, setError] = useState("");
-    const [teams, setTeams] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        async function loadTeams() {
-            try {
-                const data = await getTeams();
-                setTeams(data);
-            } catch (err) {
-                console.error("Failed to load teams:", err);
-            }
-        }
-
-        loadTeams();
-    }, []);
+    const { teams, isLoading, error: teamsError } = useTeams();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -114,17 +102,23 @@ function SignupForm() {
 
                 <div className="input-group">
                     <label>Select your team</label>
-                    <select
-                        value={teamId}
-                        onChange={(e) => setTeamId(e.target.value)}
-                    >
-                        <option value="">Choose a team</option>
-                        {teams.map((team) => (
-                            <option key={team.id} value={team.id}>
-                                {team.name}
-                            </option>
-                        ))}
-                    </select>
+                    {isLoading ? (
+                        <p>Loading teams...</p>
+                    ) : teamsError ? (
+                        <p>Error loading teams</p>
+                    ) : (
+                        <select
+                            value={teamId}
+                            onChange={(e) => setTeamId(e.target.value)}
+                        >
+                            <option value="">Choose a team</option>
+                            {teams.map((team) => (
+                                <option key={team.Id} value={team.Id}>
+                                    {team.team_name}
+                                </option>
+                            ))}
+                        </select>
+                    )}
                 </div>
 
                 <button type="submit" className="signup-button">

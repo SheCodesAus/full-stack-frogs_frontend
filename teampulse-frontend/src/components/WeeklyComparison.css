@@ -1,22 +1,67 @@
 .weeklyComparisonContainer {
-    width: 70vw;
-    height: auto;
     background-color: #fffffd;
-    border-radius: 4%;
-    display: 'flex';
+    border-radius: 20px;
     color: var(--text-dark);
+    padding: var(--text-base);
+
+    min-height: 300px;
+    max-height: 520px;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+}
+
+.chartWrapper {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 
 }
 
 .headline {
-    padding: 5% 5% 0 5%;
+    padding: 2% 5% 4% 0;
     font-weight: 350;
-    font-size: var(--text-lg);
+    font-size: 1.15rem;
+    font-family: var(--font-display);
 }
 
-@media only screen and (min-width: 800px) {
+/* @media (max-width: 600px) {
     .weeklyComparisonContainer {
-        width: 50%;
+        height: clamp(320px, 60vw, 320px);
+    }
+} */
+
+
+
+
+@media only screen and (min-width: 1000px) {
+    .weeklyComparisonContainer {
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        color: var(--text-dark);
+        padding: var(--text-2xl);
+        /* min-height: clamp(300px, 28vw, 400px); */
+        min-height: 320px;
+        max-height: 560px;
+
+
+    }
+
+    .chartWrapper {
+        max-width: 760px;
+    }
+
+    .headline {
+        font-size: 1.4rem;
     }
 
 }
