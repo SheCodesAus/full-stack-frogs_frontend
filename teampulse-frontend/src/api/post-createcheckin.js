@@ -1,5 +1,5 @@
 export async function createCheckIn(payload) {
-    const response = await fetch("/api/wellbeing/create/", {
+    const response = await fetch(VITE_API_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
