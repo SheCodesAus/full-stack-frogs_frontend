@@ -17,11 +17,19 @@ export const AuthProvider = (props) => {
             }
 
             try {
-                const res = await api.get("/me", {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
+                const res = await axios.get(
+                    `${import.meta.env.VITE_API_URL}/me/`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${auth.token}`,
+                        },
+                    }
+                );
 
-                setUser(res.data);   // expect { id, firstname, role }
+                setAuth((prev) => ({
+                    ...prev,
+                    user: res.data,
+                },console.log('consologing the'+user)));            
             } catch (err) {
                 console.error("Failed to restore user:", err);
                 setUser(null);
@@ -36,7 +44,7 @@ export const AuthProvider = (props) => {
     }, [auth.token]);
 
     return (
-        <AuthContext.Provider value={{ auth, setAuth }}>
+        <AuthContext.Provider value={{ auth, setAuth, loading }}>
             {props.children}
         </AuthContext.Provider>
     );
