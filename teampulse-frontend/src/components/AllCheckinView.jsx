@@ -3,7 +3,6 @@ import useCheckIns from "../hooks/use-checkins";
 import "./AllCheckinView.css";
 
 export default function AllCheckinsView() {
-    // Pega todos os check-ins da semana via hook
     const { checkins, isLoading, error } = useCheckIns();
 
     if (isLoading) return <p>Loading check-ins...</p>;
@@ -37,7 +36,7 @@ export default function AllCheckinsView() {
                     <div><strong>Mood:</strong> {moodOptions.find(m => m.id === item.mood)?.label}</div>
                     <div><strong>Workload:</strong> {workloadOptions.find(w => w.id === item.workload)?.label}</div>
                     <div><strong>Comments:</strong> {item.comment || "—"}</div>
-                    {/* Mostra só a data da semana, sem hora */}
+                    
                     <div className="timestamp">{new Date(item.timestamp).toLocaleDateString()}</div>
                 </div>
             ))}

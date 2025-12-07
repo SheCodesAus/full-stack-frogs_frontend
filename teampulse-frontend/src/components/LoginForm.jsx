@@ -20,7 +20,6 @@ function LoginForm() {
         }
 
         try {
-            // FUTURE API CALL (username + password)
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api-token-auth/`, {
                 method: "POST",
                 headers: {
