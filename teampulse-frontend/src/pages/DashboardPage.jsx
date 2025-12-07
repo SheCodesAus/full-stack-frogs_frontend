@@ -33,8 +33,20 @@ function DashboardPage() {
 }, [auth.token]);
 
     const myTeams = useMemo(() => {
-        if (!auth.user) return [];
-        return teams.filter((t) => t.id === auth.user.team);
+        if (!auth.user) {
+            console.log("auth.user is missing:", auth.user);
+            return [];
+        }
+
+        const filtered = teams.filter(
+            (t) => Number(t.team_manager) === Number(auth.user.id)
+        );
+
+        console.log("All teams:", teams);
+        console.log("auth.user.id:", auth.user.id);
+        console.log("Filtered teams:", filtered);
+
+        return filtered;
     }, [teams, auth.user]);
 
     useEffect(() => {

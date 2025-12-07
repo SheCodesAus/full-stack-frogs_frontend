@@ -30,7 +30,6 @@ export const AuthProvider = (props) => {
                     ...prev,
                     user: res.data,
                 }));
-                console.log('resposing' +res.data)
             } catch (err) {
                 console.error("Failed to restore user:", err);
                 localStorage.removeItem("token");
