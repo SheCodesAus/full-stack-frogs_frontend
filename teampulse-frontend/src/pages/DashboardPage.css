@@ -35,6 +35,12 @@
     gap: 1rem;
 }
 
+.no-teams-message{
+    font-size: var(--text-lg);
+    color: var(--text-dark);
+    padding-left: var(--text-xl);
+}
+
 @media only screen and (min-width: 800px) {
     .dashboard-container {
         padding: 0 20px;

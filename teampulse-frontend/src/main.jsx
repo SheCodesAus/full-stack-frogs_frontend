@@ -13,6 +13,10 @@ import CheckInPage from "./pages/CheckInPage.jsx";
 import QuotePage from "./pages/QuotePage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import NavBar from './components/NavBar.jsx';
+import ManagerOnly from "./components/ManagerOnly";
+import PermissionDeniedPage from "./pages/PermissionDeniedPage";
+import NotFoundPage from "./pages/404Page.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -28,9 +32,24 @@ const router = createBrowserRouter([
       { path: "/login", element: <LoginPage /> },
       { path: "/checkin", element: <CheckInPage /> },
       { path: "/quote", element: <QuotePage /> },
-      { path: "/dashboard", element: <DashboardPage /> },
+      {
+        path: "/dashboard",
+        element: (
+          <ManagerOnly>
+            <DashboardPage />
+          </ManagerOnly>
+        ),
+      },
+      {
+        path: "/no-permission",
+        element: <PermissionDeniedPage />,
+      },
+      { path: "*", element: <NotFoundPage /> },
     ],
-  }
+  },
+  // Permission denied page
+
+
 ]);
 
 // function AppRoot() {
