@@ -1,33 +1,45 @@
 import { useState, useEffect, useMemo } from 'react';
 import './DashboardPage.css'
-import { mockPulseLogs } from "../data/mockPulseLogs";
 
 import DashboardButton from '../components/DashboardButton';
 import DashboardView from '../components/DashboardView';
 import AllCheckinsView from '../components/AllCheckinView';
 import useTeams from '../hooks/use-teams';
-
-
+import { useAuth } from "../hooks/use-auth";
+import getAllCheckIns from '../api/get-all-checkins';
 
 function DashboardPage() {
     const { teams } = useTeams();
+    const { auth } = useAuth();
+
     const [view, setView] = useState("dashboard");
     const [selectedTeam, setSelectedTeam] = useState(null);
     const [pulseLogs, setPulseLogs] = useState([]);
-    const [showPlaceholder, setShowPlaceholder] = useState(true);
-
+    const [showPlaceholder, setShowPlaceholder] = useState(true)
 
     useEffect(() => {
-        setPulseLogs(mockPulseLogs);
+        async function fetchLogs() {
+            try {
+                const data = await getAllCheckIns(); // 🔹 aqui pega só a semana atual
+                setPulseLogs(data);
+            } catch (error) {
+                console.error("Failed to fetch pulse logs:", error);
+            }
+        }
 
-    }, []);
+        if (auth?.token) {
+            fetchLogs();
+        }
+    }, [auth]);
 
-
+    
     useEffect(() => {
         if (teams.length > 0 && !selectedTeam) {
             setSelectedTeam(teams[0].id);
         }
     }, [teams]);
+
+
 
     const teamLogs = useMemo(() => {
         if (!selectedTeam) return [];
@@ -70,7 +82,7 @@ function DashboardPage() {
                         </option>
                     ))}
                 </select>
-                                <select
+                <select
                     className='dashboard-chooseteam-select'
                     value={showPlaceholder ? '' : selectedTeam}
                     onChange={(e) => {
@@ -100,7 +112,7 @@ function DashboardPage() {
             <div className='dashboard-overview'>
 
             </div>
-            {view === "checkins" && <AllCheckinsView />}
+            {view === "checkins" && <AllCheckinsView logs={teamLogs} />}
             {view === "dashboard" && <DashboardView logs={teamLogs} />}
         </section>
     )
