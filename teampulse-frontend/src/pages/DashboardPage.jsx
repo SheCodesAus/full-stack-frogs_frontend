@@ -6,7 +6,8 @@ import DashboardButton from '../components/DashboardButton';
 import DashboardView from '../components/DashboardView';
 import AllCheckinsView from '../components/AllCheckinView';
 import useTeams from '../hooks/use-teams';
-
+import Loader from '../components/Loader'
+import { useAuth } from '../hooks/use-auth'
 
 
 function DashboardPage() {
@@ -15,27 +16,38 @@ function DashboardPage() {
     const [selectedTeam, setSelectedTeam] = useState(null);
     const [pulseLogs, setPulseLogs] = useState([]);
     const [showPlaceholder, setShowPlaceholder] = useState(true);
-
+    const { auth, setAuth } = useAuth();
 
     useEffect(() => {
         setPulseLogs(mockPulseLogs);
 
     }, []);
 
+    const myTeams = useMemo(() => {
+        if (!auth.user) return [];
+        return teams.filter((t) => t.team_manager === auth.user.id);
+    }, [teams, auth.user]);
 
     useEffect(() => {
-        if (teams.length > 0 && !selectedTeam) {
-            setSelectedTeam(teams[0].id);
+        if (myTeams.length > 0 && !selectedTeam) {
+            setSelectedTeam(myTeams[0].id);
         }
-    }, [teams]);
+    }, [myTeams]);
 
     const teamLogs = useMemo(() => {
         if (!selectedTeam) return [];
         return pulseLogs.filter(log => log.team === selectedTeam);
     }, [pulseLogs, selectedTeam]);
 
+    if (myTeams.length === 0) {
+        return (
+            <p className="no-teams-message">
+                Seems like you don't have any teams assigned to you yet.
+            </p>
+        );
+    }
     if (teams.length === 0) {
-        return <></>;
+        return <Loader />;
     }
 
 
@@ -64,13 +76,13 @@ function DashboardPage() {
                 >
                     <option value="" disabled hidden>Choose team</option>
 
-                    {teams.map((team) => (
+                    {myTeams.map((team) => (
                         <option key={team.id} value={team.id}>
                             {team.team_name}
                         </option>
                     ))}
                 </select>
-                                <select
+                <select
                     className='dashboard-chooseteam-select'
                     value={showPlaceholder ? '' : selectedTeam}
                     onChange={(e) => {
@@ -80,7 +92,7 @@ function DashboardPage() {
                 >
                     <option value="" disabled hidden>Choose team</option>
 
-                    {teams.map((team) => (
+                    {myTeams.map((team) => (
                         <option key={team.id} value={team.id}>
                             {team.team_name}
                         </option>
@@ -88,7 +100,7 @@ function DashboardPage() {
                 </select>
             </div>
             <div className='dashboard-chooseteam-buttons justify-center'>
-                {teams.map((team) => (
+                {myTeams.map((team) => (
                     <DashboardButton
                         key={team.id}
                         text={team.team_name}

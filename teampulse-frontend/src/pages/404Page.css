@@ -1,0 +1,41 @@
+.notfound-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.notfound-content {
+    text-align: center;
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+
+}
+
+.notfound-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.notfound-text {
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+}
+
+.notfound-button {
+    margin: 1.5rem 0;
+}
+
+.notfound-logo {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    width: 100%;
+}
