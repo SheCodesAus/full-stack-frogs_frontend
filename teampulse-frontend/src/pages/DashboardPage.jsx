@@ -18,19 +18,19 @@ function DashboardPage() {
     const [showPlaceholder, setShowPlaceholder] = useState(true)
 
     useEffect(() => {
-        async function fetchLogs() {
-            try {
-                const data = await getAllCheckIns(); // 🔹 aqui pega só a semana atual
-                setPulseLogs(data);
-            } catch (error) {
-                console.error("Failed to fetch pulse logs:", error);
-            }
-        }
+    async function fetchLogs() {
+        if (!auth?.token) return; 
 
-        if (auth?.token) {
-            fetchLogs();
+        try {
+            const data = await getAllCheckIns(auth.token); 
+            setPulseLogs(data);
+        } catch (error) {
+            console.error("Failed to fetch pulse logs:", error);
         }
-    }, [auth]);
+    }
+
+    fetchLogs();
+}, [auth.token]);
 
     
     useEffect(() => {

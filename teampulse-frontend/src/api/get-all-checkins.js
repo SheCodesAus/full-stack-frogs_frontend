@@ -1,4 +1,4 @@
-async function getAllCheckIns() {
+async function getAllCheckIns(token) {
 
     const currentDate = new Date();
     const lastWeekNumber = getISOWeekNumber(currentDate) - 1;
@@ -11,7 +11,7 @@ async function getAllCheckIns() {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Token ${import.meta.env.VITE_API_TOKEN}` // <- aqui
+            'Authorization': `Token ${token}`
         },
     });
 
