@@ -34,7 +34,7 @@ function DashboardPage() {
 
     const myTeams = useMemo(() => {
         if (!auth.user) return [];
-        return teams.filter((t) => t.team_manager === auth.user.id);
+        return teams.filter((t) => t.id === auth.user.team);
     }, [teams, auth.user]);
 
     useEffect(() => {
