@@ -20,7 +20,6 @@ function LoginForm() {
         }
 
         try {
-            // FUTURE API CALL (username + password)
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api-token-auth/`, {
                 method: "POST",
                 headers: {
@@ -32,10 +31,24 @@ function LoginForm() {
             const data = await response.json();
 
             if (response.ok) {
-                console.log("Login successful:", data);
-                window.localStorage.setItem("token", data.token);
-                setAuth({ token: data.token });
-                navigate("/checkin");
+                const token = data.token;
+                window.localStorage.setItem("token", token);
+                setAuth({ token });
+                const userRes = await fetch(`${import.meta.env.VITE_API_URL}/me/`, {
+                    headers: {
+                        "Authorization": `Token ${token}`,
+                    },
+                });
+                const userData = await userRes.json();
+
+                setAuth({ token, user: userData });
+
+                // is_staff
+                if (userData.is_staff) {
+                    navigate("/dashboard");
+                } else {
+                    navigate("/checkin");
+                }
 
             } else {
                 setError(data.message || "Login failed. Please try again.");
@@ -75,6 +88,8 @@ function LoginForm() {
                 <button type="submit" className="login-button">
                     Login
                 </button>
+                <p className="switch-page-text">
+                    Don't have an account? <a href="/signup">Sign up here</a></p>
             </form>
         </div>
     );

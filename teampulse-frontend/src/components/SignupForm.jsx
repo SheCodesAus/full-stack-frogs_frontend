@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./SignupForm.css";
 import useTeams from "../hooks/use-teams";
 import postSignup from "../api/post-signup";
+import { useAuth } from "../hooks/use-auth";
 
 function SignupForm() {
 
@@ -16,6 +17,7 @@ function SignupForm() {
     const navigate = useNavigate();
 
     const { teams, isLoading, error: teamsError } = useTeams();
+    const { setAuth } = useAuth();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -37,7 +39,15 @@ function SignupForm() {
             });
 
             console.log("SIGNUP SUCCESS:", createdUser);
-            navigate("/checkin");
+
+            window.localStorage.setItem("token", createdUser.token);
+            setAuth({ token: createdUser.token, user: createdUser.user });
+
+            if (createdUser.user?.is_staff) {
+                navigate("/dashboard");
+            } else {
+                navigate("/checkin");
+            }
 
         } catch (err) {
             setError(err.message || "Signup failed.");
@@ -124,6 +134,8 @@ function SignupForm() {
                 <button type="submit" className="signup-button">
                     Join teampulse
                 </button>
+                <p className="switch-page-text">
+                    Already have an account? <a href="/login">Log in here</a></p>
             </form>
         </div>
     );

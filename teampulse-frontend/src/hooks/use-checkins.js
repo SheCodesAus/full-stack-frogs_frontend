@@ -11,6 +11,7 @@ export default function useCheckIns() {
             .then((data) => {
                 setCheckins(data);
                 setIsLoading(false);
+                console.log("Fetched check-ins:", data);
             })
             .catch((err) => {
                 setError(err);
