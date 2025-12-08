@@ -13,17 +13,17 @@ export default function CheckInForm() {
     const [errorMessage, setErrorMessage] = useState("");
 
     const moodOptions = [
-        { id: 1, label: "Empowered", icon: faFaceGrinStars },
-        { id: 2, label: "Calm", icon: faSmileBeam },
-        { id: 3, label: "Anxious", icon: faFlushed },
-        { id: 4, label: "Angry", icon: faTired }
+        { id: 4, label: "Empowered", icon: faFaceGrinStars },
+        { id: 3, label: "Calm", icon: faSmileBeam },
+        { id: 2, label: "Anxious", icon: faFlushed },
+        { id: 1, label: "Angry", icon: faTired }
     ];
 
     const workloadOptions = [
-        { id: 1, label: "Light", icon: faSun },
-        { id: 2, label: "Manageable", icon: faCloudSun },
-        { id: 3, label: "Under Pressure", icon: faCloudRain },
-        { id: 4, label: "Overwhelmed", icon: faCloudBolt }
+        { id: 4, label: "Light", icon: faSun },
+        { id: 3, label: "Manageable", icon: faCloudSun },
+        { id: 2, label: "Under Pressure", icon: faCloudRain },
+        { id: 1, label: "Overwhelmed", icon: faCloudBolt }
     ];
 
     const handleSubmit = async (e) => {
