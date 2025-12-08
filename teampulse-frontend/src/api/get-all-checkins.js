@@ -4,7 +4,7 @@ async function getAllCheckIns(token) {
     const lastWeekNumber = getISOWeekNumber(currentDate) - 1;
 
 
-    const url = `${import.meta.env.VITE_API_URL}/pulse_logs/?year_week=${lastWeekNumber}`;
+    const url = `${import.meta.env.VITE_API_URL}/pulse_logs`;
 
 
     const response = await fetch(url, {
