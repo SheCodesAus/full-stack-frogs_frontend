@@ -14,6 +14,7 @@ import QuotePage from "./pages/QuotePage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import NavBar from './components/NavBar.jsx';
 import ManagerOnly from "./components/ManagerOnly";
+import UserDashboardPage from "./pages/UserDashboardPage.jsx";
 import PermissionDeniedPage from "./pages/PermissionDeniedPage";
 import NotFoundPage from "./pages/404Page.jsx";
 
@@ -32,8 +33,9 @@ const router = createBrowserRouter([
       { path: "/login", element: <LoginPage /> },
       { path: "/checkin", element: <CheckInPage /> },
       { path: "/quote", element: <QuotePage /> },
+      { path: "/user-dashboard", element: <UserDashboardPage /> },
       {
-        path: "/dashboard",
+        path: "/manager-dashboard",
         element: (
           <ManagerOnly>
             <DashboardPage />
