@@ -17,10 +17,14 @@
     max-width: 520px;
     margin: 0 auto;
     text-align: left;
+    flex-direction: column;
+    text-align: left;          /* ⬅ Fix text centering */
+    width: 100%;
+    align-items: flex-start; 
 }
 
 .user-dashboard-title-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .user-dashboard-eyebrow {
@@ -52,14 +56,8 @@
 /* STATE MESSAGES */
 
 .user-dashboard-state-message {
-    margin: 2rem auto 0;
-    max-width: 520px;
     text-align: center;
-    padding: 1rem 1.25rem;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(8px);
-    font-size: 0.95rem;
 }
 
 .user-dashboard-error {
@@ -82,18 +80,22 @@
     padding: 1.25rem 1.25rem 1.35rem;
     box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
 }
+.user-stats-card-section {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), #fff6ea);
+    border-radius: 24px;
+    padding: 1.35rem 1.25rem 1.35rem;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+}
 
 .user-section-header h2 {
-    margin: 0;
+    margin-bottom: 0.5rem;
     font-family: var(--font-display);
     font-size: 1.3rem;
 }
 
-.user-section-header p {
-    margin-top: 0.4rem;
-    font-size: 0.9rem;
-    color: rgba(0, 0, 0, 0.6);
-}
 
 /* STATS */
 
@@ -183,69 +185,33 @@
 }
 
 /* QUOTE */
-
-.user-quote-card {
-    background: radial-gradient(circle at 0% 0%, #cfe8ff, #fce7c8);
-    border-radius: 24px;
-    padding: 1.25rem 1.2rem 1.4rem;
-    color: rgba(0, 0, 0, 0.85);
-    position: relative;
-    overflow: hidden;
+.userquote-container {
+    background: var(--background-gradient);
+    padding: 1.75rem;
+    border-radius: 1.25rem;
+    text-align: left;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
 }
 
-.user-quote-card::after {
-    content: "";
-    position: absolute;
-    inset: -40%;
-    background: radial-gradient(circle at 80% 0%, #ffffff66, transparent 55%);
-    opacity: 0.7;
-    pointer-events: none;
+.userquote-icon {
+    margin-bottom: 0.75rem;
 }
 
-.user-quote-header {
-    position: relative;
+.userquote-text {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--text-dark);
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+}
+
+.userquote-kudos {
+    margin-top: 0.5rem;
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.7rem;
 }
 
-.user-quote-icon {
-    font-size: 2rem;
-    line-height: 1;
-    color: rgba(255, 255, 255, 0.9);
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.user-quote-header h2 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-}
-
-.user-quote-meta {
-    margin: 0.1rem 0 0;
-    font-size: 0.8rem;
-}
-
-.user-quote-headline {
-    position: relative;
-    margin: 0.6rem 0 0.4rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-.user-quote-body {
-    position: relative;
-    font-size: 0.9rem;
-    margin-bottom: 0.7rem;
-}
-
-.user-quote-footer {
-    position: relative;
-    font-size: 0.78rem;
-    opacity: 0.85;
-}
 
 /* CHECK-INS */
 

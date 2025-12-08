@@ -54,10 +54,7 @@ export default function UserCheckins({ firstName, loggedPulses }) {
         <section className="user-section">
             <div className="user-section-header">
                 <h2>All check-ins</h2>
-                <p>
-                    A calm, scrollable history of your weekly reflections — perfect for
-                    spotting patterns over time.
-                </p>
+
             </div>
 
             <div className="user-checkins-list">

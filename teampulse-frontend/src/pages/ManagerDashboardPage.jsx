@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import './DashboardPage.css'
+import './ManagerDashboardPage.css'
 
 import DashboardButton from '../components/DashboardButton';
 import DashboardView from '../components/DashboardView';
@@ -33,7 +33,7 @@ function DashboardPage() {
 }, [auth.token]);
 
     const myTeams = useMemo(() => {
-        if (!auth.user) {
+        if (!auth) {
             return [];
         }
 

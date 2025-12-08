@@ -11,7 +11,7 @@ import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import CheckInPage from "./pages/CheckInPage.jsx";
 import QuotePage from "./pages/QuotePage.jsx";
-import DashboardPage from "./pages/DashboardPage.jsx";
+import ManagerDashboardPage from "./pages/ManagerDashboardPage.jsx";
 import NavBar from './components/NavBar.jsx';
 import ManagerOnly from "./components/ManagerOnly";
 import UserDashboardPage from "./pages/UserDashboardPage.jsx";
@@ -43,7 +43,15 @@ const router = createBrowserRouter([
         path: "/manager-dashboard",
         element: (
           <ManagerOnly>
-            <DashboardPage />
+            <ManagerDashboardPage />
+          </ManagerOnly>
+        ),
+      },
+      {
+        path: "/user-dashboard/:userId",
+        element: (
+          <ManagerOnly>
+            <UserDashboardPage />
           </ManagerOnly>
         ),
       },
