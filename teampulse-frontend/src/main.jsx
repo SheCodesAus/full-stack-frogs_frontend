@@ -35,6 +35,11 @@ const router = createBrowserRouter([
       { path: "/quote", element: <QuotePage /> },
       { path: "/user-dashboard", element: <UserDashboardPage /> },
       {
+        path: "/no-permission",
+        element: <PermissionDeniedPage />,
+      },
+      { path: "*", element: <NotFoundPage /> },
+      {
         path: "/manager-dashboard",
         element: (
           <ManagerOnly>
@@ -42,11 +47,6 @@ const router = createBrowserRouter([
           </ManagerOnly>
         ),
       },
-      {
-        path: "/no-permission",
-        element: <PermissionDeniedPage />,
-      },
-      { path: "*", element: <NotFoundPage /> },
     ],
   },
   // Permission denied page

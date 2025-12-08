@@ -11,7 +11,7 @@ export default function PermissionDeniedPage() {
                 <h1 className="permission-title">You don’t have access to this area</h1>
 
                 <p className="permission-text">
-                    This part of teampulse is designed for team managers 
+                    This part of teampulse is designed for team managers. 
                     No worries — you can continue exploring the rest of the experience.
                 </p>
 

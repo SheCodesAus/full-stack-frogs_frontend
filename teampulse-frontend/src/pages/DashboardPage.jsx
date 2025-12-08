@@ -55,16 +55,16 @@ function DashboardPage() {
         if (!selectedTeam) return [];
         return pulseLogs.filter(log => log.team === selectedTeam);
     }, [pulseLogs, selectedTeam]);
-
+    
+    if (teams.length === 0) {
+        return <Loader />;
+    }
     if (myTeams.length === 0) {
         return (
             <p className="no-teams-message">
                 Seems like you don't have any teams assigned to you yet.
             </p>
         );
-    }
-    if (teams.length === 0) {
-        return <Loader />;
     }
 
 
@@ -99,22 +99,7 @@ function DashboardPage() {
                         </option>
                     ))}
                 </select>
-                <select
-                    className='dashboard-chooseteam-select'
-                    value={showPlaceholder ? '' : selectedTeam}
-                    onChange={(e) => {
-                        setSelectedTeam(Number(e.target.value));
-                        setShowPlaceholder(false);
-                    }}
-                >
-                    <option value="" disabled hidden>Choose team</option>
 
-                    {myTeams.map((team) => (
-                        <option key={team.id} value={team.id}>
-                            {team.team_name}
-                        </option>
-                    ))}
-                </select>
             </div>
             <div className='dashboard-chooseteam-buttons justify-center'>
                 {myTeams.map((team) => (
