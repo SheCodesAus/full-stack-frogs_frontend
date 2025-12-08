@@ -1,42 +1,35 @@
-const API_URL = import.meta.env.VITE_API_URL;
-const PULSE_LOGS_ENDPOINT = '/pulse_logs/';
-
-export async function createCheckIn(payload) {
+export async function createCheckIn(payload, token) {
     const url = `${import.meta.env.VITE_API_URL}/pulse_logs/`;
 
-    if (!import.meta.env.VITE_API_URL) {
-        throw new Error("API URL is not configured. Please check your environment variables.");
+    if (!token) {
+        throw new Error("Token is required to submit check-in.");
     }
 
     const checkInData = {
-        mood: payload.mood,
-        workload: payload.workload,
-        comment: payload.comment || "",
-        timestamp_local: payload.timestamp_local || new Date().toISOString(),
+    mood: Number(payload.mood),
+    workload: Number(payload.workload),
+    comment: payload.comment || "",
+    team: Number(payload.team),  // <- pega do payload, não de auth
+    timestamp_local: payload.timestamp || new Date().toISOString(),
     };
 
-    try {
-        const response = await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem('authToken')}`,
-            },
-            body: JSON.stringify(checkInData),
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${token}`, 
+        },
+        body: JSON.stringify(checkInData),
+    });
+
+    if (!response.ok) {
+        const fallbackError = "Error submitting check-in";
+        const data = await response.json().catch(() => {
+            throw new Error(fallbackError);
         });
-
-        if (!response.ok) {
-            const fallbackError = "Error submitting check-in";
-            const data = await response.json().catch(() => {
-                throw new Error(fallbackError);
-            });
-            const errorMessage = data?.detail || fallbackError;
-            throw new Error(errorMessage);
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error("Check-in submission error:", error);
-        throw error;
+        const errorMessage = data?.detail || fallbackError;
+        throw new Error(errorMessage);
     }
+
+    return await response.json();
 }
