@@ -29,4 +29,5 @@ async function getTeams() {
     return await response.json();
 }
 
+
 export default getTeams;

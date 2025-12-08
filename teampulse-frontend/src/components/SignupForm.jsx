@@ -46,7 +46,7 @@ function SignupForm() {
             if (createdUser.user?.is_staff) {
                 navigate("/dashboard");
             } else {
-                navigate("/checkin");
+                navigate("/login");
             }
 
         } catch (err) {
@@ -118,12 +118,12 @@ function SignupForm() {
                         <p>Error loading teams</p>
                     ) : (
                         <select
-                            value={teamId}
-                            onChange={(e) => setTeamId(e.target.value)}
+                            value={teamId || ""}
+                            onChange={(e) => setTeamId(Number(e.target.value))}
                         >
                             <option value="">Choose a team</option>
                             {teams.map((team) => (
-                                <option key={team.Id} value={team.Id}>
+                                <option key={team.id} value={team.id}>
                                     {team.team_name}
                                 </option>
                             ))}
