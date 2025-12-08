@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFaceGrinStars, faSmileBeam, faFlushed, faTired, faSun, faCloudSun, faCloudRain, faCloudBolt } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { createCheckIn } from "../api/post-createcheckin";
@@ -7,22 +9,21 @@ export default function CheckInForm() {
     const [workload, setWorkload] = useState(null);
     const [notes, setNotes] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
-
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     const moodOptions = [
-        { id: 1, label: "Motivated", emoji: "⚡" },
-        { id: 2, label: "Calm", emoji: "😊" },
-        { id: 3, label: "Anxious", emoji: "🌧️" },
-        { id: 4, label: "Angry", emoji: "😠" }
+        { id: 1, label: "Empowered", icon: faFaceGrinStars },
+        { id: 2, label: "Calm", icon: faSmileBeam },
+        { id: 3, label: "Anxious", icon: faFlushed },
+        { id: 4, label: "Angry", icon: faTired }
     ];
 
     const workloadOptions = [
-        { id: 1, label: "Light", emoji: "🙂" },
-        { id: 2, label: "Manageable", emoji: "📈" },
-        { id: 3, label: "Under Pressure", emoji: "📉" },
-        { id: 4, label: "Overwhelmed", emoji: "🔥" }
+        { id: 1, label: "Light", icon: faSun },
+        { id: 2, label: "Manageable", icon: faCloudSun },
+        { id: 3, label: "Under Pressure", icon: faCloudRain },
+        { id: 4, label: "Overwhelmed", icon: faCloudBolt }
     ];
 
     const handleSubmit = async (e) => {
@@ -42,13 +43,13 @@ export default function CheckInForm() {
         try {
             await createCheckIn(payload);
 
-            setSuccessMessage("Thanks for checking in 💛 Your feelings are valid and appreciated.");
+            setSuccessMessage("Thank you for checking in. Your feelings are valid and appreciated.");
             setMood(null);
             setWorkload(null);
             setNotes("");
         } catch (err) {
             setErrorMessage(
-                "Oops! Our system spilled its coffee ☕ Your check-in didn’t save, but your feelings still matter. Want to give it another try?"
+                "Your check-in didn't save, but your feelings still matter. Want to give it another try?"
             );
         }
 
@@ -57,7 +58,7 @@ export default function CheckInForm() {
 
     return (
         <div className="survey-container">
-            <h2>Share where you are at, so we can help build a better workplace together</h2>
+            <h2>Share how you are, so we can help build a better workplace together</h2>
 
             <form onSubmit={handleSubmit} className="survey-form">
                 {/* Mood Selection */}
@@ -72,7 +73,7 @@ export default function CheckInForm() {
                                 className={`option-card ${mood === option.id ? "selected" : ""}`}
                                 onClick={() => setMood(option.id)}
                             >
-                                <span className="emoji">{option.emoji}</span>
+                                <FontAwesomeIcon icon={option.icon} size="2x" />
                                 <span>{option.label}</span>
                             </motion.button>
                         ))}
@@ -91,7 +92,7 @@ export default function CheckInForm() {
                                 className={`option-card ${workload === option.id ? "selected" : ""}`}
                                 onClick={() => setWorkload(option.id)}
                             >
-                                <span className="emoji">{option.emoji}</span>
+                                <FontAwesomeIcon icon={option.icon} size="2x" />
                                 <span>{option.label}</span>
                             </motion.button>
                         ))}

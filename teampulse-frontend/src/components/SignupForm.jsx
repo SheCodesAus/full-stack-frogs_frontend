@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignupForm.css";
-import  getTeams  from "../api/get-teams";
+import useTeams from "../hooks/use-teams";
 import postSignup from "../api/post-signup";
+import { useAuth } from "../hooks/use-auth";
 
 function SignupForm() {
 
@@ -13,21 +14,10 @@ function SignupForm() {
     const [password, setPassword] = useState("");
     const [teamId, setTeamId] = useState("");
     const [error, setError] = useState("");
-    const [teams, setTeams] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        async function loadTeams() {
-            try {
-                const data = await getTeams();
-                setTeams(data);
-            } catch (err) {
-                console.error("Failed to load teams:", err);
-            }
-        }
-
-        loadTeams();
-    }, []);
+    const { teams, isLoading, error: teamsError } = useTeams();
+    const { setAuth } = useAuth();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -49,7 +39,15 @@ function SignupForm() {
             });
 
             console.log("SIGNUP SUCCESS:", createdUser);
-            navigate("/checkin");
+
+            window.localStorage.setItem("token", createdUser.token);
+            setAuth({ token: createdUser.token, user: createdUser.user });
+
+            if (createdUser.user?.is_staff) {
+                navigate("/dashboard");
+            } else {
+                navigate("/checkin");
+            }
 
         } catch (err) {
             setError(err.message || "Signup failed.");
@@ -114,22 +112,30 @@ function SignupForm() {
 
                 <div className="input-group">
                     <label>Select your team</label>
-                    <select
-                        value={teamId}
-                        onChange={(e) => setTeamId(e.target.value)}
-                    >
-                        <option value="">Choose a team</option>
-                        {teams.map((team) => (
-                            <option key={team.id} value={team.id}>
-                                {team.name}
-                            </option>
-                        ))}
-                    </select>
+                    {isLoading ? (
+                        <p>Loading teams...</p>
+                    ) : teamsError ? (
+                        <p>Error loading teams</p>
+                    ) : (
+                        <select
+                            value={teamId}
+                            onChange={(e) => setTeamId(e.target.value)}
+                        >
+                            <option value="">Choose a team</option>
+                            {teams.map((team) => (
+                                <option key={team.Id} value={team.Id}>
+                                    {team.team_name}
+                                </option>
+                            ))}
+                        </select>
+                    )}
                 </div>
 
                 <button type="submit" className="signup-button">
                     Join teampulse
                 </button>
+                <p className="switch-page-text">
+                    Already have an account? <a href="/login">Log in here</a></p>
             </form>
         </div>
     );

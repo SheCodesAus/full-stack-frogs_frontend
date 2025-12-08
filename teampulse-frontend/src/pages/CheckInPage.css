@@ -1,6 +1,12 @@
 .checkin-page {
     background-color: var(--background-gradient);
     min-height: 100vh;
+    padding: 1rem;
+}
+
+.checkin-header {
+    padding: 1rem;
+    font-family: var(--font-body);
 }
 
 .checkin-header .header-left {
@@ -8,38 +14,50 @@
 }
 
 .survey-container {
+    width: 100%;
     max-width: 600px;
     margin: 2rem auto;
-    padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 8px;
+    padding: 1.5rem;
+    background-color: #fffffd;
+    border-radius: 4%;
+    height: auto;
+    color: var(--text-dark);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    backdrop-filter: blur(10px);
 }
 
 .survey-container h2 {
+    padding: 0;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.4;
     color: var(--text-dark);
-    margin-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    font-family: var(--font-body);
 }
 
 .survey-container .subtitle {
     color: var(--secondary-text);
     margin-bottom: 2rem;
+    font-size: 1rem;
 }
 
-.survey-form section {
-    margin-bottom: 2rem;
+.survey-form section:first-of-type {
+    margin-top: 2rem;
 }
 
 .survey-form h3 {
     color: var(--text-dark);
     margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-style: italic;
+    font-family: var(--font-body);
+    letter-spacing: 0.3px;
 }
 
-/*Modern Button Styling */
+/* Modern Button Styling */
 button {
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 1rem;
     border: none;
     border-radius: 8px;
     font-size: 1rem;
@@ -47,6 +65,7 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: var(--font-body);
 }
 
 button:hover {
@@ -87,6 +106,8 @@ button.secondary-btn:hover {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-family: var(--font-body);
+    font-weight: 500;
 }
 
 .mood-option:hover,
@@ -103,8 +124,8 @@ button.secondary-btn:hover {
 }
 
 .notes-box {
-    width: 80%;
-    min-height: 80px;
+    width: 100%;
+    min-height: 100px;
     padding: 1rem;
     border: 2px solid var(--primary);
     border-radius: 8px;
@@ -114,6 +135,7 @@ button.secondary-btn:hover {
     background-color: rgba(255, 255, 255, 0.8);
     resize: vertical;
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .notes-box:focus {
@@ -135,6 +157,7 @@ button.secondary-btn:hover {
     color: white;
     font-weight: 600;
     margin-top: 1rem;
+    font-family: var(--font-body);
 }
 
 .submit-btn:hover:not(:disabled) {
@@ -147,13 +170,13 @@ button.secondary-btn:hover {
 }
 
 /* Error / Success Messages */
-
 .error-msg {
     color: #dc3545;
     padding: 1rem;
     background-color: rgba(220, 53, 69, 0.1);
     border-radius: 8px;
     margin: 1rem 0;
+    font-family: var(--font-body);
 }
 
 .success-msg {
@@ -162,8 +185,10 @@ button.secondary-btn:hover {
     background-color: rgba(40, 167, 69, 0.1);
     border-radius: 8px;
     margin: 1rem 0;
+    font-family: var(--font-body);
 }
 
+/* Option Cards */
 .option-card {
     background-color: rgba(168, 216, 196, 0.1);
     border: 2px solid var(--primary);
@@ -174,12 +199,16 @@ button.secondary-btn:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
+    color: var(--text-dark);
+    font-family: var(--font-body);
+    font-weight: 500;
 }
 
 .option-card:hover {
     background-color: rgba(168, 216, 196, 0.2);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(168, 216, 196, 0.2);
 }
 
 .option-card.selected {
@@ -189,13 +218,96 @@ button.secondary-btn:hover {
     box-shadow: 0 4px 12px rgba(168, 216, 196, 0.4);
 }
 
-.option-card .emoji {
-    font-size: 2rem;
+.option-card svg {
+    color: var(--primary);
+}
+
+.option-card.selected svg {
+    color: white;
 }
 
 /* Options Grid */
 .options-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* Mobile Responsiveness */
+@media only screen and (max-width: 768px) {
+    .checkin-page {
+        padding: 0.5rem;
+    }
+
+    .survey-container {
+        padding: 1rem;
+        margin: 1rem auto;
+    }
+
+    .survey-container h2 {
+        font-size: 1.75rem;
+        line-height: 1.3;
+        margin-bottom: 1.5rem;
+    }
+
+    .survey-form h3 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .option-card {
+        padding: 1rem;
+    }
+
+    .notes-box {
+        min-height: 80px;
+    }
+
+    button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.95rem;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .survey-container {
+        padding: 0.75rem;
+        margin: 0.5rem auto;
+    }
+
+    .survey-container h2 {
+        font-size: 1.5rem;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+
+    .survey-form h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .options-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .option-card {
+        padding: 0.75rem;
+        gap: 0.5rem;
+    }
+
+    button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .submit-btn {
+        padding: 0.75rem;
+    }
 }

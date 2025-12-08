@@ -6,8 +6,15 @@ import {
   Tooltip,
   Legend
 } from "chart.js";
+import './WorkloadPieChart.css'
 
-import { mockWorkloads } from "../mocks/mockWorkload";
+// Data simulation
+const workloadData = [
+  { description: "All Good", count: 5 },
+  { description: "Busy But Fine", count: 8 },
+  { description: "Quite Busy", count: 4 },
+  { description: "Very Busy", count: 2 }
+];
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -15,45 +22,34 @@ export default function WorkloadPieChart() {
   const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
-    function loadMockData() {
-      const workloads = mockWorkloads;      
-      const logs = mockPulseLogs;            
-
-      const counts = [0, 0, 0, 0];
-
-      logs.forEach(log => {
-        if (log.workload >= 1 && log.workload <= 4) {
-          counts[log.workload - 1] += 1;
-        }
-      });
+    function loadData() {
+      const counts = workloadData.map(w => w.count);
 
       setChartData({
-        labels: workloads.map(w => w.description),
+        labels: workloadData.map(w => w.description),
         datasets: [
           {
             data: counts,
             backgroundColor: [
-              "#4CAF50",  // All Good
-              "#3DB9CE",  // Busy But Fine
-              "#F9C74F",  // Quite Busy
-              "#F9844A"   // Very Busy
-            ],
+              "#A8D8C4",      // All Good
+              "#CFE8FF",   // Busy But Fine
+              "#f9db6fff",   // Quite Busy
+              "#f19a5c"    // Very Busy
+          ],
             borderWidth: 0
           }
         ]
       });
     }
 
-    loadMockData();
+    loadData();
   }, []);
 
   if (!chartData) return <p>Loading workload chart...</p>;
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md max-w-md">
-      <h3 className="text-lg font-semibold mb-4">
-        Current Team Workload Distribution
-      </h3>
+    <div className="workload-chart-container">
+      <h3>This Weeks Workload Distribution</h3>
 
       <Pie
         data={chartData}

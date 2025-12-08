@@ -32,54 +32,42 @@ const moodLabels = {
     1: "Angry",
     2: "Anxious",
     3: "Calm",
-    4: "Motivated",
+    4: "Empowered",
 };
+const LineChartExample = ({ isAnimationActive = true }) => (
 
+    <div className='weeklyComparisonContainer'>
+        <div className='weekly-header'>
+            <h2 className='headline'>Weekly trend for <strong>Average Team Mood </strong></h2>
+        </div>
 
-const LineChartExample = ({ isAnimationActive = true }) => {
-    const isDesktop = useIsDesktop();
-    return (
-        <div className="weeklyComparisonContainer">
-            <div className="headline">Weekly trend for <strong>Average Team Mood </strong></div>
-            <div className="chartWrapper">
+        <LineChart
+            style={{ width: '85%', maxWidth: '700px', maxHeight: '70vh', aspectRatio: 1.68, padding: '6%' }}
+            responsive
+            data={moodData}
+        >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="week" />
+            <YAxis width="auto" domain={[1, 4]}  
+                ticks={[1, 2, 3, 4]}
+                tickFormatter={(value) => moodLabels[value]} tickLine={false} axisLine={false}   padding={{bottom: 35 }} />
+            <Tooltip />
+            <Legend
+                verticalAlign="top"
+                align="right"
+                height={34}
+                iconType="circle"
+                wrapperStyle={{
+                    top: 35,
+                    right: 15
+                }}
+            />
+            <Line type="monotone" name="Current Period" dataKey="currentPeriod" stroke="#82ca9d" strokeWidth={2} dot={{ r: 5, strokeWidth: 2, fill: '#fff' }} isAnimationActive={isAnimationActive} />
+            <Line type="monotone" name="Previous Period" dataKey="prevPeriod" stroke="#8884d8" strokeWidth={2} strokeDasharray="3 3" dot={{ r: 2, strokeWidth: 1 }}
+                isAnimationActive={isAnimationActive} />
+        </LineChart>
 
-                <ResponsiveContainer width="100%" aspect={isDesktop ? 1.6 : 1.2}>
-                    <LineChart data={moodData}
-                        margin={
-                            isDesktop
-                                ? { top: 20, right: 40, left: 40, bottom: 40 }
-                                : { top: 10, right: 30, left: 20, bottom: 30 }
-                        } >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="week" tick={{ fontSize: isDesktop ? 14 : 12 }} />
-                        <YAxis
-                            domain={[1, 4]}
-                            ticks={[1, 2, 3, 4]}
-                            tickFormatter={(value) => moodLabels[value]}
-                            tickLine={false}
-                            axisLine={false}
-                            padding={{ bottom: 35 }}
-                            tick={{ fontSize: isDesktop ? 14 : 12 }}
-                        />
-                        <Tooltip />
-                        <Legend
-                            verticalAlign="top"
-                            align="right"
-                            height={34}
-                            iconType="circle"
-                            wrapperStyle={{
-                                top: 5,
-                                right: 19,
-                                fontSize: isDesktop ? "1rem" : "0.85rem",
-                            }}
-                        />                        
-                        <Line type="monotone" name="Current Period" dataKey="currentPeriod" stroke="#82ca9d" strokeWidth={2} dot={{ r: 5 }} />
-                        <Line type="monotone" name="Previous Period" dataKey="prevPeriod" stroke="#8884d8" strokeWidth={2} strokeDasharray="3 3" />
-                    </LineChart>
-                </ResponsiveContainer>
-            </div>
-        </div >
-    )
-};
+    </div>
+);
 
 export default LineChartExample;

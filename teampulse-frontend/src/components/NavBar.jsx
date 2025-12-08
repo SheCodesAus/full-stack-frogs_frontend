@@ -11,17 +11,22 @@ function NavBar() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('user');
-        navigate('/login');
+        localStorage.removeItem('token');
+        setAuth({
+            token: null,
+            user: null,
+        });
+        navigate('/');
     };
     return (
         <>
             <div className="navbar flex space-between">
                 <Logo size={220} />
-                <span onClick={handleLogout} className='logout-text'>
-                    Logout
-                </span>
+                {auth.token ? 
+                    (<span onClick={handleLogout} className='logout-text'>
+                        Logout
+                    </span>
+                ):null}
             </div>
             <Outlet />
         </>

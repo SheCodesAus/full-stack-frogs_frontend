@@ -1,0 +1,90 @@
+.raw-data-container {
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 1000px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+    font-family: var(--font-body);
+}
+
+.raw-data-container h2 {
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.raw-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.raw-table th,
+.raw-table td {
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.raw-table th {
+    background-color: var(--primary);
+    color: white;
+    font-weight: 600;
+}
+
+.raw-table tr:nth-child(even) {
+    background-color: rgba(168, 216, 196, 0.1);
+}
+
+.raw-table tr:hover {
+    background-color: rgba(168, 216, 196, 0.2);
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
+
+.raw-table td {
+    vertical-align: middle;
+}
+
+.checkin-card {
+    background: radial-gradient(178.94% 106.41% at 26.42% 106.41%,
+            rgba(252, 231, 200, 0.4) 0%,
+            rgba(255, 255, 255, 0) 71.88%), #F7F9FB;
+    padding: 1rem 1.5rem;
+    color: var(--text-dark);
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    display: flex;
+    justify-content: space-between; /* coloca os campos lado a lado */
+    align-items: center;
+    width: 80%;
+    margin: 0.5rem auto; /* centraliza e dá espaçamento entre cards */
+    transition: all 0.2s ease;
+}
+
+.checkin-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.checkin-field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 100px;
+    padding: 0 0.5rem;
+}
+
+.checkin-field strong {
+    font-weight: 500;
+    color: #555;
+}
+
+.timestamp {
+    font-size: 0.875rem;
+    color: #888;
+    text-align: right;
+}

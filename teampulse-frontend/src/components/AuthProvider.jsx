@@ -1,18 +1,58 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 // Here we create the Context
 export const AuthContext = createContext();
 
-// Here we create the component that will wrap our app, this means all it children can access the context using are hook.
 export const AuthProvider = (props) => {
-    // Using a object for the state here, this way we can add more properties to the state later on like user id.
     const [auth, setAuth] = useState({
-        // Here we initialize the context with the token from local storage, this way if the user refreshes the page we can still have the token in memory.
         token: window.localStorage.getItem("token"),
+        user: null,
     });
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        async function loadUser() {
+            if (!auth.token) {
+                setLoading(false);
+                console.log("⚠️ No token found in localStorage — skipping user restore.");
+                return;
+            }
+
+            try {
+                const res = await axios.get(
+                    `${import.meta.env.VITE_API_URL}/me/`,
+                    {
+                        headers: {
+                            Authorization: `Token ${auth.token}`,
+                        },
+                    }
+                );
+                setAuth((prev) => ({
+                    ...prev,
+                    user: res.data,
+                }));
+
+                console.log("✅ Auth recorded successfully!");
+                console.log("🔑 Token:", auth.token);
+                console.log("👤 User:", res.data);
+                
+            } catch (err) {
+                console.error("Failed to restore user:", err);
+                localStorage.removeItem("token");
+                setAuth({
+                    token: null,
+                    user: null,
+                });
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadUser();
+    }, [auth.token]);
 
     return (
-        <AuthContext.Provider value={{ auth, setAuth }}>
+        <AuthContext.Provider value={{ auth, setAuth, loading }}>
             {props.children}
         </AuthContext.Provider>
     );
