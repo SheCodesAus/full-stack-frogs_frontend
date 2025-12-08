@@ -1,16 +1,18 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "./AuthProvider";
+import { useAuth } from '../hooks/use-auth.js';
+import Loader from '../components/Loader'
 
 export default function ManagerOnly({ children }) {
-    const { user, loading } = useAuth();
+    const { auth, setAuth, loading } = useAuth();
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <Loader />;
     }
-    if (!user) {
+    if (!auth.user) {
         return <Navigate to="/login" replace />;
     }
-    if (user.role !== "manager") {
+    if (auth.user.is_staff === false) {
+        localStorage.removeItem('token');
         return <Navigate to="/no-permission" replace />;
     }
     return children;

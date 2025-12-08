@@ -14,6 +14,7 @@ export const AuthProvider = (props) => {
         async function loadUser() {
             if (!auth.token) {
                 setLoading(false);
+                console.log("⚠️ No token found in localStorage — skipping user restore.");
                 return;
             }
 
@@ -26,11 +27,15 @@ export const AuthProvider = (props) => {
                         },
                     }
                 );
-
                 setAuth((prev) => ({
                     ...prev,
                     user: res.data,
                 }));
+
+                console.log("✅ Auth recorded successfully!");
+                console.log("🔑 Token:", auth.token);
+                console.log("👤 User:", res.data);
+                
             } catch (err) {
                 console.error("Failed to restore user:", err);
                 localStorage.removeItem("token");

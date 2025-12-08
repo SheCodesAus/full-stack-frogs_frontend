@@ -1,6 +1,6 @@
 .dashboard-btn {
     min-height: 1rem;
-    min-width: 9.5rem;
+    min-width: 5rem;
     font-weight: 500;
     font-size: var(--text-base);
     padding: 0.65rem 0.5rem;

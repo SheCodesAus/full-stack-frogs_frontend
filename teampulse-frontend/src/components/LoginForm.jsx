@@ -45,7 +45,7 @@ function LoginForm() {
 
                 // is_staff
                 if (userData.is_staff) {
-                    navigate("/dashboard");
+                    navigate("/manager-dashboard");
                 } else {
                     navigate("/checkin");
                 }

@@ -1,46 +1,65 @@
 .dashboardOverview {
-    /* padding: var(--space-3) 0; */
+    margin: 1.5rem 0 2rem 0;
+    border-radius: 1.5rem;
+}
+
+.dashboard-title {
+    font-size: clamp(1.2rem, 2.5vw, 1.3rem);
+    color: var(--text-dark);
+    font-family: var(--font-body);
+    font-weight: 400;
+    margin-left: .3rem;
+
+}
+
+.dashboardOverview-header {
+    padding: 0 0 0.5rem 0.8rem;
+}
+
+.dashboardCards-row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    /* 2 cards per row */
     gap: clamp(1.01rem, 2vw, 1.5rem);
-    margin-top: 1rem;
-    justify-items: center;
     align-items: stretch;
+    /* equal heights per row */
 }
+
 
 .graphs {
     gap: 3rem;
     margin-top: 2rem;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 }
 
-
 @media only screen and (min-width: 800px) {
-    /* .dashboardView-container {
-
-    } */
-
     .dashboardOverview {
-        display: flex;
-        justify-content: center;
-        gap: clamp(1rem, 1.5vw, 2rem);
+        margin-top: 1rem;
+        gap: .5rem;
         padding: 1rem;
-        gap: 3rem;
         border-radius: 1.5rem;
         background: linear-gradient(to right,
                 rgba(168, 216, 196, 0.2),
                 rgba(207, 232, 255, 0.2));
-        border-width: 1px;
-        border-style: solid;
-        border-color: rgba(101, 168, 140, 0.5);
+        border: 1px solid rgba(101, 168, 140, 0.5);
     }
 
-    
+    /* Wrapper around the cards */
+    .dashboardCards-row {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        /* evenly spread */
+        gap: clamp(1rem, 1.5vw, 2rem);
+        width: 100%;
+    }
+
+
 }
 
 @media only screen and (min-width: 1000px) {
-    .graphs{
+    .graphs {
         flex-direction: row;
     }
 

@@ -1,6 +1,14 @@
 async function getTeams() {
     const url = `${import.meta.env.VITE_API_URL}/teams`;
-    const response = await fetch(url, { method: "GET" });
+    const token = window.localStorage.getItem("token")
+
+    const response = await fetch(url, {
+        method: "GET",
+        headers: {
+            Authorization: `Token ${token}`,
+            "Content-Type": "application/json"
+        }
+    });
 
     if (!response.ok) {
         const fallbackError = "Error fetching teams";

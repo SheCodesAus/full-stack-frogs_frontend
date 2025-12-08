@@ -11,8 +11,13 @@ import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import CheckInPage from "./pages/CheckInPage.jsx";
 import QuotePage from "./pages/QuotePage.jsx";
-import DashboardPage from "./pages/DashboardPage.jsx";
+import ManagerDashboardPage from "./pages/ManagerDashboardPage.jsx";
 import NavBar from './components/NavBar.jsx';
+import ManagerOnly from "./components/ManagerOnly";
+import UserDashboardPage from "./pages/UserDashboardPage.jsx";
+import PermissionDeniedPage from "./pages/PermissionDeniedPage";
+import NotFoundPage from "./pages/404Page.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -28,9 +33,33 @@ const router = createBrowserRouter([
       { path: "/login", element: <LoginPage /> },
       { path: "/checkin", element: <CheckInPage /> },
       { path: "/quote", element: <QuotePage /> },
-      { path: "/dashboard", element: <DashboardPage /> },
+      { path: "/user-dashboard", element: <UserDashboardPage /> },
+      {
+        path: "/no-permission",
+        element: <PermissionDeniedPage />,
+      },
+      { path: "*", element: <NotFoundPage /> },
+      {
+        path: "/manager-dashboard",
+        element: (
+          <ManagerOnly>
+            <ManagerDashboardPage />
+          </ManagerOnly>
+        ),
+      },
+      {
+        path: "/user-dashboard/:userId",
+        element: (
+          <ManagerOnly>
+            <UserDashboardPage />
+          </ManagerOnly>
+        ),
+      },
     ],
-  }
+  },
+  // Permission denied page
+
+
 ]);
 
 // function AppRoot() {
