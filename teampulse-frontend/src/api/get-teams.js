@@ -1,13 +1,11 @@
 async function getTeams() {
-    const url = `${import.meta.env.VITE_API_URL}/teams`;
-    const token = window.localStorage.getItem("token")
+    const url = `${import.meta.env.VITE_API_URL}/teams/`;
 
     const response = await fetch(url, {
         method: "GET",
         headers: {
-            Authorization: `Token ${token}`,
-            "Content-Type": "application/json"
-        }
+            "Content-Type": "application/json",
+        },
     });
 
     if (!response.ok) {
@@ -21,5 +19,6 @@ async function getTeams() {
 
     return await response.json();
 }
+
 
 export default getTeams;

@@ -1,8 +1,19 @@
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFaceGrinStars, faSmileBeam, faFlushed, faTired, faSun, faCloudSun, faCloudRain, faCloudBolt } from '@fortawesome/free-solid-svg-icons';
+import {
+    faFaceGrinStars,
+    faSmileBeam,
+    faFlushed,
+    faTired,
+    faSun,
+    faCloudSun,
+    faCloudRain,
+    faCloudBolt
+} from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { createCheckIn } from "../api/post-createcheckin";
+import { useAuth } from "../hooks/use-auth";
 
 export default function CheckInForm() {
     const [mood, setMood] = useState(null);
@@ -11,6 +22,8 @@ export default function CheckInForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate();
+    const { auth } = useAuth();
 
     const moodOptions = [
         { id: 1, label: "Empowered", icon: faFaceGrinStars },
@@ -36,19 +49,32 @@ export default function CheckInForm() {
             return;
         }
 
+        if (!auth?.token) {
+            setErrorMessage("You must be logged in to submit a check-in.");
+            return;
+        }
+
         setIsSubmitting(true);
 
-        const payload = { mood, workload, notes, timestamp: new Date().toISOString() };
+        const payload = {
+            mood,
+            workload,
+            comment: notes,
+            team: auth.user?.team || null, 
+            timestamp: new Date().toISOString(),
+        };
 
         try {
-            await createCheckIn(payload);
+            await createCheckIn(payload, auth.token);
 
             setSuccessMessage("Thank you for checking in. Your feelings are valid and appreciated.");
             setMood(null);
             setWorkload(null);
             setNotes("");
         } catch (err) {
+            console.error(err);
             setErrorMessage(
+                err.message ||
                 "Your check-in didn't save, but your feelings still matter. Want to give it another try?"
             );
         }
@@ -58,10 +84,22 @@ export default function CheckInForm() {
 
     return (
         <div className="survey-container">
+
+            <div className="top-bar">
+                <button
+                    type="button"
+                    className="dashboard-btn"
+                    onClick={() => navigate("/user-dashboard")}
+                >
+                    Go to Dashboard
+                </button>
+            </div>
+
             <h2>Share how you are, so we can help build a better workplace together</h2>
 
             <form onSubmit={handleSubmit} className="survey-form">
-                {/* Mood Selection */}
+
+                {/* Mood */}
                 <section>
                     <h3>How is your mood?</h3>
                     <div className="options-grid">
@@ -80,7 +118,7 @@ export default function CheckInForm() {
                     </div>
                 </section>
 
-                {/* Workload Selection */}
+                {/* Workload */}
                 <section>
                     <h3>Where is your workload at?</h3>
                     <div className="options-grid">
@@ -110,11 +148,10 @@ export default function CheckInForm() {
                     />
                 </section>
 
-                {/* Error / Success Messages */}
+                {/* Errors / Success */}
                 {errorMessage && <p className="error-msg">{errorMessage}</p>}
                 {successMessage && <p className="success-msg">{successMessage}</p>}
 
-                {/* Submit Button */}
                 <button type="submit" className="submit-btn" disabled={isSubmitting}>
                     {isSubmitting ? "Submitting..." : "Submit Check-In"}
                 </button>
