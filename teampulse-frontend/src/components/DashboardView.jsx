@@ -20,7 +20,6 @@ export default function DashboardView({ logs, participationRate,teamCount,logsCo
         : 0;
     const moodDataForTeam = teamMoodData[team];
 
-
     return (
         <div className='dashboardView-container'>
             <section>
@@ -42,7 +41,12 @@ export default function DashboardView({ logs, participationRate,teamCount,logsCo
                 <WeeklyComparison team={team} moodData={moodDataForTeam}/>
                 <WorkloadPieChart />
             </section>
-        </div>
 
+            {/* Workload Charts Row */}
+            <section className='charts-row workload-row'>
+                <WeeklyComparison chartType="workload" />
+                <PieChart chartType="workload" />
+            </section>
+        </div>
     )
 }

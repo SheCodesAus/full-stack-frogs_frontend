@@ -1,0 +1,62 @@
+.pie-chart-container {
+    flex: 1;
+    background-color: #fffffd;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
+    max-width: 350px;
+}
+
+.pie-chart-container h3 {
+    margin: 0 0 1.5rem 0;
+    font-weight: 500;
+    font-size: 1.2rem;
+    font-family: var(--font-body);
+    color: var(--text-dark);
+}
+
+.chart-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pie-chart-container canvas {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1.5rem;
+}
+
+@media only screen and (max-width: 1200px) {
+    .pie-chart-container {
+        padding: 1.25rem;
+        max-width: 300px;
+    }
+
+    .pie-chart-container h3 {
+        font-size: 1rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .pie-chart-container {
+        padding: 1rem;
+        flex: 1;
+        min-width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .pie-chart-container h3 {
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+
+    .pie-chart-container canvas {
+        margin-bottom: 1rem;
+    }
+}
