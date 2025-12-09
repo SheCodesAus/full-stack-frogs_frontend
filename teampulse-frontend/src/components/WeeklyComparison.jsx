@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './WeeklyComparison.css'
-import Button from './ButtonComponent';
 
 function useIsDesktop(minWidth = 800) {
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= minWidth);
@@ -15,12 +14,6 @@ function useIsDesktop(minWidth = 800) {
     return isDesktop;
 }
 // #Data simulation
-const moodData = [
-    { week: 'Current', currentPeriod: 3.16, prevPeriod: 2.9 },
-    { week: 'Week 32', currentPeriod: 1.72, prevPeriod: 3 },
-    { week: 'Week 33', currentPeriod: 3.04, prevPeriod: 3.5 },
-    { week: 'Week 34', currentPeriod: 2.32, prevPeriod: 1.8 },
-];
 
 const workflowData = [
     { week: 'Current', workflow: 8.5, prevPeriod: 8.0 },
@@ -34,11 +27,11 @@ const moodLabels = {
     3: "Calm",
     4: "Empowered",
 };
-const LineChartExample = ({ isAnimationActive = true }) => (
+const LineChartExample = ({ isAnimationActive = true, team, logs,moodData}) => (
 
     <div className='weeklyComparisonContainer'>
         <div className='weekly-header'>
-            <h2 className='headline'>Weekly trend for <strong>Average Team Mood </strong></h2>
+            <h2 className='headline'>Weekly trend for <strong>Average Team Mood</strong></h2>
         </div>
 
         <LineChart

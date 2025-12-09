@@ -1,4 +1,4 @@
-// src/components/manager/AllCheckinsView.jsx
+import './AllCheckinView.css'
 
 const MOOD_LABELS = {
     1: "Angry",
