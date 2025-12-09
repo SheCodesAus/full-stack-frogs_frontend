@@ -1,19 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faFaceGrinStars,
-    faSmileBeam,
-    faFlushed,
-    faTired,
-    faSun,
-    faCloudSun,
-    faCloudRain,
-    faCloudBolt
+    faFaceGrinStars, faSmileBeam, faFlushed, faTired, faSun, faCloudSun, faCloudRain, faCloudBolt
 } from '@fortawesome/free-solid-svg-icons';
-import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { createCheckIn } from "../api/post-createcheckin";
 import { useAuth } from "../hooks/use-auth";
+import { useState } from "react";
 
 export default function CheckInForm() {
     const [mood, setMood] = useState(null);
@@ -23,21 +16,38 @@ export default function CheckInForm() {
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
-    const { auth } = useAuth();
+    const { auth, loading } = useAuth();
 
     const moodOptions = [
-        { id: 1, label: "Empowered", icon: faFaceGrinStars },
-        { id: 2, label: "Calm", icon: faSmileBeam },
-        { id: 3, label: "Anxious", icon: faFlushed },
-        { id: 4, label: "Angry", icon: faTired }
+        { id: 4, label: "Empowered", icon: faFaceGrinStars },
+        { id: 3, label: "Calm", icon: faSmileBeam },
+        { id: 2, label: "Anxious", icon: faFlushed },
+        { id: 1, label: "Angry", icon: faTired }
     ];
 
     const workloadOptions = [
-        { id: 1, label: "Light", icon: faSun },
-        { id: 2, label: "Manageable", icon: faCloudSun },
-        { id: 3, label: "Under Pressure", icon: faCloudRain },
-        { id: 4, label: "Overwhelmed", icon: faCloudBolt }
+        { id: 4, label: "Light", icon: faSun },
+        { id: 3, label: "Manageable", icon: faCloudSun },
+        { id: 2, label: "Under Pressure", icon: faCloudRain },
+        { id: 1, label: "Overwhelmed", icon: faCloudBolt }
     ];
+    function getUTCFromLocal() {
+        const now = new Date();
+
+        // extract local components
+        const year = now.getFullYear();
+        const month = now.getMonth();
+        const day = now.getDate();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        const second = now.getSeconds();
+        const ms = now.getMilliseconds();
+
+        // build a local-time date, then convert to UTC automatically
+        const localDate = new Date(year, month, day, hour, minute, second, ms);
+
+        return localDate.toISOString(); // correct UTC that matches local time
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -45,12 +55,22 @@ export default function CheckInForm() {
         setSuccessMessage("");
 
         if (!mood || !workload) {
-            setErrorMessage("Choose how you're feeling first — it helps us understand your day ✨");
+            setErrorMessage("Choose how you're feeling first.");
             return;
         }
 
-        if (!auth?.token) {
+        if (loading) {
+            setErrorMessage("Still loading your profile. Please wait.");
+            return;
+        }
+
+        if (!auth?.token || !auth?.user) {
             setErrorMessage("You must be logged in to submit a check-in.");
+            return;
+        }
+
+        if (!auth.user.team) {
+            setErrorMessage("No team assigned to your account.");
             return;
         }
 
@@ -60,33 +80,30 @@ export default function CheckInForm() {
             mood,
             workload,
             comment: notes,
-            team: auth.user?.team || null, 
-            timestamp: new Date().toISOString(),
+            team: auth.user.team,
+            timestamp_local: getUTCFromLocal(),
         };
 
         try {
             await createCheckIn(payload, auth.token);
-
-            setSuccessMessage("Thank you for checking in. Your feelings are valid and appreciated.");
+            setSuccessMessage("Thank you for checking in.");
             setMood(null);
             setWorkload(null);
             setNotes("");
         } catch (err) {
             console.error(err);
-            setErrorMessage(
-                err.message ||
-                "Your check-in didn't save, but your feelings still matter. Want to give it another try?"
-            );
+            setErrorMessage(err.message || "Check-in failed.");
         }
 
         setIsSubmitting(false);
     };
 
+
     return (
         <div className="survey-container">
 
 
-            <h2>Share how you are, so we can help build a better workplace together</h2>
+            <h2>Take a moment to check in with yourself.</h2>
 
             <form onSubmit={handleSubmit} className="survey-form">
 
