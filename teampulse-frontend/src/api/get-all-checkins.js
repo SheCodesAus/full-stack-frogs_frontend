@@ -1,11 +1,10 @@
 async function getAllCheckIns(token) {
 
     const currentDate = new Date();
-    const lastWeekNumber = getISOWeekNumber(currentDate) - 1;
+    const WeekNumber = getISOWeekNumber(currentDate);
 
 
-    const url = `${import.meta.env.VITE_API_URL}/pulse_logs`;
-
+    const url = `${import.meta.env.VITE_API_URL}/pulse_logs/?year_week=${WeekNumber}`;
 
     const response = await fetch(url, {
         method: "GET",
@@ -31,19 +30,18 @@ async function getAllCheckIns(token) {
 
 export default getAllCheckIns;
 
+
+
 function getISOWeekNumber(date) {
     const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    // ISO week date weeks start on Monday (1) and Sunday is 7
     const dayNum = d.getUTCDay() || 7;
-    // Set date to the Thursday of this week (ISO rule)
     d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-    // First day of year
+
     const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    const getYear = d.getUTCFullYear();
-    // Calculate full weeks to nearest Thursday
-    const weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
-    return `${getYear}${weekNo}`;
+    const year = d.getUTCFullYear();
+    
+    const week = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+    const weekPadded = String(week).padStart(2, "0");
 
+    return `${year}${weekPadded}`;
 }
-
-

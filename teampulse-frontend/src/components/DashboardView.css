@@ -1,39 +1,3 @@
-.dashboardOverview {
-    margin: 1.5rem 0 2rem 0;
-    border-radius: 1.5rem;
-}
-
-.dashboard-title {
-    font-size: clamp(1.2rem, 2.5vw, 1.3rem);
-    color: var(--text-dark);
-    font-family: var(--font-body);
-    font-weight: 400;
-    margin-left: .3rem;
-
-}
-
-.dashboardOverview-header {
-    padding: 0 0 0.5rem 0.8rem;
-}
-
-.dashboardCards-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* 2 cards per row */
-    gap: clamp(1.01rem, 2vw, 1.5rem);
-    align-items: stretch;
-    /* equal heights per row */
-}
-
-
-.graphs {
-    gap: 3rem;
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-}
-
-@media only screen and (min-width: 800px) {
     .dashboardOverview {
         margin-top: 1rem;
         gap: .5rem;
@@ -55,12 +19,94 @@
         width: 100%;
     }
 
-
-}
-
-@media only screen and (min-width: 1000px) {
-    .graphs {
-        flex-direction: row;
+    .dashboard-title {
+        font-size: clamp(1.2rem, 2.5vw, 1.3rem);
+        color: var(--text-dark);
+        font-family: var(--font-body);
+        font-weight: 400;
+        margin-left: .3rem;
     }
 
-}
+    .dashboardOverview-header {
+        padding: 0 0 0.5rem 0.8rem;
+    }
+
+    /* -----------------------
+   DESKTOP (default)
+------------------------ */
+    .dashboardCards-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        /* ✔ FIX: 4 cards per row */
+        gap: clamp(1rem, 2vw, 1.5rem);
+        align-items: stretch;
+    }
+
+    /* -----------------------
+   TABLET (max-width 1200px)
+------------------------ */
+    @media only screen and (max-width: 1200px) {
+        .dashboardCards-row {
+            grid-template-columns: repeat(2, 1fr);
+            /* ✔ Tablet: 2 cards per row */
+        }
+
+        .charts-row {
+            height: 450px;
+            gap: 1.5rem;
+        }
+    }
+
+    /* -----------------------
+   MOBILE (max-width 800px)
+------------------------ */
+    @media only screen and (max-width: 800px) {
+        .dashboardOverview {
+            margin: 1.5rem 0 2rem 0;
+            border-radius: 1.5rem;
+        }
+
+        .dashboard-title {
+            font-size: clamp(1.2rem, 2.5vw, 1.3rem);
+            color: var(--text-dark);
+            font-family: var(--font-body);
+            font-weight: 400;
+            margin-left: .3rem;
+
+        }
+
+        .dashboardOverview-header {
+            padding: 0 0 0.5rem 0.8rem;
+        }
+
+        .dashboardCards-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* 2 cards per row */
+            gap: clamp(1.01rem, 2vw, 1.5rem);
+            align-items: stretch;
+            /* equal heights per row */
+        }
+
+    }
+
+    /* -----------------------
+   MOBILE CHART STACKING
+------------------------ */
+    @media only screen and (max-width: 768px) {
+        .charts-row {
+            flex-direction: column;
+            height: auto;
+            gap: 1.5rem;
+        }
+
+        .charts-row>* {
+            min-width: 100%;
+            height: 400px;
+        }
+
+        .mood-row,
+        .workload-row {
+            margin-top: 1.5rem;
+        }
+    }
