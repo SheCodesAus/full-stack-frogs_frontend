@@ -1,14 +1,10 @@
 import './DashboardView.css'
-import WorkloadPieChart from '../components/WorkloadPieChart'
-import NeedsAttentionBox from './NeedsAttention'
-import DashboardCard from './DashboardCard';
-import WeeklyComparison from '../components/WeeklyComparison';
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
-import CardIcon from './CardIcon';
+import DashboardCard from './DashboardCard'
+import WeeklyComparison from '../components/WeeklyComparison'
+import PieChart from '../components/PieChart'
+import NeedsAttention from './NeedsAttention'
 
-
-
-export default function DashboardView({ logs, team }) {
+export default function DashboardView({ logs }) {
     const avgMood = logs.length > 0
         ? (logs.reduce((sum, log) => sum + log.mood_value, 0) / logs.length).toFixed(1)
         : 0;
@@ -16,29 +12,27 @@ export default function DashboardView({ logs, team }) {
         ? (logs.reduce((sum, log) => sum + log.workload_value, 0) / logs.length).toFixed(1)
         : 0;
 
-
     return (
         <div className='dashboardView-container'>
-            <section>
-                <div className="dashboardOverview">
-                    <div className='dashboardOverview-header flex align-center'>
-                        <span><CardIcon icon={faCalendar} size='lg' color={'var(--primary)'} /></span>
-                        <span><h1 className='dashboard-title'>Week at a glance</h1></span>
-                    </div>
-                    <div className="dashboardCards-row">
-                        <DashboardCard title='Check-in Rate' number='100%' detail='19/19 this week' />
-                        <DashboardCard title='Needs Attention' number='2' detail='members' />
-                        <DashboardCard title='Average Mood' number={avgMood} detail='Out of 4.0' />
-                        <DashboardCard title='Average Workflow' number={avgWorkflow} detail='Out of 4.0' />
-                    </div>
-                </div>
+            <section className="dashboardOverview flex justify-center">
+                <DashboardCard title='Check-in Rate' number='100%' detail='19/19 this week' />
+                <DashboardCard title='Needs Attention' number='2' detail='members' />
+                <DashboardCard title='Average Mood' number={avgMood} detail='Out of 4.0' />
+                <DashboardCard title='Average Workflow' number={avgWorkflow} detail='Out of 4.0' />
             </section>
-            <NeedsAttentionBox logs={logs} />
-            <section className='charts-section flex justify-center gap-4'>
-                <WeeklyComparison />
-                <WorkloadPieChart />
+            <NeedsAttention logs={logs} />
+            
+            {/* Mood Charts Row */}
+            <section className='charts-row mood-row'>
+                <WeeklyComparison chartType="mood" />
+                <PieChart chartType="mood" />
+            </section>
+
+            {/* Workload Charts Row */}
+            <section className='charts-row workload-row'>
+                <WeeklyComparison chartType="workload" />
+                <PieChart chartType="workload" />
             </section>
         </div>
-
     )
 }
