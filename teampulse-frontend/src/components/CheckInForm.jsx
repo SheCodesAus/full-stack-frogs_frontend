@@ -74,6 +74,11 @@ export default function CheckInForm() {
             return;
         }
 
+        if (!auth?.token) {
+            setErrorMessage("You must be logged in to submit a check-in.");
+            return;
+        }
+
         setIsSubmitting(true);
 
         const payload = {

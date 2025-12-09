@@ -46,7 +46,7 @@ function SignupForm() {
             if (createdUser.user?.is_staff) {
                 navigate("/dashboard");
             } else {
-                navigate("/checkin");
+                navigate("/login");
             }
 
         } catch (err) {
