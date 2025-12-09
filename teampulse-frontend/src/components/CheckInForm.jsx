@@ -95,6 +95,7 @@ export default function CheckInForm() {
             setMood(null);
             setWorkload(null);
             setNotes("");
+            navigate("/user-dashboard");
         } catch (err) {
             console.error(err);
             setErrorMessage(err.message || "Check-in failed.");

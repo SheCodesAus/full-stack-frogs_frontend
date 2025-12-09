@@ -35,14 +35,11 @@ export const AuthProvider = (props) => {
                 console.log("✅ Auth recorded successfully!");
                 console.log("🔑 Token:", auth.token);
                 console.log("👤 User:", res.data);
-                
+
             } catch (err) {
                 console.error("Failed to restore user:", err);
-                localStorage.removeItem("token");
-                setAuth({
-                    token: null,
-                    user: null,
-                });
+                setAuth((prev) => ({ ...prev, user: null }));
+
             } finally {
                 setLoading(false);
             }
