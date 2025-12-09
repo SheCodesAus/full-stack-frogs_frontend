@@ -47,13 +47,13 @@ export default function DashboardView({ logs, participationRate, teamCount, logs
         });
 
         return Object.values(memberMap).filter(member =>
-            Math.round(member.mood_value) === 1 || Math.round(member.workload_value) === 1
+            Math.round(member.mood_value) === 1 ||
+            Math.round(member.workload_value) === 1
         ).length;
     }, [logs]);
 
     return (
         <div className='dashboardView-container'>
-
             <section>
                 <div className="dashboardOverview">
                     <div className='dashboardOverview-header flex align-center'>
