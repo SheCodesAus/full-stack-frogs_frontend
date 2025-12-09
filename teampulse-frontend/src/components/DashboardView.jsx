@@ -1,5 +1,5 @@
 import './DashboardView.css'
-import WorkloadPieChart from '../components/WorkloadPieChart'
+import PieChart from '../components/PieChart'
 import NeedsAttentionBox from './NeedsAttention'
 import DashboardCard from './DashboardCard';
 import WeeklyComparison from '../components/WeeklyComparison';
@@ -39,7 +39,7 @@ export default function DashboardView({ logs, participationRate,teamCount,logsCo
             <NeedsAttentionBox logs={logs} />
             <section className='charts-section flex justify-center gap-4'>
                 <WeeklyComparison team={team} moodData={moodDataForTeam}/>
-                <WorkloadPieChart />
+                <PieChart />
             </section>
 
             {/* Workload Charts Row */}
