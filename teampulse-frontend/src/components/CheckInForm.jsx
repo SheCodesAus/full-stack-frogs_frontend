@@ -85,15 +85,6 @@ export default function CheckInForm() {
     return (
         <div className="survey-container">
 
-            <div className="top-bar">
-                <button
-                    type="button"
-                    className="dashboard-btn"
-                    onClick={() => navigate("/user-dashboard")}
-                >
-                    Go to Dashboard
-                </button>
-            </div>
 
             <h2>Share how you are, so we can help build a better workplace together</h2>
 
