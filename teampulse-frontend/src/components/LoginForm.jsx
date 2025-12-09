@@ -3,23 +3,22 @@ import { useNavigate } from "react-router-dom";
 import "./LoginForm.css";
 import { useAuth } from "../hooks/use-auth";
 
-
+// ISO week helper
 function getISOWeekNumber(date = new Date()) {
     const target = new Date(date.valueOf());
-
-    // ISO week date: Monday = 1, Sunday = 7
     const dayNr = (date.getDay() + 6) % 7;
-
-    // set target to nearest Thursday (current date + 4 - dayNr)
     target.setDate(target.getDate() - dayNr + 3);
 
-    // First Thursday of the ISO year
     const firstThursday = new Date(target.getFullYear(), 0, 4);
 
-    // Calculate full weeks to nearest Thursday
-    const weekNumber = 1 + Math.round(
-        ((target - firstThursday) / 86400000 - 3 + ((firstThursday.getDay() + 6) % 7)) / 7
-    );
+    const weekNumber =
+        1 +
+        Math.round(
+            ((target - firstThursday) / 86400000 -
+                3 +
+                ((firstThursday.getDay() + 6) % 7)) /
+                7
+        );
 
     return weekNumber;
 }
@@ -37,7 +36,7 @@ function LoginForm() {
         setError("");
 
         try {
-
+            // 🔹 1. LOGIN request
             const response = await fetch(
                 `${import.meta.env.VITE_API_URL}/api-token-auth/`,
                 {
@@ -56,41 +55,63 @@ function LoginForm() {
 
             const token = data.token;
 
-            // Save token
+            // 🔹 2. Save token FIRST
             window.localStorage.setItem("token", token);
 
-            // Update context with token
+            // 🔹 3. Add token to context early
             setAuth({ token });
 
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/me/`, {
+            // 🔹 4. Fetch user basic data from /me
+            const meRes = await fetch(`${import.meta.env.VITE_API_URL}/me/`, {
                 headers: { Authorization: `Token ${token}` },
             });
 
-            const userData = await res.json();
+            const meData = await meRes.json();
+            const userId = meData.id;
 
+            // 🔹 5. Fetch full user info (with logs) from /users/:id
+            const fullUserRes = await fetch(
+                `${import.meta.env.VITE_API_URL}/users/${userId}`,
+                {
+                    headers: { Authorization: `Token ${token}` },
+                }
+            );
 
+            const userData = await fullUserRes.json();
+
+            // Update auth context with full user data
             setAuth({ token, user: userData });
 
+            // 🔹 6. Manager redirect
             if (userData.is_staff) {
                 navigate("/manager-dashboard");
                 return;
             }
 
-
+            // 🔹 7. Determine current year-week
             const now = new Date();
             const weekIndex = getISOWeekNumber(now);
             const paddedWeek = String(weekIndex).padStart(2, "0");
             const currentYearWeek = Number(`${now.getFullYear()}${paddedWeek}`);
-            console.log("👉 CURRENT YEAR WEEK:", `${now.getFullYear()}${paddedWeek}`);
 
-            const hasCheckedIn = userData.logged_pulses?.some(
-                (pulse) => pulse.year_week === currentYearWeek
-            );
+            // 🔹 8. Logs check
+            if (!userData.logged_pulses || userData.logged_pulses.length === 0) {
+                console.log("No logs found for this user.");
+            }
 
+            console.log("🔥 userData.logged_pulses:", userData.logged_pulses);
+
+            const hasCheckedIn = userData.logged_pulses?.some((pulse) => {
+                // console.log("pulse.year_week:", pulse.year_week);
+                // console.log("currentYearWeek:", currentYearWeek);
+                return pulse.year_week === currentYearWeek;
+            });
+
+            // 🔹 9. Redirect based on check-in status
             if (hasCheckedIn) {
-                navigate("/user-dashboard");   // Already submitted this week
+                navigate("/user-dashboard");
             } else {
-                navigate("/checkin");          // Needs to submit
+                navigate("/checkin");
             }
 
         } catch (err) {

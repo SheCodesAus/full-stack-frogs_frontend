@@ -18,19 +18,19 @@ function DashboardPage() {
     const { auth, setAuth } = useAuth();
 
     useEffect(() => {
-    async function fetchLogs() {
-        if (!auth?.token) return; 
+        async function fetchLogs() {
+            if (!auth?.token) return;
 
-        try {
-            const data = await getAllCheckIns(auth.token); 
-            setPulseLogs(data);
-        } catch (error) {
-            console.error("Failed to fetch pulse logs:", error);
+            try {
+                const data = await getAllCheckIns(auth.token);
+                setPulseLogs(data);
+            } catch (error) {
+                console.error("Failed to fetch pulse logs:", error);
+            }
         }
-    }
 
-    fetchLogs();
-}, [auth.token]);
+        fetchLogs();
+    }, [auth.token]);
 
     const myTeams = useMemo(() => {
         if (!auth) {
@@ -55,7 +55,24 @@ function DashboardPage() {
         if (!selectedTeam) return [];
         return pulseLogs.filter(log => log.team === selectedTeam);
     }, [pulseLogs, selectedTeam]);
-    
+
+    const selectedTeamObj = useMemo(() => {
+        return teams.find((t) => t.id === selectedTeam);
+    }, [teams, selectedTeam]);
+
+    // Participation rate
+
+    const totalMembers = selectedTeamObj?.user_count;
+
+    const participationRate = useMemo(() => {
+        if (!selectedTeamObj) return 0;
+        if (totalMembers === 0) return 0;
+
+        return teamLogs.length / totalMembers;
+    }, [teamLogs, selectedTeamObj]);
+
+    const participationPercentage = Math.round(participationRate * 100);
+
     if (teams.length === 0) {
         return <Loader />;
     }
@@ -115,7 +132,7 @@ function DashboardPage() {
 
             </div>
             {view === "checkins" && <AllCheckinsView logs={teamLogs} />}
-            {view === "dashboard" && <DashboardView logs={teamLogs} />}
+            {view === "dashboard" && <DashboardView participationRate={participationPercentage} teamCount={totalMembers } logs={teamLogs} logsCounts={teamLogs.length} team={selectedTeam}/>}
         </section>
     )
 };

@@ -1,90 +1,85 @@
-.raw-data-container {
-    padding: 2rem;
-    margin: 2rem auto;
-    max-width: 1000px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    backdrop-filter: blur(10px);
-    font-family: var(--font-body);
-}
-
-.raw-data-container h2 {
-    color: var(--text-dark);
-    margin-bottom: 1rem;
-}
-
-.raw-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.raw-table th,
-.raw-table td {
-    border: 1px solid rgba(0,0,0,0.1);
-    padding: 12px 15px;
-    text-align: left;
-}
-
-.raw-table th {
-    background-color: var(--primary);
-    color: white;
-    font-weight: 600;
-}
-
-.raw-table tr:nth-child(even) {
-    background-color: rgba(168, 216, 196, 0.1);
-}
-
-.raw-table tr:hover {
-    background-color: rgba(168, 216, 196, 0.2);
-    transform: translateY(-1px);
-    transition: all 0.2s ease;
-}
-
-.raw-table td {
-    vertical-align: middle;
-}
-
-.checkin-card {
-    background: radial-gradient(178.94% 106.41% at 26.42% 106.41%,
-            rgba(252, 231, 200, 0.4) 0%,
-            rgba(255, 255, 255, 0) 71.88%), #F7F9FB;
-    padding: 1rem 1.5rem;
-    color: var(--text-dark);
-    border-radius: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    display: flex;
-    justify-content: space-between; /* coloca os campos lado a lado */
-    align-items: center;
-    width: 80%;
-    margin: 0.5rem auto; /* centraliza e dá espaçamento entre cards */
-    transition: all 0.2s ease;
-}
-
-.checkin-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-.checkin-field {
+.manager-checkins-list {
+    margin-top: 1.5rem;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    min-width: 100px;
-    padding: 0 0.5rem;
+    gap: 0.85rem;
 }
 
-.checkin-field strong {
+.manager-checkin-card {
+    background: linear-gradient(135deg, #ffffff, #f9f5ff);
+    border-radius: 18px;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.manager-section{
+    color: var(--text-dark);
+    
+}
+/* Header */
+.manager-checkin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.manager-checkin-date {
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.55);
+}
+
+.manager-checkin-badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: var(--highlight);
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Name + tags */
+.manager-checkin-info-row {
+    margin-top: 0.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.manager-checkin-name {
+    font-size: 0.95rem;
     font-weight: 500;
-    color: #555;
 }
 
-.timestamp {
-    font-size: 0.875rem;
-    color: #888;
-    text-align: right;
+.manager-checkin-tags {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.manager-chip {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.manager-chip--mood {
+    background: rgba(168, 216, 196, 0.25);
+}
+
+.manager-chip--workload {
+    background: rgba(218, 213, 248, 0.25);
+}
+
+.manager-checkin-comment {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+    .manager-checkin-info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+    }
 }
