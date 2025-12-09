@@ -10,7 +10,6 @@ import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import CheckInPage from "./pages/CheckInPage.jsx";
-import QuotePage from "./pages/QuotePage.jsx";
 import ManagerDashboardPage from "./pages/ManagerDashboardPage.jsx";
 import NavBar from './components/NavBar.jsx';
 import ManagerOnly from "./components/ManagerOnly";
@@ -32,7 +31,6 @@ const router = createBrowserRouter([
       { path: "/signup", element: <SignupPage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/checkin", element: <CheckInPage /> },
-      { path: "/quote", element: <QuotePage /> },
       { path: "/user-dashboard", element: <UserDashboardPage /> },
       {
         path: "/no-permission",

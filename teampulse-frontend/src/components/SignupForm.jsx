@@ -31,11 +31,11 @@ function SignupForm() {
         try {
             const createdUser = await postSignup({
                 username,
-                firstName,
-                surname,
+                first_name: firstName,
+                last_name: surname,
                 email,
                 password,
-                teamId,
+                team: teamId,
             });
 
             console.log("SIGNUP SUCCESS:", createdUser);
