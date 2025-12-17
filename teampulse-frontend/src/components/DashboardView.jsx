@@ -37,9 +37,9 @@ export default function DashboardView({ logs, participationRate,teamCount,logsCo
                 </div>
             </section>
             <NeedsAttentionBox logs={logs} />
-            <section className='charts-section flex justify-center gap-4'>
+            <section className='charts-row mood-row'>
                 <WeeklyComparison team={team} moodData={moodDataForTeam}/>
-                <PieChart />
+                <PieChart chartType="mood"/>
             </section>
 
             {/* Workload Charts Row */}

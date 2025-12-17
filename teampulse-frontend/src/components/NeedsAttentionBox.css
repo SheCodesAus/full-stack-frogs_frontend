@@ -5,6 +5,9 @@
     margin: 2rem 0;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     border-left: 5px solid #f97316;
+    width: 81vw;
+    max-width: 1300px;
+    
 }
 
 .attention-header {
@@ -140,7 +143,7 @@
 @media only screen and (max-width: 768px) {
     .needs-attention-box {
         padding: 1.5rem;
-        margin: 1.5rem 0;
+        margin: 0.5rem 0;
     }
 
     .flag-item {

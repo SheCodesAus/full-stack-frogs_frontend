@@ -17,7 +17,10 @@ const chartConfig = {
       { description: "Calm", count: 12 },
       { description: "Empowered", count: 8 }
     ],
-    colors: ["#1d4730ff", "#376e4cff", "#7ab28dff", "#a7f4bcff"]
+    colors: ["#8a5a44", "#b07d62", "#d69f7e", "#edc4b3"]
+    // colors: ["#1d4730ff", "#376e4cff", "#7ab28dff", "#a7f4bcff"]
+
+
   },
   workload: {
     title: "Current Team Workload Distribution",
@@ -27,7 +30,10 @@ const chartConfig = {
       { description: "Manageable Load", count: 10 },
       { description: "Light", count: 5 }
     ],
-    colors: ["#ca7e04ff", "#ffab23ff", "#edc356ff", "#f3e699ff"]
+    colors: ["#415d43", "#709775", "#8fb996", "#a1cca5"]
+    // colors: ["#ca7e04ff", "#ffab23ff", "#edc356ff", "#f3e699ff"]
+
+
   }
 };
 
