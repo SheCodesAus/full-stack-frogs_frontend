@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './WeeklyComparison.css'
 import Button from './ButtonComponent';
+import Loader from './Loader';
 
 function useIsDesktop(minWidth = 800) {
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= minWidth);
@@ -15,14 +16,17 @@ function useIsDesktop(minWidth = 800) {
     return isDesktop;
 }
 
-const moodLabels = {
-    1: "Angry",
-    2: "Anxious",
-    3: "Calm",
-    4: "Empowered",
-};
+export default function LineChartExample({ chartType, isAnimationActive = true, team, logs, data, moods = [], workloads = [] }) {
 
-export default function LineChartExample({ isAnimationActive = true, team, logs, moodData }) {
+    // const moodLabels = moods.reduce((acc, mood) => {
+    //     acc[mood.value] = mood.description;
+    //     return acc;
+    // }, {});
+
+    const labels =
+        chartType === "mood"
+            ? Object.fromEntries((moods ?? []).map(m => [m.value, m.description]))
+            : Object.fromEntries((workloads ?? []).map(w => [w.value, w.description]));
 
     return (
         <div className='weeklyComparisonContainer'>
@@ -40,7 +44,7 @@ export default function LineChartExample({ isAnimationActive = true, team, logs,
                     aspectRatio: 1.68,
                     padding: '6%'
                 }}
-                data={moodData}
+                data={data}
             >
                 <CartesianGrid strokeDasharray="3 3" />
 
@@ -50,7 +54,7 @@ export default function LineChartExample({ isAnimationActive = true, team, logs,
                     width="auto"
                     domain={[1, 4]}
                     ticks={[1, 2, 3, 4]}
-                    tickFormatter={(value) => moodLabels[value]}
+                    tickFormatter={(value) => labels[value]}
                     tickLine={false}
                     axisLine={false}
                     padding={{ bottom: 35 }}

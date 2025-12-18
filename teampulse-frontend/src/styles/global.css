@@ -114,7 +114,7 @@ html::after {
 
 body {
     font-family: var(--font-body);
-    color: var(--secondary-text);
+    color: var(--text-dark);
 }
 
 h1,

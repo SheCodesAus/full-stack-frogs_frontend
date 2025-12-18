@@ -17,8 +17,7 @@
 
 .dashboard-btn:hover {
     letter-spacing: 1.7px;
-    background-image: none;
-
+    background-color: var(--background)
 }
 
 .dashboard-btn:active {
@@ -29,6 +28,7 @@
     color: hsl(0, 0%, 100%);
     transition: 200ms;
 }
+
 .dashboard-btn.selected {
     letter-spacing: 1.7px;
     background-color: var(--primary);
@@ -41,20 +41,20 @@
 
 @media only screen and (min-width: 800px) {
     .dashboard-btn {
-    min-height: 2.8rem;
-    min-width: 8rem;
-    font-weight: 600;
-    font-size: var(--text-base);
-    padding: 1rem 3.2rem;
-    margin: var(--text-xxs);
-    font-family: var(--font-body);
-    border-radius: 40px;
-    color: var(--text-dark);
-    background-color: var(--background);
-    letter-spacing: 1.2px;
-    transition: all 0.5s;
-    cursor: pointer;
-    border: none;
-}
+        min-height: 2.8rem;
+        min-width: 8rem;
+        font-weight: 600;
+        font-size: var(--text-base);
+        padding: 1rem 3.2rem;
+        margin: var(--text-xxs);
+        font-family: var(--font-body);
+        border-radius: 40px;
+        color: var(--text-dark);
+        background-color: var(--background);
+        letter-spacing: 1.2px;
+        transition: all 0.5s;
+        cursor: pointer;
+        border: none;
+    }
 
 }

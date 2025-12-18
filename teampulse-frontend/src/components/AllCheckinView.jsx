@@ -1,19 +1,5 @@
 import './AllCheckinView.css'
 
-const MOOD_LABELS = {
-    1: "Angry",
-    2: "Anxious",
-    3: "Calm",
-    4: "Empowered",
-};
-
-const WORKLOAD_LABELS = {
-    1: "Overwhelmed",
-    2: "Under pressure",
-    3: "Manageable load",
-    4: "Light",
-};
-
 function formatDate(timestampLocal) {
     if (!timestampLocal) return "";
     const date = new Date(timestampLocal);
@@ -45,12 +31,9 @@ export default function AllCheckinsView({ logs }) {
 
             <div className="manager-checkins-list">
                 {sorted.map((item) => {
-                    const mood = MOOD_LABELS[item.mood_value ?? item.mood];
-                    const workload = WORKLOAD_LABELS[item.workload_value ?? item.workload];
-
                     return (
                         <article key={item.id} className="manager-checkin-card">
-                            {/* Header */}
+                            {/* Date */}
                             <div className="manager-checkin-header">
                                 <p className="manager-checkin-date">
                                     Week {item.week_index} • {formatDate(item.timestamp_local)}
@@ -58,26 +41,29 @@ export default function AllCheckinsView({ logs }) {
                                 <span className="manager-checkin-badge">Check-in</span>
                             </div>
 
-                            {/* Name + Tags */}
+                            {/* Names */}
                             <div className="manager-checkin-info-row">
                                 <p className="manager-checkin-name">
                                     {item.first_name} {item.last_name}
                                 </p>
+                            </div>
 
+                            {/* Comment + Tags */}
+                            <div className="manager-checkin-info-row">
+                                {item.comment && item.comment.trim() !== ""
+                                    ? <p className="manager-checkin-comment">“{item.comment}”</p>
+                                    : <p className="manager-checkin-comment">The user didn't leave any comment.</p>
+                                }
                                 <div className="manager-checkin-tags">
                                     <span className="manager-chip manager-chip--mood">
-                                        {mood}
+                                        {item.mood_description}
                                     </span>
                                     <span className="manager-chip manager-chip--workload">
-                                        {workload}
+                                        {item.workload_description}
                                     </span>
                                 </div>
                             </div>
 
-                            {/* Comment */}
-                            {item.comment && item.comment.trim() !== "" && (
-                                <p className="manager-checkin-comment">“{item.comment}”</p>
-                            )}
                         </article>
                     );
                 })}

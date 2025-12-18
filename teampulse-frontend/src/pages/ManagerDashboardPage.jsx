@@ -4,33 +4,26 @@ import './ManagerDashboardPage.css'
 import DashboardButton from '../components/DashboardButton';
 import DashboardView from '../components/DashboardView';
 import AllCheckinsView from '../components/AllCheckinView';
-import useTeams from '../hooks/use-teams';
 import Loader from '../components/Loader'
+
 import { useAuth } from '../hooks/use-auth';
-import getAllCheckIns from '../api/get-all-checkins';
+import useTeams from '../hooks/use-teams';
+import useCheckins from '../hooks/use-checkins';
+import useMoods from '../hooks/use-moods';
+import useWorkloads from '../hooks/use-workloads';
+
 
 function DashboardPage() {
-    const { teams } = useTeams();
-    const [view, setView] = useState("dashboard");
-    const [selectedTeam, setSelectedTeam] = useState(null);
-    const [pulseLogs, setPulseLogs] = useState([]);
-    const [showPlaceholder, setShowPlaceholder] = useState(true);
+    const { teams, teamisLoading } = useTeams();
+    const { moods, moodisLoading } = useMoods();
+    const { workloads, workloadisLoading } = useWorkloads();
+    const { pulseLogs, checkinisLoading } = useCheckins();
     const { auth, setAuth } = useAuth();
 
-    useEffect(() => {
-        async function fetchLogs() {
-            if (!auth?.token) return;
+    const [view, setView] = useState("dashboard");
+    const [selectedTeam, setSelectedTeam] = useState(null);
+    const [showPlaceholder, setShowPlaceholder] = useState(true);
 
-            try {
-                const data = await getAllCheckIns(auth.token);
-                setPulseLogs(data);
-            } catch (error) {
-                console.error("Failed to fetch pulse logs:", error);
-            }
-        }
-
-        fetchLogs();
-    }, [auth.token]);
 
     const myTeams = useMemo(() => {
         if (!auth) {
@@ -73,9 +66,17 @@ function DashboardPage() {
 
     const participationPercentage = Math.round(participationRate * 100);
 
-    if (teams.length === 0) {
+
+    const isLoading =
+        moodisLoading ||
+        teamisLoading ||
+        checkinisLoading ||
+        workloadisLoading;
+
+    if (isLoading) {
         return <Loader />;
     }
+
     if (myTeams.length === 0) {
         return (
             <p className="no-teams-message">
@@ -99,9 +100,11 @@ function DashboardPage() {
                     onClick={() => setView("checkins")}
                 />
             </div>
+
+            {/* mobile view */}
             <div className='dashboard-selects flex justify-center'>
                 <select
-                    className='dashboard-chooseteam-select'
+                    className='dashboard-chooseteam-select-mobile'
                     value={showPlaceholder ? '' : selectedTeam}
                     onChange={(e) => {
                         setSelectedTeam(Number(e.target.value));
@@ -118,6 +121,8 @@ function DashboardPage() {
                 </select>
 
             </div>
+
+            {/* destop view */}
             <div className='dashboard-chooseteam-buttons justify-center'>
                 {myTeams.map((team) => (
                     <DashboardButton
@@ -132,7 +137,14 @@ function DashboardPage() {
 
             </div>
             {view === "checkins" && <AllCheckinsView logs={teamLogs} />}
-            {view === "dashboard" && <DashboardView participationRate={participationPercentage} teamCount={totalMembers } logs={teamLogs} logsCounts={teamLogs.length} team={selectedTeam}/>}
+            {view === "dashboard" && <DashboardView
+                participationRate={participationPercentage}
+                teamCount={totalMembers} 
+                logs={teamLogs}
+                logsCounts={teamLogs.length}
+                team={selectedTeam}
+                moodOption={moods}
+                workloadOption={workloads} />}
         </section>
     )
 };
