@@ -1,17 +1,26 @@
 import './DashboardView.css'
-import WorkloadPieChart from '../components/WorkloadPieChart'
+
+import PieChart from '../components/PieChart'
 import NeedsAttentionBox from './NeedsAttention'
 import DashboardCard from './DashboardCard';
-import WeeklyComparison from '../components/WeeklyComparison';
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import CardIcon from './CardIcon';
+import WeeklyComparison from '../components/WeeklyComparison';
+import Loader from './Loader';
+
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+
 import { teamMoodData } from "../data/mockForTeamMood";
 import { teamWorkflowData } from "../data/mockForTeamWorkflow";
 
 
 
 
-export default function DashboardView({ logs, participationRate,teamCount,logsCounts, team}) {
+export default function DashboardView({ logs, participationRate, teamCount, logsCounts, team, moodOption, workloadOption }) {
+
+    if (!moodOption?.length || !workloadOption?.length) {
+        return <Loader />;
+    }
+
     const avgMood = logs.length > 0
         ? (logs.reduce((sum, log) => sum + log.mood_value, 0) / logs.length).toFixed(1)
         : 0;
@@ -19,6 +28,7 @@ export default function DashboardView({ logs, participationRate,teamCount,logsCo
         ? (logs.reduce((sum, log) => sum + log.workload_value, 0) / logs.length).toFixed(1)
         : 0;
     const moodDataForTeam = teamMoodData[team];
+    const workloadDataForTeam = teamWorkflowData[team];
 
     return (
         <div className='dashboardView-container'>
@@ -37,14 +47,14 @@ export default function DashboardView({ logs, participationRate,teamCount,logsCo
                 </div>
             </section>
             <NeedsAttentionBox logs={logs} />
-            <section className='charts-section flex justify-center gap-4'>
-                <WeeklyComparison team={team} moodData={moodDataForTeam}/>
-                <WorkloadPieChart />
+            <section className='charts-row mood-row'>
+                <WeeklyComparison chartType="mood" team={team} data={moodDataForTeam} moods={moodOption} />
+                <PieChart chartType="mood" />
             </section>
 
             {/* Workload Charts Row */}
             <section className='charts-row workload-row'>
-                <WeeklyComparison chartType="workload" />
+                <WeeklyComparison chartType="workload" team={team} data={workloadDataForTeam} workloads={workloadOption} />
                 <PieChart chartType="workload" />
             </section>
         </div>

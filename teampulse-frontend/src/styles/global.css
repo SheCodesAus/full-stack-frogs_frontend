@@ -18,7 +18,7 @@
     /* GRADIENTS */
     --text-gradient-1: linear-gradient(0deg, #f19a5c, #f9db6f);
     --text-gradient-2: radial-gradient(circle at 0% 0%, #62bfd4, #f1dd76);
-    --background-gradient: linear-gradient(120deg, #FCE7C8, #CFE8FF);
+    --background-gradient: linear-gradient(120deg, #FCE7C8, #dbeaf8);
 
 
     /*TYPOGRAPHY*/
@@ -57,31 +57,65 @@
 }
 
 /* Sematic Styling */
-
+html,
 body {
-    font-family: var(--font-body);
-    color: var(--secondary-text);
-    min-height: 100vh; 
-    background: linear-gradient(120deg, #FCE7C8, #CFE8FF);
-    background-size: 200% 200%;
-    animation: breatheBackground 8s ease-in-out infinite;
-
+    height: 100%;
+    margin: 0;
 }
 
-@keyframes breatheBackground {
-    0% {
-        background-position: 0% 50%;
+body {
+    background: transparent;
+}
+
+/* make sure app wrappers aren’t painting white */
+#root,
+.App,
+main {
+    background: transparent;
+}
+
+/* two static gradients */
+html::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background: linear-gradient(120deg, #FCE7C8, #dbeaf8);
+    opacity: 1;
+}
+
+html::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background: linear-gradient(10deg, #dbeaf8, #FCE7C8);
+    opacity: 0;
+    animation: fadeB 20s ease-in-out infinite;
+    /* much slower */
+}
+
+@keyframes fadeB {
+
+    0%,
+    100% {
+        opacity: 0;
     }
 
     50% {
-        background-position: 100% 50%;
+        opacity: 0.25;
     }
 
-    100% {
-        background-position: 0% 50%;
-    }
+    /* subtle = less noticeable when it stutters */
 }
 
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-dark);
+}
 
 h1,
 h2,
@@ -98,39 +132,40 @@ p {
 
 
 /* Utilities Classes */
-.flex{
+.flex {
     display: flex;
-}    
+}
 
-.space-between{
-    justify-content:space-between;
-}    
-.space-around{
-    justify-content:space-around;
-}    
+.space-between {
+    justify-content: space-between;
+}
 
-.column{
+.space-around {
+    justify-content: space-around;
+}
+
+.column {
     flex-direction: column;
 }
 
-.justify-right{
-    justify-content:flex-end;
-}
-.justify-center{
-    justify-content:center;
+.justify-right {
+    justify-content: flex-end;
 }
 
-.align-center{
-    align-items:center;
+.justify-center {
+    justify-content: center;
 }
+
+.align-center {
+    align-items: center;
+}
+
 .teampulse-logo {
     width: clamp(265px, 20vw, 320px);
     overflow: visible;
     display: block;
-    padding: var(--space-3) ;
+    padding: var(--space-3);
 }
 
 
-@media only screen and (min-width: 700px) {
-    
-}
+@media only screen and (min-width: 700px) {}

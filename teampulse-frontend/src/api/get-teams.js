@@ -2,12 +2,10 @@ async function getTeams() {
     const token = window.localStorage.getItem("token");
     const url = `${import.meta.env.VITE_API_URL}/teams`;
 
-    // Build headers object dynamically
     const headers = {
         "Content-Type": "application/json",
     };
 
-    // Only attach auth header if token exists
     if (token) {
         headers.Authorization = `Token ${token}`;
     }
