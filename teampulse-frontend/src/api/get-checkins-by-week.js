@@ -1,18 +1,25 @@
-async function getAllCheckIns(token) {
-
+async function getCheckInsByWeek() {
+    
     const currentDate = new Date();
     const WeekNumber = getISOWeekNumber(currentDate);
-
-
+    
     const url = `${import.meta.env.VITE_API_URL}/pulse_logs/?year_week=${WeekNumber}`;
+    const token = window.localStorage.getItem("token");
+    
+
+    const headers = {
+        "Content-Type": "application/json",
+    };
+
+    if (token) {
+        headers.Authorization = `Token ${token}`;
+    }
 
     const response = await fetch(url, {
         method: "GET",
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`
-        },
+        headers
     });
+
 
     if (!response.ok) {
         const fallbackError = "Error fetching check-ins";
@@ -28,7 +35,7 @@ async function getAllCheckIns(token) {
     return await response.json();
 }
 
-export default getAllCheckIns;
+export default getCheckInsByWeek;
 
 
 

@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import getAllCheckIns from "../api/get-all-checkins";
+import getCheckInsByWeek from "../api/get-checkins-by-week";
 
-export default function useCheckIns() {
-    const [checkins, setCheckins] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+export default function useCheckins() {
+    const [pulseLogs, setCheckins] = useState([]);
+    const [checkinisLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    
     useEffect(() => {
-        getAllCheckIns()
+        getCheckInsByWeek()
             .then((data) => {
                 setCheckins(data);
                 setIsLoading(false);
@@ -19,5 +19,5 @@ export default function useCheckIns() {
             });
     }, []);
 
-    return { checkins, isLoading, error };
+    return { pulseLogs, checkinisLoading, error };
 }

@@ -6,17 +6,18 @@
 }
 
 .manager-checkin-card {
-    background: linear-gradient(135deg, #ffffff, #f9f5ff);
+    background: linear-gradient(135deg, #ffffff, #f4f0fb);
     border-radius: 18px;
     padding: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
-.manager-section{
+.manager-section {
     color: var(--text-dark);
-    
+
 }
-/* Header */
+
+/* Data + checkin badge */
 .manager-checkin-header {
     display: flex;
     justify-content: space-between;
@@ -24,55 +25,61 @@
 }
 
 .manager-checkin-date {
-    font-size: 0.8rem;
+    font-size: 0.83rem;
     color: rgba(0, 0, 0, 0.55);
 }
 
 .manager-checkin-badge {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     padding: 0.2rem 0.6rem;
     border-radius: 999px;
     background: var(--highlight);
     color: rgba(0, 0, 0, 0.7);
+    font-family: var(--font-lore);
+
 }
 
-/* Name + tags */
+/* Name + mood&workflow tags */
 .manager-checkin-info-row {
-    margin-top: 0.4rem;
+    margin-top: 0.3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .manager-checkin-name {
-    font-size: 0.95rem;
+    font-size: var(--text-base);
     font-weight: 500;
 }
 
 .manager-checkin-tags {
     display: flex;
     gap: 0.4rem;
+
 }
 
 .manager-chip {
-    font-size: 0.8rem;
-    padding: 0.25rem 0.7rem;
+    font-size: var(--text-base);
+    padding: 0.3rem 0.9rem;
     border-radius: 999px;
     background: rgba(0, 0, 0, 0.04);
+
 }
 
 .manager-chip--mood {
     background: rgba(168, 216, 196, 0.25);
+
 }
 
 .manager-chip--workload {
     background: rgba(218, 213, 248, 0.25);
+
 }
 
 .manager-checkin-comment {
-    margin-top: 0.6rem;
-    font-size: 0.85rem;
+    margin-top: 0.2rem;
     color: rgba(0, 0, 0, 0.65);
+    font-family: var(--font-lore);
 }
 
 /* Mobile adjustments */

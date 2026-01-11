@@ -4,7 +4,7 @@ import getTeams from '../api/get-teams';
 
 export default function useTeams(){
     const [teams, setTeams] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [teamisLoading, setIsLoading] = useState(true);
     const [error, setError] = useState();
     useEffect(() => {
         getTeams()
@@ -17,6 +17,6 @@ export default function useTeams(){
         })
     },[])
 
-    return {teams, isLoading, error};
+    return {teams, teamisLoading, error};
 
 }   
