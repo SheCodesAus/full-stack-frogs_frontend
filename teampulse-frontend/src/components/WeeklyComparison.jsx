@@ -15,19 +15,50 @@ function useIsDesktop(minWidth = 800) {
 
     return isDesktop;
 }
+// #Data simulation
 
-export default function LineChartExample({ chartType, isAnimationActive = true, team, logs, data, moods = [], workloads = [] }) {
-
-    // const moodLabels = moods.reduce((acc, mood) => {
-    //     acc[mood.value] = mood.description;
-    //     return acc;
-    // }, {});
-
-    const labels =
-        chartType === "mood"
-            ? Object.fromEntries((moods ?? []).map(m => [m.value, m.description]))
-            : Object.fromEntries((workloads ?? []).map(w => [w.value, w.description]));
-
+// Chart configurations
+const chartConfig = {
+    mood: {
+        title: "Weekly trend for Average Team Mood",
+        data: [
+            { week: 'Current', currentPeriod: 3.16, prevPeriod: 2.9 },
+            { week: 'Week 32', currentPeriod: 1.72, prevPeriod: 3 },
+            { week: 'Week 33', currentPeriod: 3.04, prevPeriod: 3.5 },
+            { week: 'Week 34', currentPeriod: 2.32, prevPeriod: 1.8 },
+        ],
+        yAxisDomain: [1, 4],
+        yAxisTicks: [1, 2, 3, 4],
+        tickFormatter: {
+            1: "Angry",
+            2: "Anxious",
+            3: "Calm",
+            4: "Empowered",
+        },
+        lineColor1: "#82ca9d",
+        lineColor2: "#8884d8"
+    },
+    workload: {
+        title: "Weekly trend for Average Team Workload",
+        data: [
+            { week: 'Current', currentPeriod: 3.2, prevPeriod: 3.0 },
+            { week: 'Week 32', currentPeriod: 2.1, prevPeriod: 2.8 },
+            { week: 'Week 33', currentPeriod: 2.5, prevPeriod: 2.9 },
+            { week: 'Week 34', currentPeriod: 2.8, prevPeriod: 2.4 },
+        ],
+        yAxisDomain: [1, 4],
+        yAxisTicks: [1, 2, 3, 4],
+        tickFormatter: {
+            1: "Overwhelmed",
+            2: "Under Pressure",
+            3: "Manageable",
+            4: "Light",
+        },
+        lineColor1: "#fbbf24",
+        lineColor2: "#60a5fa"
+    }
+};
+const LineChartExample = ({ isAnimationActive = true, team, logs, moodData }) => {
     return (
         <div className='weeklyComparisonContainer'>
             <div className='weekly-header'>
