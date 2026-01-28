@@ -7,7 +7,6 @@ import DashboardCard from './DashboardCard';
 import CardIcon from './CardIcon';
 import WeeklyComparison from '../components/WeeklyComparison';
 import Loader from './Loader';
-import { useNeedsAttention } from '../hooks/use-needs-attention.js';
 
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
@@ -15,7 +14,10 @@ import { teamMoodData } from "../data/mockForTeamMood";
 import { teamWorkflowData } from "../data/mockForTeamWorkflow";
 
 export default function DashboardView({ logs, participationRate, teamCount, logsCounts, team, moodOption, workloadOption }) {
-    const { needsAttention } = useNeedsAttention(team);
+    const flaggedCount = useMemo(() => {
+        if (!logs || logs.length === 0) return 0;
+        return logs.filter(log => log.mood === 1 || log.workload === 1).length;
+    }, [logs]);
 
     if (!moodOption?.length || !workloadOption?.length) {
         return <Loader />;
@@ -41,13 +43,13 @@ export default function DashboardView({ logs, participationRate, teamCount, logs
                     </div>
                     <div className="dashboardCards-row">
                         <DashboardCard title='Check-in Rate' number={`${participationRate}%`} detail={`${logsCounts}/${teamCount} this week`} />
-                        <DashboardCard title='Needs Attention' number={needsAttention.length} detail='members' />
+                        <DashboardCard title='Needs Attention' number={flaggedCount} detail='members' />
                         <DashboardCard title='Average Mood' number={avgMood} detail='Out of 4.0' />
                         <DashboardCard title='Average Workflow' number={avgWorkflow} detail='Out of 4.0' />
                     </div>
                 </div>
             </section>
-            <NeedsAttentionBox team={team} />
+            <NeedsAttentionBox logs={logs} />
             <section className='charts-row mood-row'>
                 <WeeklyComparison chartType="mood" team={team} data={moodDataForTeam} moods={moodOption} />
                 <PieChart chartType="mood" />

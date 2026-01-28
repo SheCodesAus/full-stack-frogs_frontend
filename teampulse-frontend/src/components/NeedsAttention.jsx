@@ -1,15 +1,18 @@
-import { useNeedsAttention } from '../hooks/use-needs-attention.js';
+import { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import './NeedsAttentionBox.css';
 
-export default function NeedsAttentionBox({ team }) {
-    const { needsAttention, loading, error } = useNeedsAttention(team);
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-
-    const flaggedMembers = needsAttention;
+export default function NeedsAttentionBox({ logs }) {
+    // Filter for members needing attention from the passed logs
+    const flaggedMembers = useMemo(() => {
+        if (!logs || logs.length === 0) return [];
+        
+        return logs.filter(log => {
+            // Flag if mood is low (1) OR workload is high (1)
+            return log.mood === 1 || log.workload === 1;
+        });
+    }, [logs]);
 
     const getReasonText = (member) => {
         if (member.mood === 1 && member.workload === 1) {
@@ -47,9 +50,9 @@ export default function NeedsAttentionBox({ team }) {
             </div>
             <div className='flagged-members-row'>
                 {flaggedMembers.map((member) => (
-                    <div key={member.user} className={`flag-item severity-${getSeverity(member)}`}>
+                    <div key={member.id} className={`flag-item severity-${getSeverity(member)}`}>
                         <div className='flag-content'>
-                            <p className='member-name'>{member.userName}</p>
+                            <p className='member-name'>{member.first_name} {member.last_name}</p>
                             <p className='flag-reason'>{getReasonText(member)}</p>
                         </div>
                     </div>
