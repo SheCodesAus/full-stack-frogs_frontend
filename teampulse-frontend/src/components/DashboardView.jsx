@@ -1,4 +1,5 @@
 import './DashboardView.css'
+import { useMemo } from 'react';
 
 import PieChart from '../components/PieChart'
 import NeedsAttentionBox from './NeedsAttention'
@@ -12,10 +13,11 @@ import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { teamMoodData } from "../data/mockForTeamMood";
 import { teamWorkflowData } from "../data/mockForTeamWorkflow";
 
-
-
-
 export default function DashboardView({ logs, participationRate, teamCount, logsCounts, team, moodOption, workloadOption }) {
+    const flaggedCount = useMemo(() => {
+        if (!logs || logs.length === 0) return 0;
+        return logs.filter(log => log.mood === 1 || log.workload === 1).length;
+    }, [logs]);
 
     if (!moodOption?.length || !workloadOption?.length) {
         return <Loader />;
@@ -27,6 +29,7 @@ export default function DashboardView({ logs, participationRate, teamCount, logs
     const avgWorkflow = logs.length > 0
         ? (logs.reduce((sum, log) => sum + log.workload_value, 0) / logs.length).toFixed(1)
         : 0;
+
     const moodDataForTeam = teamMoodData[team];
     const workloadDataForTeam = teamWorkflowData[team];
 
@@ -40,7 +43,7 @@ export default function DashboardView({ logs, participationRate, teamCount, logs
                     </div>
                     <div className="dashboardCards-row">
                         <DashboardCard title='Check-in Rate' number={`${participationRate}%`} detail={`${logsCounts}/${teamCount} this week`} />
-                        <DashboardCard title='Needs Attention' number='2' detail='members' />
+                        <DashboardCard title='Needs Attention' number={flaggedCount} detail='members' />
                         <DashboardCard title='Average Mood' number={avgMood} detail='Out of 4.0' />
                         <DashboardCard title='Average Workflow' number={avgWorkflow} detail='Out of 4.0' />
                     </div>
@@ -52,7 +55,6 @@ export default function DashboardView({ logs, participationRate, teamCount, logs
                 <PieChart chartType="mood" />
             </section>
 
-            {/* Workload Charts Row */}
             <section className='charts-row workload-row'>
                 <WeeklyComparison chartType="workload" team={team} data={workloadDataForTeam} workloads={workloadOption} />
                 <PieChart chartType="workload" />

@@ -1,56 +1,33 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle, faAngry, faFire } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import './NeedsAttentionBox.css';
 
 export default function NeedsAttentionBox({ logs }) {
+    // Filter for members needing attention from the passed logs
     const flaggedMembers = useMemo(() => {
         if (!logs || logs.length === 0) return [];
-
-        const memberMap = {};
-
-        logs.forEach(log => {
-            if (!memberMap[log.user_id]) {
-                memberMap[log.user_id] = {
-                    user_id: log.user_id,
-                    name: `${log.user_firstname} ${log.user_lastname}`,
-                    mood_value: log.mood_value,
-                    workload_value: log.workload_value,
-                    timestamp: log.timestamp
-                };
-            } else {
-                // Keep the most recent entry
-                if (new Date(log.timestamp) > new Date(memberMap[log.user_id].timestamp)) {
-                    memberMap[log.user_id] = {
-                        user_id: log.user_id,
-                        name: `${log.user_firstname} ${log.user_lastname}`,
-                        mood_value: log.mood_value,
-                        workload_value: log.workload_value,
-                        timestamp: log.timestamp
-                    };
-                }
-            }
+        
+        return logs.filter(log => {
+            // Flag if mood is low (1) OR workload is high (1)
+            return log.mood === 1 || log.workload === 1;
         });
-
-        return Object.values(memberMap).filter(member => 
-            member.mood_value === 1 || member.workload_value === 1
-        );
     }, [logs]);
 
-    const getSeverity = (member) => {
-        if (member.mood_value === 1 && member.workload_value === 1) return 'critical';
-        if (member.mood_value === 1) return 'high';
-        return 'medium';
+    const getReasonText = (member) => {
+        if (member.mood === 1 && member.workload === 1) {
+            return 'Low mood & Overwhelmed';
+        }
+        if (member.mood === 1) {
+            return 'Low mood';
+        }
+        return 'Overwhelmed';
     };
 
-    const getReasonText = (member) => {
-        if (member.mood_value === 1 && member.workload_value === 1) {
-            return 'Low mood & overwhelmed with workload';
-        }
-        if (member.mood_value === 1) {
-            return 'Low mood detected';
-        }
-        return 'Overwhelmed with workload';
+    const getSeverity = (member) => {
+        if (member.mood === 1 && member.workload === 1) return 'critical';
+        if (member.mood === 1) return 'high';
+        return 'medium';
     };
 
     if (flaggedMembers.length === 0) {
@@ -71,22 +48,13 @@ export default function NeedsAttentionBox({ logs }) {
                 <FontAwesomeIcon icon={faExclamationTriangle} className='attention-icon' />
                 <h3>Attention Needed</h3>
             </div>
-            <div className='flagged-members'>
+            <div className='flagged-members-row'>
                 {flaggedMembers.map((member) => (
-                    <div key={member.user_id} className={`flag-item severity-${getSeverity(member)}`}>
-                        <div className='flag-left'>
-                            <FontAwesomeIcon 
-                                icon={member.mood_value === 1 ? faAngry : faFire} 
-                                className='flag-icon'
-                            />
-                            <div className='flag-info'>
-                                <p className='member-name'>{member.name}</p>
-                                <p className='flag-reason'>{getReasonText(member)}</p>
-                            </div>
+                    <div key={member.id} className={`flag-item severity-${getSeverity(member)}`}>
+                        <div className='flag-content'>
+                            <p className='member-name'>{member.first_name} {member.last_name}</p>
+                            <p className='flag-reason'>{getReasonText(member)}</p>
                         </div>
-                        <span className={`severity-badge severity-${getSeverity(member)}`}>
-                            {getSeverity(member).toUpperCase()}
-                        </span>
                     </div>
                 ))}
             </div>
