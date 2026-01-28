@@ -1,0 +1,258 @@
+.garden-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.garden-card {
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 24px;
+    padding: 1.4rem 1.5rem;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
+}
+
+.garden-summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.garden-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.7rem;
+    color: rgba(0, 0, 0, 0.45);
+    margin-bottom: 0.3rem;
+}
+
+.garden-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.garden-points {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), #f4efe6);
+    border-radius: 18px;
+    padding: 0.7rem 1.1rem;
+    text-align: center;
+    min-width: 120px;
+}
+
+.garden-points-number {
+    font-size: 1.6rem;
+    font-weight: 700;
+    display: block;
+}
+
+.garden-points-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.garden-progress {
+    margin-top: 1.2rem;
+}
+
+.garden-progress-bar {
+    height: 10px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.garden-progress-fill {
+    height: 100%;
+    background: linear-gradient(120deg, #a8d8c4, #fce7c8);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+}
+
+.garden-progress-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: rgba(0, 0, 0, 0.55);
+    margin-top: 0.6rem;
+}
+
+.garden-canvas-card {
+    padding: 1.2rem;
+}
+
+.garden-canvas {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    min-height: 260px;
+    background: linear-gradient(120deg, #fff8ee, #f6f9f4);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.garden-canvas-sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(207, 232, 255, 0.9), rgba(255, 255, 255, 0.2));
+    z-index: 0;
+}
+
+.garden-canvas-ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+    background: linear-gradient(180deg, rgba(168, 216, 196, 0.7), rgba(233, 245, 232, 0.9));
+    z-index: 1;
+}
+
+.garden-landscape--australian-landscape .garden-canvas-sky {
+    background: linear-gradient(180deg, rgba(252, 231, 200, 0.85), rgba(255, 255, 255, 0.25));
+}
+
+.garden-landscape--australian-landscape .garden-canvas-ground {
+    background: linear-gradient(180deg, rgba(248, 215, 176, 0.7), rgba(245, 233, 216, 0.9));
+}
+
+.garden-landscape--living-garden .garden-canvas-sky {
+    background: linear-gradient(180deg, rgba(207, 232, 255, 0.95), rgba(242, 250, 255, 0.4));
+}
+
+.garden-landscape--living-garden .garden-canvas-ground {
+    background: linear-gradient(180deg, rgba(168, 216, 196, 0.85), rgba(232, 248, 241, 0.95));
+}
+
+.garden-items {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 1rem;
+    padding: 1.5rem;
+}
+
+.garden-item {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 18px;
+    padding: 0.7rem 0.6rem;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.garden-item-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #a8d8c4, #fce7c8);
+    margin: 0 auto 0.4rem;
+}
+
+.garden-item--animal .garden-item-icon {
+    background: linear-gradient(135deg, #f7d7ff, #cfe8ff);
+}
+
+.garden-item-name {
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.garden-empty {
+    grid-column: 1 / -1;
+    padding: 2rem 1rem;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.55);
+    font-size: 0.95rem;
+}
+
+.garden-unlocks {
+    margin-top: 1.4rem;
+}
+
+.garden-section-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+}
+
+.garden-unlock-grid {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.garden-unlock-card {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 16px;
+    padding: 0.7rem 0.9rem;
+    border: 1px dashed rgba(0, 0, 0, 0.12);
+    opacity: 0.7;
+}
+
+.garden-unlock-card--unlocked {
+    border-style: solid;
+    opacity: 1;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.garden-unlock-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #fce7c8, #fff6ea);
+}
+
+.garden-unlock-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.garden-unlock-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.garden-unlock-type {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.garden-unlock-points {
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.55);
+}
+
+.garden-tips {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(207, 232, 255, 0.3));
+}
+
+.garden-tip-list {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+    padding: 0;
+}
+
+.garden-tip {
+    padding: 0.6rem 0.8rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 640px) {
+    .garden-unlock-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
