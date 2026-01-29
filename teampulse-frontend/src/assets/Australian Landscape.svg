@@ -19,6 +19,6 @@
   </defs>
 
   <rect width="1000" height="680" fill="url(#sky)"/>
-  <rect y="408" width="1000" height="272" fill="url(#ground)"/>
+  <rect y="260" width="1000" height="420" fill="url(#ground)"/>
   <rect width="1000" height="680" fill="url(#sunGlow)"/>
 </svg>

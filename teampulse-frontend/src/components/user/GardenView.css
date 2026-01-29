@@ -307,6 +307,17 @@
 
 .garden-item-asset--animal {
     animation: garden-float 3.2s ease-in-out infinite;
+    transform: translate(-50%, -50%)
+        translateY(var(--float))
+        scale(calc(var(--scale) * 1.5))
+        rotate(calc(var(--rotation) + var(--sway)));
+}
+
+.garden-item-asset--plant {
+    transform: translate(-50%, -50%)
+        translateY(var(--float))
+        scale(calc(var(--scale) * 1.2))
+        rotate(calc(var(--rotation) + var(--sway)));
 }
 
 .garden-empty {

@@ -3,50 +3,31 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 import CardIcon from "../CardIcon";
 import { GARDEN_ASSET_IMAGE_MAP, GARDEN_TIPS } from "../../assets/gardenAssets";
 
-const hashString = (value) => {
-    let hash = 7;
-    for (let i = 0; i < value.length; i += 1) {
-        hash = (hash * 31 + value.charCodeAt(i)) % 100000;
-    }
-    return hash;
+const ASSET_PLACEMENTS = {
+    Seed: { left: 18, top: 64, scale: 0.9, rotation: -2, delay: 0 },
+    "Grass Shoot": { left: 34, top: 76, scale: 1, rotation: -4, delay: 0 },
+    Wildflower: { left: 70, top: 76, scale: 1, rotation: 3, delay: 0 },
+    "Wattle Bloom": { left: 52, top: 82, scale: 1.05, rotation: 2, delay: 0 },
+    Bottlebrush: { left: 82, top: 70, scale: 1.05, rotation: -3, delay: 0 },
+    "Gum Tree": { left: 12, top: 82, scale: 1.1, rotation: -2, delay: 0 },
+    "Rainbow Lorikeet": { left: 62, top: 66, scale: 1.1, rotation: 1, delay: 0 },
+    Quokka: { left: 42, top: 80, scale: 1, rotation: 1, delay: 0 },
+    Koala: { left: 76, top: 84, scale: 1.05, rotation: -1, delay: 0 },
+    Kangaroo: { left: 56, top: 74, scale: 1.15, rotation: 2, delay: 0 },
 };
 
-const seededRandom = (seed) => {
-    const x = Math.sin(seed) * 10000;
-    return x - Math.floor(x);
-};
-
-const getAssetPlacement = (id) => {
-    const seed = hashString(id);
-    return {
-        left: 8 + seededRandom(seed) * 84,
-        top: 60 + seededRandom(seed + 1) * 30,
-        scale: 0.75 + seededRandom(seed + 2) * 0.45,
-        rotation: -6 + seededRandom(seed + 3) * 12,
-        delay: seededRandom(seed + 4) * 2.5,
+const getAssetPlacement = (name) =>
+    ASSET_PLACEMENTS[name] || {
+        left: 50,
+        top: 75,
+        scale: 1,
+        rotation: 0,
+        delay: 0,
     };
-};
-
-const slugify = (value) =>
-    value
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "");
 
 export default function GardenView({ currentPoints = 0, rewards = [] }) {
-    const mappedAssets = rewards.map((reward) => {
-        const slug = slugify(reward.name);
-        return {
-            id: reward.id,
-            slug,
-            name: reward.name,
-            type: reward.category,
-            points: reward.points,
-            image: GARDEN_ASSET_IMAGE_MAP[slug] || null,
-        };
-    });
-    const sortedAssets = [...mappedAssets].sort((a, b) => a.points - b.points);
+    const getRewardImage = (reward) => GARDEN_ASSET_IMAGE_MAP[reward.name] || null;
+    const sortedAssets = [...rewards].sort((a, b) => a.points - b.points);
     const nextAsset = sortedAssets.find((asset) => asset.points > currentPoints);
     // Use the latest unlocked asset as the progress baseline (reverse so find hits the highest match).
     const previousAsset =
@@ -65,19 +46,19 @@ export default function GardenView({ currentPoints = 0, rewards = [] }) {
         (asset) => asset.points <= currentPoints
     );
     const unlockedLandscape = [...unlockedAssets]
-        .filter((asset) => asset.type === "landscape")
+        .filter((asset) => asset.category === "landscape")
         .sort((a, b) => b.points - a.points)[0];
     const gardenItems = unlockedAssets.filter(
-        (asset) => asset.type === "plant" || asset.type === "animal"
+        (asset) => asset.category === "plant" || asset.category === "animal"
     );
-    const visibleGardenItems = gardenItems.filter((asset) => asset.image);
+    const visibleGardenItems = gardenItems.filter((asset) => getRewardImage(asset));
 
-    const landscapeKey = unlockedLandscape?.slug || unlockedLandscape?.id;
+    const landscapeKey = unlockedLandscape?.id;
     const landscapeClass = landscapeKey
         ? `garden-landscape--${landscapeKey}`
         : "garden-landscape--base";
     const landscapeImage =
-        unlockedLandscape?.image ||
+        (unlockedLandscape ? getRewardImage(unlockedLandscape) : null) ||
         new URL("../../assets/landscape-default.svg", import.meta.url).href;
 
     return (
@@ -103,10 +84,10 @@ export default function GardenView({ currentPoints = 0, rewards = [] }) {
                         </div>
                         {nextAsset ? (
                             <div className="garden-next-unlock garden-next-unlock--floating">
-                                {nextAsset.image ? (
+                                {getRewardImage(nextAsset) ? (
                                     <img
                                         className="garden-next-unlock-thumb"
-                                        src={nextAsset.image}
+                                        src={getRewardImage(nextAsset)}
                                         alt={nextAsset.name}
                                         loading="lazy"
                                         draggable="false"
@@ -168,13 +149,13 @@ export default function GardenView({ currentPoints = 0, rewards = [] }) {
                             </div>
                         ) : (
                             visibleGardenItems.map((asset) => {
-                                const placement = getAssetPlacement(asset.slug || String(asset.id));
+                                const placement = getAssetPlacement(asset.name);
                                 return (
                                     <img
                                         key={asset.id}
-                                        src={asset.image}
+                                        src={getRewardImage(asset)}
                                         alt={asset.name}
-                                        className={`garden-item-asset garden-item-asset--${asset.type}`}
+                                        className={`garden-item-asset garden-item-asset--${asset.category}`}
                                         loading="lazy"
                                         draggable="false"
                                         style={{
@@ -212,10 +193,10 @@ export default function GardenView({ currentPoints = 0, rewards = [] }) {
                                             />
                                         </span>
                                     ) : null}
-                                    {asset.image ? (
+                                    {getRewardImage(asset) ? (
                                         <img
                                             className="garden-unlock-thumb"
-                                            src={asset.image}
+                                            src={getRewardImage(asset)}
                                             alt={asset.name}
                                             loading="lazy"
                                             draggable="false"
@@ -231,7 +212,7 @@ export default function GardenView({ currentPoints = 0, rewards = [] }) {
                                             {asset.name}
                                         </p>
                                         <p className="garden-unlock-type">
-                                            {asset.type}
+                                            {asset.category}
                                         </p>
                                         <p className="garden-unlock-points">
                                             {asset.points} pts
