@@ -1,4 +1,6 @@
 import "./GardenView.css";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import CardIcon from "../CardIcon";
 import { GARDEN_ASSETS, GARDEN_TIPS } from "../../assets/gardenAssets";
 
 const hashString = (value) => {
@@ -18,7 +20,7 @@ const getAssetPlacement = (id) => {
     const seed = hashString(id);
     return {
         left: 8 + seededRandom(seed) * 84,
-        top: 45 + seededRandom(seed + 1) * 30,
+        top: 60 + seededRandom(seed + 1) * 30,
         scale: 0.75 + seededRandom(seed + 2) * 0.45,
         rotation: -6 + seededRandom(seed + 3) * 12,
         delay: seededRandom(seed + 4) * 2.5,
@@ -51,6 +53,9 @@ export default function GardenView({ currentPoints = 0 }) {
     const landscapeClass = unlockedLandscape
         ? `garden-landscape--${unlockedLandscape.id}`
         : "garden-landscape--base";
+    const landscapeImage =
+        unlockedLandscape?.image ||
+        new URL("../../assets/landscape-default.svg", import.meta.url).href;
 
     return (
         <div className="user-dashboard-layout garden-view">
@@ -124,7 +129,13 @@ export default function GardenView({ currentPoints = 0 }) {
             </section>
 
             <section className="garden-card garden-canvas-card">
-                <div className={`garden-canvas ${landscapeClass}`}>
+                <div className={`garden-canvas ${landscapeClass} garden-canvas--image`}>
+                    <img
+                        className="garden-landscape-image"
+                        src={landscapeImage}
+                        alt=""
+                        aria-hidden="true"
+                    />
                     <div className="garden-canvas-sky" />
                     <div className="garden-canvas-ground" />
                     <div className="garden-items">
@@ -169,6 +180,15 @@ export default function GardenView({ currentPoints = 0 }) {
                                         isUnlocked ? "garden-unlock-card--unlocked" : ""
                                     }`}
                                 >
+                                    {!isUnlocked ? (
+                                        <span className="garden-unlock-lock" aria-label="Locked">
+                                            <CardIcon
+                                                icon={faLock}
+                                                size="lg"
+                                                color="rgba(0, 0, 0, 0.45)"
+                                            />
+                                        </span>
+                                    ) : null}
                                     {asset.image ? (
                                         <img
                                             className="garden-unlock-thumb"

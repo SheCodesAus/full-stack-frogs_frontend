@@ -1,4 +1,4 @@
-const GARDEN_ASSET_IMAGES = import.meta.glob("../assets/*.png", {
+const GARDEN_ASSET_IMAGES = import.meta.glob("../assets/*.{png,svg}", {
     eager: true,
     import: "default",
 });
@@ -6,7 +6,7 @@ const GARDEN_ASSET_IMAGES = import.meta.glob("../assets/*.png", {
 const GARDEN_ASSET_IMAGE_MAP = Object.fromEntries(
     Object.entries(GARDEN_ASSET_IMAGES).map(([path, src]) => {
         const filename = path.split("/").pop() || "";
-        const id = filename.replace(/\.png$/i, "");
+        const id = filename.replace(/\.(png|svg)$/i, "");
         return [id, src];
     })
 );
