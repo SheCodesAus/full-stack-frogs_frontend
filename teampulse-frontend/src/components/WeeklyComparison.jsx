@@ -58,12 +58,78 @@ const chartConfig = {
         lineColor2: "#60a5fa"
     }
 };
-const LineChartExample = ({ isAnimationActive = true, team, logs, moodData }) => {
+const WeeklyComparison = ({ isAnimationActive = true, team, logs = [], chartType = "mood", data: moodData, moods, workloads }) => {
+    const [chartData, setChartData] = useState(null);
+    const config = chartConfig[chartType];
+    const labels = config.tickFormatter;
+    
+    useEffect(() => {
+        if (!logs || logs.length === 0) {
+            // Don't show any data if no logs
+            setChartData(null);
+            return;
+        }
+
+        // Calculate weekly averages from logs for 4 week period
+        const valueKey = chartType === "mood" ? "mood_value" : "workload_value";
+        
+        // Group logs by week_index
+        const weeklyData = {};
+        logs.forEach(log => {
+            const weekIndex = log.week_index;
+            const timestamp = log.timestamp_local;
+            
+            if (!weeklyData[weekIndex]) {
+                weeklyData[weekIndex] = {
+                    values: [],
+                    timestamp: timestamp
+                };
+            }
+            weeklyData[weekIndex].values.push(log[valueKey]);
+        });
+
+        const sortedWeeks = Object.entries(weeklyData).sort((a, b) => parseInt(a[0]) - parseInt(b[0]));
+        const last4Weeks = sortedWeeks.slice(-4);
+
+        // Helper function to format date
+        function formatDate(timestampLocal) {
+            if (!timestampLocal) return "";
+            const date = new Date(timestampLocal);
+            return date.toLocaleDateString(undefined, {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+            });
+        }
+
+        const processedData = last4Weeks.map(([weekIndex, data]) => {
+            const weekLabel = `Week ${weekIndex}`;
+            return {
+                week: weekLabel,
+                currentPeriod: parseFloat((data.values.reduce((a, b) => a + b, 0) / data.values.length).toFixed(2))
+            };
+        });
+
+        setChartData(processedData.length > 0 ? processedData : null);
+    }, [logs, chartType]);
+
+    if (!chartData) {
+        return (
+            <div className='weeklyComparisonContainer'>
+                <p style={{ textAlign: 'center', padding: '20px', color: '#999' }}>No data available. Waiting for team check-ins...</p>
+            </div>
+        );
+    }
+
+    const titleText = chartType === "mood" 
+        ? "Weekly trend for Average Team Mood"
+        : "Weekly trend for Average Team Workload";
+    
     return (
         <div className='weeklyComparisonContainer'>
             <div className='weekly-header'>
                 <h2 className='headline'>
-                    Weekly trend for <strong>Average Team Mood</strong>
+                    {titleText}
                 </h2>
             </div>
 
@@ -75,7 +141,7 @@ const LineChartExample = ({ isAnimationActive = true, team, logs, moodData }) =>
                     aspectRatio: 1.68,
                     padding: '6%'
                 }}
-                data={data}
+                data={chartData}
             >
                 <CartesianGrid strokeDasharray="3 3" />
 
@@ -125,3 +191,5 @@ const LineChartExample = ({ isAnimationActive = true, team, logs, moodData }) =>
         </div>
     );
 }
+
+export default WeeklyComparison;

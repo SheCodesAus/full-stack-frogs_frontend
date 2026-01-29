@@ -10,28 +10,28 @@ import Loader from './Loader';
 
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
-import { teamMoodData } from "../data/mockForTeamMood";
-import { teamWorkflowData } from "../data/mockForTeamWorkflow";
-
 export default function DashboardView({ logs, participationRate, teamCount, logsCounts, team, moodOption, workloadOption }) {
+    // Filter logs by current team
+    const teamLogs = useMemo(() => {
+        if (!logs || logs.length === 0) return [];
+        return logs.filter(log => log.team_id === team || log.team === team);
+    }, [logs, team]);
+
     const flaggedCount = useMemo(() => {
-        if (!logs || logs.length === 0) return 0;
-        return logs.filter(log => log.mood === 1 || log.workload === 1).length;
-    }, [logs]);
+        if (!teamLogs || teamLogs.length === 0) return 0;
+        return teamLogs.filter(log => log.mood === 1 || log.workload === 1).length;
+    }, [teamLogs]);
 
     if (!moodOption?.length || !workloadOption?.length) {
         return <Loader />;
     }
 
-    const avgMood = logs.length > 0
-        ? (logs.reduce((sum, log) => sum + log.mood_value, 0) / logs.length).toFixed(1)
+    const avgMood = teamLogs.length > 0
+        ? (teamLogs.reduce((sum, log) => sum + log.mood_value, 0) / teamLogs.length).toFixed(1)
         : 0;
-    const avgWorkflow = logs.length > 0
-        ? (logs.reduce((sum, log) => sum + log.workload_value, 0) / logs.length).toFixed(1)
+    const avgWorkflow = teamLogs.length > 0
+        ? (teamLogs.reduce((sum, log) => sum + log.workload_value, 0) / teamLogs.length).toFixed(1)
         : 0;
-
-    const moodDataForTeam = teamMoodData[team];
-    const workloadDataForTeam = teamWorkflowData[team];
 
     return (
         <div className='dashboardView-container'>
@@ -49,15 +49,15 @@ export default function DashboardView({ logs, participationRate, teamCount, logs
                     </div>
                 </div>
             </section>
-            <NeedsAttentionBox logs={logs} />
+            <NeedsAttentionBox logs={teamLogs} />
             <section className='charts-row mood-row'>
-                <WeeklyComparison chartType="mood" team={team} data={moodDataForTeam} moods={moodOption} />
-                <PieChart chartType="mood" />
+                <WeeklyComparison chartType="mood" team={team} logs={teamLogs} moods={moodOption} />
+                <PieChart chartType="mood" logs={teamLogs} />
             </section>
 
             <section className='charts-row workload-row'>
-                <WeeklyComparison chartType="workload" team={team} data={workloadDataForTeam} workloads={workloadOption} />
-                <PieChart chartType="workload" />
+                <WeeklyComparison chartType="workload" team={team} logs={teamLogs} workloads={workloadOption} />
+                <PieChart chartType="workload" logs={teamLogs} />
             </section>
         </div>
     )
