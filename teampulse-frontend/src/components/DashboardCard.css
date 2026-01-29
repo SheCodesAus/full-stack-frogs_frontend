@@ -18,7 +18,37 @@
 
 .card-nunmber {
     font-size: clamp(1.65rem, 2vw, 2rem);
+}
 
+.card-icon {
+    padding-right: var(--space-1);
+}
+
+.card-indicator-icon {
+    padding-right: var(--space-1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-number-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.change-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.change-indicator.up {
+    color: #6FA876;
+}
+
+.change-indicator.down {
+    color: #C97A7A;
 }
 
 .card-icon {
