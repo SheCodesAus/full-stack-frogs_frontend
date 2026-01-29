@@ -1,32 +1,11 @@
 import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './WeeklyComparison.css'
-import Button from './ButtonComponent';
-import Loader from './Loader';
-
-function useIsDesktop(minWidth = 800) {
-    const [isDesktop, setIsDesktop] = useState(window.innerWidth >= minWidth);
-
-    useEffect(() => {
-        const onResize = () => setIsDesktop(window.innerWidth >= minWidth);
-        window.addEventListener("resize", onResize);
-        return () => window.removeEventListener("resize", onResize);
-    }, [minWidth]);
-
-    return isDesktop;
-}
-// #Data simulation
 
 // Chart configurations
 const chartConfig = {
     mood: {
         title: "Weekly trend for Average Team Mood",
-        data: [
-            { week: 'Current', currentPeriod: 3.16, prevPeriod: 2.9 },
-            { week: 'Week 32', currentPeriod: 1.72, prevPeriod: 3 },
-            { week: 'Week 33', currentPeriod: 3.04, prevPeriod: 3.5 },
-            { week: 'Week 34', currentPeriod: 2.32, prevPeriod: 1.8 },
-        ],
         yAxisDomain: [1, 4],
         yAxisTicks: [1, 2, 3, 4],
         tickFormatter: {
@@ -34,18 +13,10 @@ const chartConfig = {
             2: "Anxious",
             3: "Calm",
             4: "Empowered",
-        },
-        lineColor1: "#82ca9d",
-        lineColor2: "#8884d8"
+        }
     },
     workload: {
         title: "Weekly trend for Average Team Workload",
-        data: [
-            { week: 'Current', currentPeriod: 3.2, prevPeriod: 3.0 },
-            { week: 'Week 32', currentPeriod: 2.1, prevPeriod: 2.8 },
-            { week: 'Week 33', currentPeriod: 2.5, prevPeriod: 2.9 },
-            { week: 'Week 34', currentPeriod: 2.8, prevPeriod: 2.4 },
-        ],
         yAxisDomain: [1, 4],
         yAxisTicks: [1, 2, 3, 4],
         tickFormatter: {
@@ -53,12 +24,10 @@ const chartConfig = {
             2: "Under Pressure",
             3: "Manageable",
             4: "Light",
-        },
-        lineColor1: "#fbbf24",
-        lineColor2: "#60a5fa"
+        }
     }
 };
-const WeeklyComparison = ({ isAnimationActive = true, team, logs = [], chartType = "mood", data: moodData, moods, workloads }) => {
+const WeeklyComparison = ({ isAnimationActive = true, team, logs = [], chartType = "mood" }) => {
     const [chartData, setChartData] = useState(null);
     const config = chartConfig[chartType];
     const labels = config.tickFormatter;
@@ -75,9 +44,12 @@ const WeeklyComparison = ({ isAnimationActive = true, team, logs = [], chartType
         
         // Group logs by week_index
         const weeklyData = {};
+        let maxWeek = 0;
+        
         logs.forEach(log => {
             const weekIndex = log.week_index;
             const timestamp = log.timestamp_local;
+            maxWeek = Math.max(maxWeek, parseInt(weekIndex));
             
             if (!weeklyData[weekIndex]) {
                 weeklyData[weekIndex] = {
@@ -88,26 +60,26 @@ const WeeklyComparison = ({ isAnimationActive = true, team, logs = [], chartType
             weeklyData[weekIndex].values.push(log[valueKey]);
         });
 
-        const sortedWeeks = Object.entries(weeklyData).sort((a, b) => parseInt(a[0]) - parseInt(b[0]));
-        const last4Weeks = sortedWeeks.slice(-4);
-
-        // Helper function to format date
-        function formatDate(timestampLocal) {
-            if (!timestampLocal) return "";
-            const date = new Date(timestampLocal);
-            return date.toLocaleDateString(undefined, {
-                weekday: "short",
-                month: "short",
-                day: "numeric",
-            });
+        // Create array of last 4 weeks (including weeks with no data)
+        const last4WeekIndices = [];
+        for (let i = 3; i >= 0; i--) {
+            last4WeekIndices.push(maxWeek - i);
         }
 
-        const processedData = last4Weeks.map(([weekIndex, data]) => {
+        // Create data for all 4 weeks, with 0 for weeks that have no logs
+        const processedData = last4WeekIndices.map((weekIndex) => {
             const weekLabel = `Week ${weekIndex}`;
-            return {
-                week: weekLabel,
-                currentPeriod: parseFloat((data.values.reduce((a, b) => a + b, 0) / data.values.length).toFixed(2))
-            };
+            if (weeklyData[weekIndex]) {
+                return {
+                    week: weekLabel,
+                    currentPeriod: parseFloat((weeklyData[weekIndex].values.reduce((a, b) => a + b, 0) / weeklyData[weekIndex].values.length).toFixed(2))
+                };
+            } else {
+                return {
+                    week: weekLabel,
+                    currentPeriod: 0
+                };
+            }
         });
 
         setChartData(processedData.length > 0 ? processedData : null);
@@ -174,17 +146,6 @@ const WeeklyComparison = ({ isAnimationActive = true, team, logs = [], chartType
                     stroke="#82ca9d"
                     strokeWidth={2}
                     dot={{ r: 5, strokeWidth: 2, fill: '#fff' }}
-                    isAnimationActive={isAnimationActive}
-                />
-
-                <Line
-                    type="monotone"
-                    name="Previous Period"
-                    dataKey="prevPeriod"
-                    stroke="#8884d8"
-                    strokeWidth={2}
-                    strokeDasharray="3 3"
-                    dot={{ r: 2, strokeWidth: 1 }}
                     isAnimationActive={isAnimationActive}
                 />
             </LineChart>

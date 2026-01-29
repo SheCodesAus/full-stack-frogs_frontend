@@ -10,7 +10,7 @@ import Loader from './Loader';
 
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
-export default function DashboardView({ logs, participationRate, teamCount, logsCounts, team, moodOption, workloadOption }) {
+export default function DashboardView({ logs, logsHistory = [], participationRate, teamCount, logsCounts, team, moodOption, workloadOption }) {
     // Filter logs by current team
     const teamLogs = useMemo(() => {
         if (!logs || logs.length === 0) return [];
@@ -51,12 +51,12 @@ export default function DashboardView({ logs, participationRate, teamCount, logs
             </section>
             <NeedsAttentionBox logs={teamLogs} />
             <section className='charts-row mood-row'>
-                <WeeklyComparison chartType="mood" team={team} logs={teamLogs} moods={moodOption} />
+                <WeeklyComparison chartType="mood" team={team} logs={logsHistory.length > 0 ? logsHistory : teamLogs} moods={moodOption} />
                 <PieChart chartType="mood" logs={teamLogs} />
             </section>
 
             <section className='charts-row workload-row'>
-                <WeeklyComparison chartType="workload" team={team} logs={teamLogs} workloads={workloadOption} />
+                <WeeklyComparison chartType="workload" team={team} logs={logsHistory.length > 0 ? logsHistory : teamLogs} workloads={workloadOption} />
                 <PieChart chartType="workload" logs={teamLogs} />
             </section>
         </div>
