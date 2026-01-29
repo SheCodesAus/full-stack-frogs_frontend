@@ -11,6 +11,7 @@ import UserCheckins from "../components/user/UserCheckins";
 import GardenView from "../components/user/GardenView";
 import Loader from "../components/Loader";
 import usePoints from "../hooks/use-points";
+import useRewards from "../hooks/use-rewards";
 
 
 export default function UserDashboardPage() {
@@ -57,9 +58,12 @@ export default function UserDashboardPage() {
         [userData]
     );
     const { points } = usePoints();
+    const { rewards, rewardsIsLoading, rewardsError } = useRewards();
 
-
-
+    const isPageLoading = isLoading || rewardsIsLoading;
+    const pageError =
+        error ||
+        (rewardsError ? rewardsError.message || "Unable to load rewards." : null);
     const safePoints = points ?? 0;
 
     return (
@@ -106,19 +110,19 @@ export default function UserDashboardPage() {
                 </div>
             </header>
 
-            {isLoading && (
+            {isPageLoading && (
                 <div className="user-dashboard-state-message">
                     <Loader />
                 </div>
             )}
 
-            {error && !isLoading && (
+            {pageError && !isPageLoading && (
                 <div className="user-dashboard-state-message user-dashboard-error">
-                    {error}
+                    {pageError}
                 </div>
             )}
 
-            {!isLoading && !error && (
+            {!isPageLoading && !pageError && (
                 <main className="user-dashboard-main">
                     {view === "dashboard" && (
                         <UserDashboard
@@ -136,7 +140,7 @@ export default function UserDashboardPage() {
                         />
                     )}
                     {view === "garden" && (
-                        <GardenView currentPoints={safePoints} />
+                        <GardenView currentPoints={safePoints} rewards={rewards} />
                     )}
                 </main>
             )}

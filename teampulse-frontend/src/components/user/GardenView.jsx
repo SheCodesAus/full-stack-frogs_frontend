@@ -1,7 +1,7 @@
 import "./GardenView.css";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import CardIcon from "../CardIcon";
-import { GARDEN_ASSETS, GARDEN_TIPS } from "../../assets/gardenAssets";
+import { GARDEN_ASSET_IMAGE_MAP, GARDEN_TIPS } from "../../assets/gardenAssets";
 
 const hashString = (value) => {
     let hash = 7;
@@ -27,17 +27,39 @@ const getAssetPlacement = (id) => {
     };
 };
 
-export default function GardenView({ currentPoints = 0 }) {
-    const sortedAssets = [...GARDEN_ASSETS].sort((a, b) => a.points - b.points);
+const slugify = (value) =>
+    value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+
+export default function GardenView({ currentPoints = 0, rewards = [] }) {
+    const mappedAssets = rewards.map((reward) => {
+        const slug = slugify(reward.name);
+        return {
+            id: reward.id,
+            slug,
+            name: reward.name,
+            type: reward.category,
+            points: reward.points,
+            image: GARDEN_ASSET_IMAGE_MAP[slug] || null,
+        };
+    });
+    const sortedAssets = [...mappedAssets].sort((a, b) => a.points - b.points);
     const nextAsset = sortedAssets.find((asset) => asset.points > currentPoints);
     // Use the latest unlocked asset as the progress baseline (reverse so find hits the highest match).
     const previousAsset =
         [...sortedAssets].reverse().find((asset) => asset.points <= currentPoints) ||
-        sortedAssets[0];
-    const progress = nextAsset
-        ? (currentPoints - previousAsset.points) /
-          Math.max(1, nextAsset.points - previousAsset.points)
-        : 1;
+        sortedAssets[0] ||
+        { points: 0 };
+    const progress =
+        sortedAssets.length === 0
+            ? 0
+            : nextAsset
+              ? (currentPoints - previousAsset.points) /
+                Math.max(1, nextAsset.points - previousAsset.points)
+              : 1;
 
     const unlockedAssets = sortedAssets.filter(
         (asset) => asset.points <= currentPoints
@@ -50,8 +72,9 @@ export default function GardenView({ currentPoints = 0 }) {
     );
     const visibleGardenItems = gardenItems.filter((asset) => asset.image);
 
-    const landscapeClass = unlockedLandscape
-        ? `garden-landscape--${unlockedLandscape.id}`
+    const landscapeKey = unlockedLandscape?.slug || unlockedLandscape?.id;
+    const landscapeClass = landscapeKey
+        ? `garden-landscape--${landscapeKey}`
         : "garden-landscape--base";
     const landscapeImage =
         unlockedLandscape?.image ||
@@ -145,7 +168,7 @@ export default function GardenView({ currentPoints = 0 }) {
                             </div>
                         ) : (
                             visibleGardenItems.map((asset) => {
-                                const placement = getAssetPlacement(asset.id);
+                                const placement = getAssetPlacement(asset.slug || String(asset.id));
                                 return (
                                     <img
                                         key={asset.id}
