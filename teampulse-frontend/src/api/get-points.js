@@ -1,13 +1,13 @@
-async function getPointsById(id){
-    const token = window.localStorage.getItem("token");
-    const url = `${import.meta.env.VITE_API_URL}/teams`;
+async function getPoints(token) {
+    const authToken = token || window.localStorage.getItem("token");
+    const url = `${import.meta.env.VITE_API_URL}/user_points/`;
 
     const headers = {
         "Content-Type": "application/json",
     };
 
-    if (token) {
-        headers.Authorization = `Token ${token}`;
+    if (authToken) {
+        headers.Authorization = `Token ${authToken}`;
     }
 
     const response = await fetch(url, {
@@ -16,7 +16,7 @@ async function getPointsById(id){
     });
 
     if (!response.ok) {
-        const fallbackError = "Error fetching teams";
+        const fallbackError = "Error fetching points";
         const data = await response.json().catch(() => {
             throw new Error(fallbackError);
         });
@@ -28,4 +28,4 @@ async function getPointsById(id){
 }
 
 
-export default getPointsById;
+export default getPoints;

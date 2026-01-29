@@ -10,7 +10,7 @@ import UserDashboard from "../components/user/UserDashboard";
 import UserCheckins from "../components/user/UserCheckins";
 import GardenView from "../components/user/GardenView";
 import Loader from "../components/Loader";
-import { calculatePoints } from "../utils/userPoints";
+import usePoints from "../hooks/use-points";
 
 
 export default function UserDashboardPage() {
@@ -56,9 +56,11 @@ export default function UserDashboardPage() {
         () => userData?.logged_pulses ?? [],
         [userData]
     );
-    const points = useMemo(() => calculatePoints(loggedPulses), [loggedPulses]);
+    const { points } = usePoints();
 
 
+
+    const safePoints = points ?? 0;
 
     return (
         <div className="user-dashboard-page">
@@ -123,7 +125,7 @@ export default function UserDashboardPage() {
                             firstName={userData?.first_name}
                             loggedPulses={loggedPulses}
                             isManagerView={isManagerView}
-                            points={points}
+                            points={safePoints}
                         />
                     )}
 
@@ -134,7 +136,7 @@ export default function UserDashboardPage() {
                         />
                     )}
                     {view === "garden" && (
-                        <GardenView currentPoints={points} />
+                        <GardenView currentPoints={safePoints} />
                     )}
                 </main>
             )}
