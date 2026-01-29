@@ -1,11 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
 import './ManagerDashboardPage.css'
-
 import DashboardButton from '../components/DashboardButton';
 import DashboardView from '../components/DashboardView';
 import AllCheckinsView from '../components/AllCheckinView';
 import Loader from '../components/Loader'
-
 import { useAuth } from '../hooks/use-auth';
 import useTeams from '../hooks/use-teams';
 import useCheckins from '../hooks/use-checkins';
@@ -59,8 +57,6 @@ function DashboardPage() {
     const selectedTeamObj = useMemo(() => {
         return teams.find((t) => t.id === selectedTeam);
     }, [teams, selectedTeam]);
-
-    // Participation rate
 
     const totalMembers = selectedTeamObj?.user_count;
 
@@ -153,7 +149,8 @@ function DashboardPage() {
                 logsCounts={teamLogs.length}
                 team={selectedTeam}
                 moodOption={moods}
-                workloadOption={workloads} />}
+                workloadOption={workloads}
+                isLoading={isLoading} />}
         </section>
     )
 };

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './WeeklyComparison.css'
 
-// Chart configurations
+// Chart configurations with colors matching pie charts
 const chartConfig = {
     mood: {
         title: "Weekly trend for Average Team Mood",
@@ -13,7 +13,9 @@ const chartConfig = {
             2: "Anxious",
             3: "Calm",
             4: "Empowered",
-        }
+        },
+        lineColor: "#9B5843",      // Second darkest peach
+        currentWeekColor: "#6B3D2F" // Darkest peach
     },
     workload: {
         title: "Weekly trend for Average Team Workload",
@@ -24,13 +26,58 @@ const chartConfig = {
             2: "Under Pressure",
             3: "Manageable",
             4: "Light",
-        }
+        },
+        lineColor: "#4A6B9F",      // Second darkest blue
+        currentWeekColor: "#2D4A7A" // Darkest blue
     }
 };
-const WeeklyComparison = ({ isAnimationActive = true, team, logs = [], chartType = "mood" }) => {
+
+const WeeklyComparison = ({ isAnimationActive = true, logs = [], chartType = "mood", isLoading = false }) => {
     const [chartData, setChartData] = useState(null);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const config = chartConfig[chartType];
     const labels = config.tickFormatter;
+    
+    const getTooltipText = (value) => {
+        return labels[value];
+    };
+
+    const CustomYAxisTick = ({ x, y, payload }) => {
+        const value = payload.value;
+        const label = labels[value];
+        
+        let color = '#333';
+        if (value === 3 || value === 4) {
+            color = '#6FA876'; // Desaturated green
+        } else if (value === 1 || value === 2) {
+            color = '#C97A7A'; // Desaturated red
+        }
+        
+        return (
+            <g transform={`translate(${x},${y})`}>
+                <text 
+                    x={0} 
+                    y={0} 
+                    dy={4}
+                    textAnchor="end" 
+                    fontSize={isMobile ? 15 : 17}
+                    fill={color}
+                    style={{ fontWeight: '500' }}
+                >
+                    {label}
+                </text>
+            </g>
+        );
+    };
+    
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     
     useEffect(() => {
         if (!logs || logs.length === 0) {
@@ -86,16 +133,43 @@ const WeeklyComparison = ({ isAnimationActive = true, team, logs = [], chartType
     }, [logs, chartType]);
 
     if (!chartData) {
+        if (isLoading) {
+            // Don't show anything while loading
+            return (
+                <div className='weeklyComparisonContainer'>
+                    <div className='weekly-header'>
+                        <h2 className='headline'>
+                            {chartType === "mood" ? "Mood Weekly Trend" : "Workload Trend"}
+                        </h2>
+                    </div>
+                </div>
+            );
+        }
+        
+        // Only show error message if we have logs but no data (after loading)
+        if (logs && logs.length > 0) {
+            return (
+                <div className='weeklyComparisonContainer'>
+                    <p style={{ textAlign: 'center', padding: '20px', color: '#999' }}>No data available. Waiting for team check-ins...</p>
+                </div>
+            );
+        }
+        
+        // Show empty state if still loading or no logs yet
         return (
             <div className='weeklyComparisonContainer'>
-                <p style={{ textAlign: 'center', padding: '20px', color: '#999' }}>No data available. Waiting for team check-ins...</p>
+                <div className='weekly-header'>
+                    <h2 className='headline'>
+                        {chartType === "mood" ? "Mood Weekly Trend" : "Workload Trend"}
+                    </h2>
+                </div>
             </div>
         );
     }
 
     const titleText = chartType === "mood" 
-        ? "Weekly trend for Average Team Mood"
-        : "Weekly trend for Average Team Workload";
+        ? "Mood Trend - four week comparison"
+        : "Workload Trend - four week comparison";
     
     return (
         <div className='weeklyComparisonContainer'>
@@ -105,50 +179,77 @@ const WeeklyComparison = ({ isAnimationActive = true, team, logs = [], chartType
                 </h2>
             </div>
 
+            <div className='weekly-chart-wrapper'>
             <LineChart
                 style={{
-                    width: '85%',
-                    maxWidth: '700px',
-                    maxHeight: '70vh',
+                    width: isMobile ? '90%' : '75%',
+                    maxWidth: '550px',
+                    maxHeight: '50vh',
                     aspectRatio: 1.68,
-                    padding: '6%'
                 }}
+                margin={{ top: 15, right: 20, left: isMobile ? 120 : 120, bottom: isMobile ? 50 : 40 }}
                 data={chartData}
             >
                 <CartesianGrid strokeDasharray="3 3" />
 
-                <XAxis dataKey="week" />
+                <XAxis dataKey="week" tick={{ fontSize: isMobile ? 16 : 18 }} />
 
                 <YAxis
                     width="auto"
                     domain={[1, 4]}
                     ticks={[1, 2, 3, 4]}
-                    tickFormatter={(value) => labels[value]}
                     tickLine={false}
                     axisLine={false}
-                    padding={{ bottom: 35 }}
+                    tick={<CustomYAxisTick />}
+                    padding={{ bottom: 20 }}
                 />
 
-                <Tooltip />
-
-                <Legend
-                    verticalAlign="top"
-                    align="right"
-                    height={34}
-                    iconType="circle"
-                    wrapperStyle={{ top: 35, right: 15 }}
+                <Tooltip 
+                    content={({ active, payload }) => {
+                        if (active && payload && payload[0]) {
+                            const value = payload[0].value;
+                            return (
+                                <div style={{ 
+                                    backgroundColor: '#fff', 
+                                    padding: '8px 12px', 
+                                    borderRadius: '4px', 
+                                    border: '1px solid #ccc',
+                                    fontSize: '12px'
+                                }}>
+                                    <p style={{ margin: '0 0 4px 0', fontWeight: '600' }}>{payload[0].payload.week}</p>
+                                    <p style={{ margin: '0', color: '#666' }}>Average: {payload[0].value}</p>
+                                </div>
+                            );
+                        }
+                        return null;
+                    }}
                 />
 
                 <Line
                     type="monotone"
-                    name="Current Period"
+                    name="Average"
                     dataKey="currentPeriod"
-                    stroke="#82ca9d"
-                    strokeWidth={2}
-                    dot={{ r: 5, strokeWidth: 2, fill: '#fff' }}
+                    stroke={config.lineColor}
+                    strokeWidth={5}
+                    dot={(props) => {
+                        const { cx, cy, payload, index } = props;
+                        const isCurrentWeek = index === 3;
+                        const color = isCurrentWeek ? config.currentWeekColor : config.lineColor;
+                        return (
+                            <circle 
+                                cx={cx} 
+                                cy={cy} 
+                                r={isCurrentWeek ? 7 : 5} 
+                                fill={color}
+                                stroke="#fff"
+                                strokeWidth={2}
+                            />
+                        );
+                    }}
                     isAnimationActive={isAnimationActive}
                 />
             </LineChart>
+            </div>
         </div>
     );
 }
