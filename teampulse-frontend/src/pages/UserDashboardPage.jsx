@@ -8,7 +8,9 @@ import { useParams } from "react-router-dom";
 import DashboardButton from "../components/DashboardButton";
 import UserDashboard from "../components/user/UserDashboard";
 import UserCheckins from "../components/user/UserCheckins";
+import GardenView from "../components/user/GardenView";
 import Loader from "../components/Loader";
+import { calculatePoints } from "../utils/userPoints";
 
 
 export default function UserDashboardPage() {
@@ -54,6 +56,7 @@ export default function UserDashboardPage() {
         () => userData?.logged_pulses ?? [],
         [userData]
     );
+    const points = useMemo(() => calculatePoints(loggedPulses), [loggedPulses]);
 
 
 
@@ -90,6 +93,14 @@ export default function UserDashboardPage() {
                         isActive={view === "checkins"}
                         onClick={() => setView("checkins")}
                     />
+                    <DashboardButton
+                        text="Wellbeing Garden"
+                        fontSize="var(--text-sm)"
+                        padding="0.4rem 0.9rem"
+                        letterSpacing="0.5px"
+                        isActive={view === "garden"}
+                        onClick={() => setView("garden")}
+                    />
                 </div>
             </header>
 
@@ -112,6 +123,7 @@ export default function UserDashboardPage() {
                             firstName={userData?.first_name}
                             loggedPulses={loggedPulses}
                             isManagerView={isManagerView}
+                            points={points}
                         />
                     )}
 
@@ -120,6 +132,9 @@ export default function UserDashboardPage() {
                             firstName={userData?.first_name}
                             loggedPulses={loggedPulses}
                         />
+                    )}
+                    {view === "garden" && (
+                        <GardenView currentPoints={points} />
                     )}
                 </main>
             )}

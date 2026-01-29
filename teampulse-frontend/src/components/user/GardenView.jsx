@@ -1,15 +1,34 @@
 import "./GardenView.css";
-import { GARDEN_ASSETS } from "../../data/gardenAssets";
+import { GARDEN_ASSETS, GARDEN_TIPS } from "../../assets/gardenAssets";
 
-const GARDEN_TIPS = [
-    "Each check-in earns 10 points.",
-    "Each week streak earns an extra 10 points.",
-];
+const hashString = (value) => {
+    let hash = 7;
+    for (let i = 0; i < value.length; i += 1) {
+        hash = (hash * 31 + value.charCodeAt(i)) % 100000;
+    }
+    return hash;
+};
 
-export default function GardenView() {
-    const currentPoints = 140;
+const seededRandom = (seed) => {
+    const x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+};
+
+const getAssetPlacement = (id) => {
+    const seed = hashString(id);
+    return {
+        left: 8 + seededRandom(seed) * 84,
+        top: 45 + seededRandom(seed + 1) * 30,
+        scale: 0.75 + seededRandom(seed + 2) * 0.45,
+        rotation: -6 + seededRandom(seed + 3) * 12,
+        delay: seededRandom(seed + 4) * 2.5,
+    };
+};
+
+export default function GardenView({ currentPoints = 0 }) {
     const sortedAssets = [...GARDEN_ASSETS].sort((a, b) => a.points - b.points);
     const nextAsset = sortedAssets.find((asset) => asset.points > currentPoints);
+    // Use the latest unlocked asset as the progress baseline (reverse so find hits the highest match).
     const previousAsset =
         [...sortedAssets].reverse().find((asset) => asset.points <= currentPoints) ||
         sortedAssets[0];
@@ -27,6 +46,7 @@ export default function GardenView() {
     const gardenItems = unlockedAssets.filter(
         (asset) => asset.type === "plant" || asset.type === "animal"
     );
+    const visibleGardenItems = gardenItems.filter((asset) => asset.image);
 
     const landscapeClass = unlockedLandscape
         ? `garden-landscape--${unlockedLandscape.id}`
@@ -36,34 +56,70 @@ export default function GardenView() {
         <div className="user-dashboard-layout garden-view">
             <section className="garden-card garden-summary">
                 <div className="garden-summary-header">
-                    <div>
+                    <div className="garden-summary-text">
                         <p className="garden-eyebrow">Wellbeing Garden</p>
-                        <h2 className="garden-title">Your current points</h2>
-                    </div>
-                    <div className="garden-points">
-                        <span className="garden-points-number">{currentPoints}</span>
-                        <span className="garden-points-label">points</span>
+                        <h2 className="garden-title">Growth Balance</h2>
+                        <div className="garden-points">
+                            <span className="garden-points-number">{currentPoints}</span>
+                            <span className="garden-points-label">points</span>
+                        </div>
                     </div>
                 </div>
                 <div className="garden-progress">
-                    <div className="garden-progress-bar">
-                        <div
-                            className="garden-progress-fill"
-                            style={{ width: `${Math.min(progress * 100, 100)}%` }}
-                        />
-                    </div>
-                    <div className="garden-progress-meta">
+                    <div className="garden-progress-bar-row">
+                        <div className="garden-progress-bar">
+                            <div
+                                className="garden-progress-fill"
+                                style={{ width: `${Math.min(progress * 100, 100)}%` }}
+                            />
+                        </div>
                         {nextAsset ? (
-                            <>
-                                <span>
-                                    Next unlock: {nextAsset.name} ({nextAsset.points} pts)
-                                </span>
-                                <span>{nextAsset.points - currentPoints} pts to go</span>
-                            </>
+                            <div className="garden-next-unlock garden-next-unlock--floating">
+                                {nextAsset.image ? (
+                                    <img
+                                        className="garden-next-unlock-thumb"
+                                        src={nextAsset.image}
+                                        alt={nextAsset.name}
+                                        loading="lazy"
+                                        draggable="false"
+                                    />
+                                ) : null}
+                                <div className="garden-next-unlock-info">
+                                    <span className="garden-next-unlock-label">
+                                        Next unlock
+                                    </span>
+                                    <span className="garden-next-unlock-name">
+                                        {nextAsset.name}
+                                    </span>
+                                </div>
+                            </div>
                         ) : (
-                            <span>All assets unlocked.</span>
+                            <div className="garden-next-unlock garden-next-unlock--complete garden-next-unlock--floating">
+                                All assets unlocked.
+                            </div>
                         )}
                     </div>
+                    {nextAsset ? (
+                        <>
+                            <div className="garden-progress-meta">
+                                {/* <span className="garden-progress-start">
+                                    {previousAsset.points} pts
+                                </span> */}
+                                <span className="garden-progress-center">
+                                    {nextAsset.points - currentPoints} pts to go
+                                </span>
+                                <span className="garden-progress-end">
+                                    {nextAsset.points} pts
+                                </span>
+                            </div>
+                        </>
+                    ) : (
+                        <div className="garden-progress-meta">
+                            <div className="garden-next-unlock garden-next-unlock--complete">
+                                All assets unlocked.
+                            </div>
+                        </div>
+                    )}
                 </div>
             </section>
 
@@ -72,20 +128,31 @@ export default function GardenView() {
                     <div className="garden-canvas-sky" />
                     <div className="garden-canvas-ground" />
                     <div className="garden-items">
-                        {gardenItems.length === 0 ? (
+                        {visibleGardenItems.length === 0 ? (
                             <div className="garden-empty">
                                 Your first seed is ready to grow.
                             </div>
                         ) : (
-                            gardenItems.map((asset) => (
-                                <div
-                                    key={asset.id}
-                                    className={`garden-item garden-item--${asset.type}`}
-                                >
-                                    <div className="garden-item-icon" />
-                                    <span className="garden-item-name">{asset.name}</span>
-                                </div>
-                            ))
+                            visibleGardenItems.map((asset) => {
+                                const placement = getAssetPlacement(asset.id);
+                                return (
+                                    <img
+                                        key={asset.id}
+                                        src={asset.image}
+                                        alt={asset.name}
+                                        className={`garden-item-asset garden-item-asset--${asset.type}`}
+                                        loading="lazy"
+                                        draggable="false"
+                                        style={{
+                                            left: `${placement.left}%`,
+                                            top: `${placement.top}%`,
+                                            "--scale": placement.scale,
+                                            "--rotation": `${placement.rotation}deg`,
+                                            animationDelay: `${placement.delay}s`,
+                                        }}
+                                    />
+                                );
+                            })
                         )}
                     </div>
                 </div>
@@ -102,12 +169,29 @@ export default function GardenView() {
                                         isUnlocked ? "garden-unlock-card--unlocked" : ""
                                     }`}
                                 >
-                                    <div className="garden-unlock-thumb" />
+                                    {asset.image ? (
+                                        <img
+                                            className="garden-unlock-thumb"
+                                            src={asset.image}
+                                            alt={asset.name}
+                                            loading="lazy"
+                                            draggable="false"
+                                        />
+                                    ) : (
+                                        <div
+                                            className="garden-unlock-thumb"
+                                            aria-hidden="true"
+                                        />
+                                    )}
                                     <div className="garden-unlock-info">
-                                        <p className="garden-unlock-name">{asset.name}</p>
-                                        <p className="garden-unlock-type">{asset.type}</p>
+                                        <p className="garden-unlock-name">
+                                            {asset.name}
+                                        </p>
+                                        <p className="garden-unlock-type">
+                                            {asset.type}
+                                        </p>
                                         <p className="garden-unlock-points">
-                                            {isUnlocked ? "Unlocked" : `${asset.points} pts`}
+                                            {asset.points} pts
                                         </p>
                                     </div>
                                 </div>

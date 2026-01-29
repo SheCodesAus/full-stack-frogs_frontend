@@ -3,7 +3,12 @@ import UserStats from "./UserStats";
 import UserWeeklyComparison from "./UserWeeklyComparison";
 import UserQuote from "./UserQuote";
 
-export default function UserDashboard({ firstName, loggedPulses, isManagerView }) {
+export default function UserDashboard({
+    firstName,
+    loggedPulses,
+    isManagerView,
+    points,
+}) {
     return (
         <div className="user-dashboard-layout">
             <section className="user-section--stats">
@@ -19,7 +24,7 @@ export default function UserDashboard({ firstName, loggedPulses, isManagerView }
                             ? `${firstName}, every weekly check-in is a step to a more sustainable workflow.`
                             : "Every weekly check-in is a step toward a more sustainable workflow."}
                     </p>
-                    <UserStats loggedPulses={loggedPulses} />
+                    <UserStats loggedPulses={loggedPulses} points={points} />
 
                 </div>
             </section>

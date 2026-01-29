@@ -16,6 +16,13 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.garden-summary-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
 }
 
 .garden-eyebrow {
@@ -28,7 +35,7 @@
 
 .garden-title {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: 1.44rem;
     margin: 0;
 }
 
@@ -37,7 +44,7 @@
     border-radius: 18px;
     padding: 0.7rem 1.1rem;
     text-align: center;
-    min-width: 120px;
+    min-width: 140px;
 }
 
 .garden-points-number {
@@ -53,11 +60,34 @@
     color: rgba(0, 0, 0, 0.5);
 }
 
+@media (max-width: 540px) {
+    .garden-points {
+        min-width: 110px;
+        padding: 0.55rem 0.8rem;
+    }
+
+    .garden-points-number {
+        font-size: 1.35rem;
+    }
+
+    .garden-points-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+    }
+}
+
 .garden-progress {
     margin-top: 1.2rem;
 }
 
+.garden-progress-bar-row {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
 .garden-progress-bar {
+    flex: 1;
     height: 10px;
     background: rgba(0, 0, 0, 0.08);
     border-radius: 999px;
@@ -66,18 +96,103 @@
 
 .garden-progress-fill {
     height: 100%;
-    background: linear-gradient(120deg, #a8d8c4, #fce7c8);
+    background: linear-gradient(10deg, #a8d8c4, #fce7c8,#DAD5F8,#dbeaf8);
     border-radius: 999px;
     transition: width 0.3s ease;
+    transform-origin: left;
+    transform: scaleX(0);
+    animation: garden-progress-grow 1.1s ease forwards;
+    position: relative;
+    overflow: hidden;
+}
+
+.garden-progress-fill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.55) 45%,
+        rgba(255, 255, 255, 0) 90%
+    );
+    transform: translateX(-120%);
+    animation: garden-progress-shine 2.4s ease-in-out infinite;
 }
 
 .garden-progress-meta {
     display: flex;
-    justify-content: space-between;
-    gap: 0.75rem;
+    align-items: center;
+    position: relative;
     font-size: 0.85rem;
     color: rgba(0, 0, 0, 0.55);
     margin-top: 0.6rem;
+}
+
+.garden-progress-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+.garden-progress-start {
+    position: absolute;
+    left: 0;
+    white-space: nowrap;
+}
+
+.garden-progress-end {
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+
+.garden-next-unlock {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.65);
+    white-space: nowrap;
+}
+
+.garden-next-unlock--floating {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 0.6rem);
+}
+
+.garden-next-unlock--complete {
+    padding: 0;
+}
+
+.garden-next-unlock-thumb {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    object-fit: contain;
+}
+
+
+.garden-next-unlock-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.garden-next-unlock-label {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.6rem;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.garden-next-unlock-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.72);
 }
 
 .garden-canvas-card {
@@ -127,42 +242,38 @@
 }
 
 .garden-items {
-    position: relative;
+    position: absolute;
+    inset: 0;
     z-index: 2;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-    gap: 1rem;
-    padding: 1.5rem;
+    pointer-events: none;
 }
 
-.garden-item {
-    background: rgba(255, 255, 255, 0.85);
-    border-radius: 18px;
-    padding: 0.7rem 0.6rem;
-    text-align: center;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.9);
+.garden-item-asset {
+    position: absolute;
+    width: clamp(42px, 7vw, 84px);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.14));
+    --scale: 1;
+    --rotation: 0deg;
+    --float: 0px;
+    --sway: 0deg;
+    transform: translate(-50%, -50%)
+        translateY(var(--float))
+        scale(var(--scale))
+        rotate(calc(var(--rotation) + var(--sway)));
 }
 
-.garden-item-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #a8d8c4, #fce7c8);
-    margin: 0 auto 0.4rem;
-}
-
-.garden-item--animal .garden-item-icon {
-    background: linear-gradient(135deg, #f7d7ff, #cfe8ff);
-}
-
-.garden-item-name {
-    font-size: 0.8rem;
-    color: rgba(0, 0, 0, 0.65);
+.garden-item-asset--animal {
+    animation: garden-float 3.2s ease-in-out infinite;
 }
 
 .garden-empty {
-    grid-column: 1 / -1;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 2rem 1rem;
     text-align: center;
     color: rgba(0, 0, 0, 0.55);
@@ -180,20 +291,32 @@
 }
 
 .garden-unlock-grid {
-    display: grid;
+    display: flex;
     gap: 0.9rem;
+    overflow-x: auto;
+    padding-bottom: 0.2rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
 }
 
 .garden-unlock-card {
+    flex: 0 0 auto;
+    min-width: 180px;
     display: flex;
     align-items: center;
     gap: 0.9rem;
-    background: rgba(255, 255, 255, 0.85);
-    border-radius: 16px;
     padding: 0.7rem 0.9rem;
-    border: 1px dashed rgba(0, 0, 0, 0.12);
-    opacity: 0.7;
+    background-color: rgba(255, 255, 255, 0.074);
+    border: 1px solid rgba(255, 255, 255, 0.222);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border-radius: 0.7rem;
+    opacity: 0.6;
+    scroll-snap-align: start;
+    position: relative;
+    overflow: hidden;
 }
+
 
 .garden-unlock-card--unlocked {
     border-style: solid;
@@ -206,12 +329,18 @@
     height: 44px;
     border-radius: 14px;
     background: linear-gradient(135deg, #fce7c8, #fff6ea);
+    object-fit: contain;
+    padding: 0.35rem;
+    position: relative;
+    z-index: 1;
 }
 
 .garden-unlock-info {
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
+    position: relative;
+    z-index: 1;
 }
 
 .garden-unlock-name {
@@ -252,7 +381,43 @@
 
 @media (min-width: 640px) {
     .garden-unlock-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding-bottom: 0.4rem;
     }
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .garden-item-asset--animal,
+    .garden-item-asset--plant {
+        animation: none;
+    }
+}
+
+@keyframes garden-progress-grow {
+    from {
+        transform: scaleX(0);
+    }
+    to {
+        transform: scaleX(1);
+    }
+}
+
+@keyframes garden-progress-shine {
+    0%,
+    35% {
+        transform: translateX(-120%);
+    }
+    70%,
+    100% {
+        transform: translateX(120%);
+    }
+}
+
+@keyframes garden-float {
+    0%,
+    100% {
+        --float: 0px;
+    }
+    50% {
+        --float: -8px;
+    }
+}
