@@ -10,12 +10,12 @@ import './PieChart.css'
 
 const chartConfig = {
   mood: {
-    title: "Mood Distribution - current week",
+    title: "Mood Mix - current week",
     // Peach/orange gradient: Angry (darkest) → Anxious → Calm → Empowered (lightest)
     colors: ["#6B3D2F", "#9B5843", "#D4845E", "#F4C5A0"]
   },
   workload: {
-    title: "Workload Distribution - current week",
+    title: "Workload Mix - current week",
     // Blue gradient: Overwhelmed (darkest) → Under Pressure → Manageable → Light (lightest)
     colors: ["#2D4A7A", "#4A6B9F", "#6B8FC7", "#9DB4E0"]
   }
@@ -70,7 +70,7 @@ export default function PieChart({ chartType = "workload", logs = [], isLoading 
 
     // Calculate distribution from actual logs
     const moodMap = { 1: "Angry", 2: "Anxious", 3: "Calm", 4: "Empowered" };
-    const workloadMap = { 1: "Overwhelmed", 2: "Under Pressure", 3: "Manageable Load", 4: "Light" };
+    const workloadMap = { 1: "Overwhelmed", 2: "Under Pressure", 3: "Manageable", 4: "Light" };
     
     const valueKey = chartType === "mood" ? "mood_value" : "workload_value";
     const valueMap = chartType === "mood" ? moodMap : workloadMap;

@@ -23,7 +23,7 @@ const chartConfig = {
         yAxisTicks: [1, 2, 3, 4],
         tickFormatter: {
             1: "Overwhelmed",
-            2: "Under Pressure",
+            2: "Pressured",
             3: "Manageable",
             4: "Light",
         },
@@ -168,8 +168,8 @@ const WeeklyComparison = ({ isAnimationActive = true, logs = [], chartType = "mo
     }
 
     const titleText = chartType === "mood" 
-        ? "Mood Trend - four week comparison"
-        : "Workload Trend - four week comparison";
+        ? "Mood Pattern - four week comparison"
+        : "Workload Pattern - four week comparison";
     
     return (
         <div className='weeklyComparisonContainer'>
