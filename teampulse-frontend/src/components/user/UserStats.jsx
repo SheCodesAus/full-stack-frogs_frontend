@@ -1,17 +1,15 @@
 import { faFire, faStar } from "@fortawesome/free-solid-svg-icons";
 import CardIcon from "../CardIcon";
 import "./UserStats.css";
+import { calculateWeeklyStreak } from "../../utils/userPoints";
 
-export default function UserStats({ loggedPulses }) {
+export default function UserStats({ loggedPulses, points = 0 }) {
 
     // Weekly streak calculation
     const streak = calculateWeeklyStreak(loggedPulses);
 
     // Total mindful weeks = total number of checkins
     const mindfulWeeks = loggedPulses?.length || 0;
-
-    // Points = 10 per weekly check-in
-    const points = mindfulWeeks * 10;
 
     return (
         <div className="userstats-container">
@@ -38,20 +36,4 @@ export default function UserStats({ loggedPulses }) {
 
         </div>
     );
-}
-
-function calculateWeeklyStreak(loggedPulses) {
-    if (!loggedPulses || loggedPulses.length === 0) return 0;
-
-    // Extract week numbers
-    const weeks = loggedPulses.map(p => p.week_index).sort((a,b) => b-a);
-
-    let streak = 1;
-
-    for (let i = 0; i < weeks.length - 1; i++) {
-        if (weeks[i] - 1 === weeks[i + 1]) streak++;
-        else break;
-    }
-
-    return streak;
 }

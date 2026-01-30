@@ -8,7 +8,10 @@ import { useParams } from "react-router-dom";
 import DashboardButton from "../components/DashboardButton";
 import UserDashboard from "../components/user/UserDashboard";
 import UserCheckins from "../components/user/UserCheckins";
+import GardenView from "../components/user/GardenView";
 import Loader from "../components/Loader";
+import usePoints from "../hooks/use-points";
+import useRewards from "../hooks/use-rewards";
 
 
 export default function UserDashboardPage() {
@@ -54,8 +57,14 @@ export default function UserDashboardPage() {
         () => userData?.logged_pulses ?? [],
         [userData]
     );
+    const { points } = usePoints();
+    const { rewards, rewardsIsLoading, rewardsError } = useRewards();
 
-
+    const isPageLoading = isLoading || rewardsIsLoading;
+    const pageError =
+        error ||
+        (rewardsError ? rewardsError.message || "Unable to load rewards." : null);
+    const safePoints = points ?? 0;
 
     return (
         <div className="user-dashboard-page">
@@ -90,28 +99,37 @@ export default function UserDashboardPage() {
                         isActive={view === "checkins"}
                         onClick={() => setView("checkins")}
                     />
+                    <DashboardButton
+                        text="Wellbeing Garden"
+                        fontSize="var(--text-sm)"
+                        padding="0.4rem 0.9rem"
+                        letterSpacing="0.5px"
+                        isActive={view === "garden"}
+                        onClick={() => setView("garden")}
+                    />
                 </div>
             </header>
 
-            {isLoading && (
+            {isPageLoading && (
                 <div className="user-dashboard-state-message">
                     <Loader />
                 </div>
             )}
 
-            {error && !isLoading && (
+            {pageError && !isPageLoading && (
                 <div className="user-dashboard-state-message user-dashboard-error">
-                    {error}
+                    {pageError}
                 </div>
             )}
 
-            {!isLoading && !error && (
+            {!isPageLoading && !pageError && (
                 <main className="user-dashboard-main">
                     {view === "dashboard" && (
                         <UserDashboard
                             firstName={userData?.first_name}
                             loggedPulses={loggedPulses}
                             isManagerView={isManagerView}
+                            points={safePoints}
                         />
                     )}
 
@@ -120,6 +138,9 @@ export default function UserDashboardPage() {
                             firstName={userData?.first_name}
                             loggedPulses={loggedPulses}
                         />
+                    )}
+                    {view === "garden" && (
+                        <GardenView currentPoints={safePoints} rewards={rewards} />
                     )}
                 </main>
             )}

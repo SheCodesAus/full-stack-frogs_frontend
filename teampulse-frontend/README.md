@@ -13,6 +13,8 @@ TeamPulse is a full-stack application designed to foster team wellbeing by allow
 - **Individual Dashboards**: Users can track their own check-in history and personal wellness metrics
 - **Weekly Trend Analysis**: Compare current week data against previous periods with interactive line charts
 - **Real-time Data Visualization**: Dynamic charts powered by Recharts for immediate insights
+- **Gamification System**: Points and streak bonuses that encourage consistent check-ins
+- **Wellbeing Garden**: Unlockable rewards and progress bar milestones as users grow their garden
 - **Role-Based Access Control**: Distinct views and permissions for team members vs. managers
 - **User Authentication**: Secure login and signup system with token-based authentication
 - **Responsive Design**: Fully responsive interface that works on desktop and mobile devices
@@ -37,6 +39,10 @@ TeamPulse is a full-stack application designed to foster team wellbeing by allow
 **HTTP & State Management**
 - Axios 1.13.2 - API client for HTTP requests
 - React Hooks - Built-in state management
+
+## Contributors
+
+- Sara Liang — leungyunyee@gmail.com — https://au.linkedin.com/in/sara-liang-au
 
 **Developer Tools**
 - ESLint 9.39.1 - Code linting
