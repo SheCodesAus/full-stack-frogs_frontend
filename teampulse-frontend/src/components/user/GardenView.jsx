@@ -4,22 +4,22 @@ import CardIcon from "../CardIcon";
 import { GARDEN_ASSET_IMAGE_MAP, GARDEN_TIPS } from "../../assets/gardenAssets";
 
 const ASSET_PLACEMENTS = {
-    Seed: { left: 18, top: 64, scale: 0.9, rotation: -2, delay: 0 },
-    "Grass Shoot": { left: 34, top: 76, scale: 1, rotation: -4, delay: 0 },
-    Wildflower: { left: 70, top: 76, scale: 1, rotation: 3, delay: 0 },
+    Seed: { left: 18, top: 55, scale: 0.6, rotation: -2, delay: 0 },
+    "Grass Shoot": { left: 35, top: 70, scale: 1, rotation: -4, delay: 0 },
+    Wildflower: { left: 65, top: 40, scale: 1.05, rotation: 3, delay: 0 },
     "Wattle Bloom": { left: 52, top: 82, scale: 1.05, rotation: 2, delay: 0 },
-    Bottlebrush: { left: 82, top: 70, scale: 1.05, rotation: -3, delay: 0 },
-    "Gum Tree": { left: 12, top: 82, scale: 1.1, rotation: -2, delay: 0 },
-    "Rainbow Lorikeet": { left: 62, top: 66, scale: 1.1, rotation: 1, delay: 0 },
-    Quokka: { left: 42, top: 80, scale: 1, rotation: 1, delay: 0 },
-    Koala: { left: 76, top: 84, scale: 1.05, rotation: -1, delay: 0 },
-    Kangaroo: { left: 56, top: 74, scale: 1.15, rotation: 2, delay: 0 },
+    Bottlebrush: { left: 92, top: 70, scale: 1.3, rotation: -3, delay: 0 },
+    "Gum Tree": { left: 30, top: 30, scale: 1.7, rotation: -2, delay: 0 },
+    "Rainbow Lorikeet": { left: 90, top: 40, scale: 1, rotation: 1, delay: 0 },
+    Quokka: { left: 42, top: 45, scale: 0.9, rotation: 1, delay: 0 },
+    Koala: { left: 76, top: 80, scale: 1.05, rotation: -1, delay: 0 },
+    Kangaroo: { left: 15, top: 74, scale: 1.15, rotation: 2, delay: 0 },
 };
 
 const getAssetPlacement = (name) =>
     ASSET_PLACEMENTS[name] || {
         left: 50,
-        top: 75,
+        top: 80,
         scale: 1,
         rotation: 0,
         delay: 0,
