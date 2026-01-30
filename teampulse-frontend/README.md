@@ -2,7 +2,7 @@
 
 A modern React application for team wellness and engagement tracking. TeamPulse enables team members to check in with their mood and workload status, while managers gain insights into team dynamics through interactive dashboards and analytics.
 
-## 📋 Project Overview
+## Project Overview
 
 TeamPulse is a full-stack application designed to foster team wellbeing by allowing employees to log regular check-ins about their emotional state and workload. Managers can view team trends, identify patterns, and proactively support their teams. The application features role-based access with distinct interfaces for team members and managers.
 
@@ -17,7 +17,7 @@ TeamPulse is a full-stack application designed to foster team wellbeing by allow
 - **User Authentication**: Secure login and signup system with token-based authentication
 - **Responsive Design**: Fully responsive interface that works on desktop and mobile devices
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 **Frontend Framework & Build**
 - React 19.2.0 - UI library
@@ -42,7 +42,7 @@ TeamPulse is a full-stack application designed to foster team wellbeing by allow
 - ESLint 9.39.1 - Code linting
 - Vite plugin React - Fast refresh for development
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 src/
@@ -110,7 +110,7 @@ public/
 └── _redirects           # Netlify routing configuration
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -168,7 +168,7 @@ Run ESLint to check code quality:
 npm run lint
 ```
 
-## 🔐 Authentication & Authorization
+## Authentication & Authorization
 
 The application uses token-based authentication with two user roles:
 
@@ -177,7 +177,7 @@ The application uses token-based authentication with two user roles:
 
 Authentication is managed through the `AuthProvider` context and persisted via custom hooks.
 
-## 📊 Key Components
+## Key Components
 
 ### Check-in System
 - `CheckInForm.jsx` - Allows users to submit mood and workload ratings
@@ -198,14 +198,14 @@ Authentication is managed through the `AuthProvider` context and persisted via c
 - `NavBar.jsx` - Main navigation
 - Role-based route protection with `ManagerOnly.jsx`
 
-## 🎨 Styling
+## Styling
 
 Component-specific styles are co-located with their respective components:
 - Each component has a corresponding `.css` file
 - Global styles in `src/styles/global.css`
 - Responsive design using CSS media queries
 
-## 🔄 Data Flow
+## Data Flow
 
 1. User submits check-in through `CheckInForm`
 2. Data sent to backend via `post-createcheckin.js`
@@ -213,14 +213,14 @@ Component-specific styles are co-located with their respective components:
 4. Components receive data as props or via context
 5. Charts and dashboards render real-time data
 
-## 📱 Responsive Design
+## Responsive Design
 
 The application is fully responsive with:
 - Mobile-first CSS approach
 - Custom `useIsDesktop()` hook for responsive layout decisions
 - Adaptive chart sizing and component layouts
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please follow these guidelines:
 1. Create a feature branch from `main`
@@ -228,13 +228,13 @@ Contributions are welcome! Please follow these guidelines:
 3. Test thoroughly in development mode
 4. Submit a pull request with a detailed description
 
-## 📝 Notes
+## Notes
 
 - Mock data in `src/data/` is used for development/testing
 - Some components reference undefined variables (e.g., `moodLabels`, `labels`) that should be imported from configuration
 - Consider migrating to TypeScript for improved type safety in production
 
-## 🔗 Backend Integration
+##  Backend Integration
 
 This frontend connects to a Django/DRF backend for:
 - User authentication and profile management

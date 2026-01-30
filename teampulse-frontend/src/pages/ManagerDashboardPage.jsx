@@ -1,14 +1,13 @@
 import { useState, useEffect, useMemo } from 'react';
 import './ManagerDashboardPage.css'
-
 import DashboardButton from '../components/DashboardButton';
 import DashboardView from '../components/DashboardView';
 import AllCheckinsView from '../components/AllCheckinView';
 import Loader from '../components/Loader'
-
 import { useAuth } from '../hooks/use-auth';
 import useTeams from '../hooks/use-teams';
 import useCheckins from '../hooks/use-checkins';
+import useCheckinsHistory from '../hooks/use-checkins-history';
 import useMoods from '../hooks/use-moods';
 import useWorkloads from '../hooks/use-workloads';
 
@@ -18,6 +17,7 @@ function DashboardPage() {
     const { moods, moodisLoading } = useMoods();
     const { workloads, workloadisLoading } = useWorkloads();
     const { pulseLogs, checkinisLoading } = useCheckins();
+    const { pulseLogs: historicalPulseLogs, checkinisLoading: historyisLoading } = useCheckinsHistory();
     const { auth, setAuth } = useAuth();
 
     const [view, setView] = useState("dashboard");
@@ -49,11 +49,14 @@ function DashboardPage() {
         return pulseLogs.filter(log => log.team === selectedTeam);
     }, [pulseLogs, selectedTeam]);
 
+    const teamLogsHistory = useMemo(() => {
+        if (!selectedTeam) return [];
+        return historicalPulseLogs.filter(log => log.team === selectedTeam);
+    }, [historicalPulseLogs, selectedTeam]);
+
     const selectedTeamObj = useMemo(() => {
         return teams.find((t) => t.id === selectedTeam);
     }, [teams, selectedTeam]);
-
-    // Participation rate
 
     const totalMembers = selectedTeamObj?.user_count;
 
@@ -71,7 +74,8 @@ function DashboardPage() {
         moodisLoading ||
         teamisLoading ||
         checkinisLoading ||
-        workloadisLoading;
+        workloadisLoading ||
+        historyisLoading;
 
     if (isLoading) {
         return <Loader />;
@@ -141,10 +145,12 @@ function DashboardPage() {
                 participationRate={participationPercentage}
                 teamCount={totalMembers} 
                 logs={teamLogs}
+                logsHistory={teamLogsHistory}
                 logsCounts={teamLogs.length}
                 team={selectedTeam}
                 moodOption={moods}
-                workloadOption={workloads} />}
+                workloadOption={workloads}
+                isLoading={isLoading} />}
         </section>
     )
 };

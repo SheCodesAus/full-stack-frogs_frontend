@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import getCheckInsByWeek from "../api/get-checkins-by-week";
+import getCheckInsHistory from "../api/get-checkins-history";
 
-export default function useCheckins() {
+export default function useCheckinsHistory() {
     const [pulseLogs, setCheckins] = useState([]);
     const [checkinisLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     
     useEffect(() => {
-        getCheckInsByWeek()
+        getCheckInsHistory()
             .then((data) => {
                 setCheckins(data);
                 setIsLoading(false);
-                console.log("Fetched check-ins (current week):", data);
+                console.log("Fetched check-ins history (4 weeks):", data);
             })
             .catch((err) => {
                 setError(err);

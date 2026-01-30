@@ -1,20 +1,6 @@
-/* ...existing code... */
+@import './SharedChartStyles.css';
 
-.charts-section {
-    display: flex;
-    gap: 2rem;
-    margin-top: 2rem;
-    width: 100%;
-    height: 500px;
-    flex-wrap: wrap;
-    align-items: stretch;
-}
-
-.charts-section > * {
-    flex: 1;
-    min-width: 300px;
-}
-
+/* Weekly Comparison specific container */
 .weeklyComparisonContainer {
     flex: 1;
     background-color: #fffffd;
@@ -25,46 +11,44 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Weekly Comparison chart wrapper - centers and pads chart content */
+.weekly-chart-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem;
+}
+
+/* Weekly Comparison header */
 .weekly-header {
     margin-bottom: 1.5rem;
 }
 
 .weekly-header h2 {
     margin: 0;
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-size: 1.4rem;
+    font-weight: 600;
     color: var(--text-dark);
     font-family: var(--font-body);
 }
 
 @media only screen and (max-width: 1200px) {
-    .charts-section {
-        height: 450px;
-        gap: 1.5rem;
-    }
-
-    .weeklyComparisonContainer {
-        padding: 1.25rem;
-    }
-
     .weekly-header h2 {
         font-size: 1rem;
     }
 }
 
 @media only screen and (max-width: 768px) {
-    .charts-section {
-        flex-direction: column;
-        height: auto;
-        gap: 1.5rem;
+    .weekly-header h2 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
     }
+}
 
-    .charts-section > * {
-        min-width: 100%;
-        height: 400px;
-    }
-
-    .weeklyComparisonContainer {
-        padding: 1rem;
+@media only screen and (max-width: 480px) {
+    .weekly-header h2 {
+        font-size: 1rem;
+        margin-bottom: 0.8rem;
     }
 }
