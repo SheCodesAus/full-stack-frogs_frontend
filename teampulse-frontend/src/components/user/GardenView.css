@@ -213,7 +213,7 @@
 }
 
 .garden-canvas-card {
-    padding: 1.2rem;
+    padding: 1rem;
 }
 
 .garden-canvas {
@@ -346,9 +346,30 @@
     display: flex;
     gap: 0.9rem;
     overflow-x: auto;
-    padding-bottom: 0.2rem;
+    padding-bottom: 0.6rem;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(168, 216, 196, 0.6) transparent;
+}
+
+.garden-unlock-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.garden-unlock-grid::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 999px;
+}
+
+.garden-unlock-grid::-webkit-scrollbar-thumb {
+    background: linear-gradient(120deg, rgba(168, 216, 196, 0.7), rgba(248, 215, 176, 0.7));
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.garden-unlock-grid::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(120deg, rgba(136, 202, 181, 0.9), rgba(246, 196, 152, 0.9));
 }
 
 .garden-unlock-card {
@@ -427,8 +448,24 @@
 }
 
 .garden-tips {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(207, 232, 255, 0.3));
+    background-color: hsla(0, 0%, 100%, 1);
+    background-image: radial-gradient(
+            at 88% 40%,
+            hsla(0, 0%, 100%, 1) 0px,
+            transparent 85%
+        ),
+        radial-gradient(at 49% 30%, hsla(0, 0%, 100%, 1) 0px, transparent 85%),
+        radial-gradient(at 14% 26%, hsla(0, 0%, 100%, 1) 0px, transparent 85%),
+        radial-gradient(at 0% 64%, rgb(197, 217, 232) 0px, transparent 85%),
+        radial-gradient(at 41% 94%, rgb(191, 217, 247) 0px, transparent 85%),
+        radial-gradient(at 100% 99%, rgb(180, 208, 232) 0px, transparent 85%);
+    border-radius: 1rem;
+    box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    position: relative;
+    overflow: hidden;
 }
+
 
 .garden-tip-list {
     list-style: none;
@@ -438,9 +475,9 @@
 }
 
 .garden-tip {
-    padding: 0.6rem 0.8rem;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 12px;
+    padding: 0;
+    background: none;
+    border-radius: 0;
     font-size: 0.9rem;
     color: rgba(0, 0, 0, 0.6);
 }

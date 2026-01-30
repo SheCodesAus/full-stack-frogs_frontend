@@ -12,6 +12,8 @@ export const GARDEN_ASSET_IMAGE_MAP = Object.fromEntries(
 );
 
 export const GARDEN_TIPS = [
-    "Each check-in earns 10 points.",
-    "Each week streak earns an extra 10 points.",
+    "🌱 Each check-in earns 10 points.",
+    "🌿 Every 3-week streak adds a 20-point bonus.",
+    "🌼 Each element represents a milestone",
+    "🌸 Keep watering, unlock 12 garden elements"
 ];

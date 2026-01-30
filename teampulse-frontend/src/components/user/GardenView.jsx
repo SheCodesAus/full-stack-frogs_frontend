@@ -173,7 +173,7 @@ export default function GardenView({ currentPoints = 0, rewards = [] }) {
                 </div>
 
                 <div className="garden-unlocks">
-                    <h3 className="garden-section-title">Upcoming unlocks</h3>
+                    <h3 className="garden-section-title">Growing next</h3>
                     <div className="garden-unlock-grid">
                         {sortedAssets.map((asset) => {
                             const isUnlocked = asset.points <= currentPoints;
