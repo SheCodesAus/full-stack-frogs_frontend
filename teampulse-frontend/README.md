@@ -19,6 +19,15 @@ TeamPulse is a full-stack application designed to foster team wellbeing by allow
 - **User Authentication**: Secure login and signup system with token-based authentication
 - **Responsive Design**: Fully responsive interface that works on desktop and mobile devices
 
+### UI & Design Highlights
+
+- **Visual System**: Soft, mindful color palette and typography with a rotating breathing background
+- **Manager Experience**: Dashboard + All Check-ins views, multi-team selector, overview KPIs with change indicators, and an attention panel with severity color-coding for low mood
+- **Data Visualization**: Recharts line chart for 4-week trends and pie chart for composition
+- **Personal Reflection**: Dashboard blends points + streak gamification, weekly comparisons, contextual quotes, and a planned kudos feature to encourage positive social interaction
+- **History Views**: Raw historic check-ins for both managers and individuals
+- **Wellbeing Garden**: Points card + progress bar, next unlock preview, Australian-themed assets, unlock carousel, and gardening tips
+
 ## Tech Stack
 
 **Frontend Framework & Build**
@@ -40,9 +49,6 @@ TeamPulse is a full-stack application designed to foster team wellbeing by allow
 - Axios 1.13.2 - API client for HTTP requests
 - React Hooks - Built-in state management
 
-## Contributors
-
-- Sara Liang — leungyunyee@gmail.com — https://au.linkedin.com/in/sara-liang-au
 
 **Developer Tools**
 - ESLint 9.39.1 - Code linting
@@ -249,3 +255,19 @@ This frontend connects to a Django/DRF backend for:
 - Mood and workload analytics
 
 Ensure the backend server is running before testing API functionality.
+
+
+## Contributors
+
+Font-end:
+
+- Sara Liang — leungyunyee@gmail.com — https://au.linkedin.com/in/sara-liang-au
+
+- Blossom (Eliza) Herbison - eliza.herbison94@gmail.com - www.linkedin.com/in/eliza-herbison-102954169
+
+- Joyce Gonzaga 
+
+Back-end:
+
+- Sheila Sukmadja 
+- Trang Vo 
