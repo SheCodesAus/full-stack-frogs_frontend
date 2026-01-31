@@ -115,7 +115,7 @@ const WeeklyComparison = ({ isAnimationActive = true, logs = [], chartType = "mo
 
         // Create data for all 4 weeks, with 0 for weeks that have no logs
         const processedData = last4WeekIndices.map((weekIndex) => {
-            const weekLabel = `Week ${weekIndex}`;
+            const weekLabel = `W${weekIndex}`;
             if (weeklyData[weekIndex]) {
                 return {
                     week: weekLabel,
@@ -182,12 +182,12 @@ const WeeklyComparison = ({ isAnimationActive = true, logs = [], chartType = "mo
             <div className='weekly-chart-wrapper'>
             <LineChart
                 style={{
-                    width: isMobile ? '90%' : '75%',
-                    maxWidth: '550px',
+                    width: isMobile ? '100%' : '75%',
+                    maxWidth: '6000px',
                     maxHeight: '50vh',
                     aspectRatio: 1.68,
                 }}
-                margin={{ top: 15, right: 20, left: isMobile ? 120 : 120, bottom: isMobile ? 50 : 40 }}
+                margin={{ top: 10, right: 10, left: isMobile ? 60 : 70, bottom: isMobile ? 30 : 15 }}
                 data={chartData}
             >
                 <CartesianGrid strokeDasharray="3 3" />
@@ -195,7 +195,7 @@ const WeeklyComparison = ({ isAnimationActive = true, logs = [], chartType = "mo
                 <XAxis dataKey="week" tick={{ fontSize: isMobile ? 16 : 18 }} />
 
                 <YAxis
-                    width="auto"
+                    width={isMobile ? 60 : 120}
                     domain={[1, 4]}
                     ticks={[1, 2, 3, 4]}
                     tickLine={false}
