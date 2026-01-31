@@ -16,6 +16,13 @@ const ASSET_PLACEMENTS = {
     Kangaroo: { left: 15, top: 74, scale: 1.15, rotation: 2, delay: 0 },
 };
 
+const slugify = (value = "") =>
+    value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+
 const getAssetPlacement = (name) =>
     ASSET_PLACEMENTS[name] || {
         left: 50,
@@ -26,7 +33,8 @@ const getAssetPlacement = (name) =>
     };
 
 export default function GardenView({ currentPoints = 0, rewards = [] }) {
-    const getRewardImage = (reward) => GARDEN_ASSET_IMAGE_MAP[reward.name] || null;
+    const getRewardImage = (reward) =>
+        GARDEN_ASSET_IMAGE_MAP[slugify(reward.name)] || null;
     const sortedAssets = [...rewards].sort((a, b) => a.points - b.points);
     const nextAsset = sortedAssets.find((asset) => asset.points > currentPoints);
     // Use the latest unlocked asset as the progress baseline (reverse so find hits the highest match).
