@@ -87,7 +87,7 @@ export default function DashboardView({ logs, logsHistory = [], participationRat
                         <DashboardCard title='Check-in Rate' number={`${participationRate}%`} detail={`${logsCounts}/${teamCount} this week`} />
                         <DashboardCard title='Needs Attention' number={flaggedCount} detail='members' />
                         <DashboardCard title='Average Mood' number={avgMood} detail='Out of 4.0' changeIndicator={getMoodChange()} />
-                        <DashboardCard title='Average Workflow' number={avgWorkflow} detail='Out of 4.0' changeIndicator={getWorkflowChange()} />
+                        <DashboardCard title='Average Workload' number={avgWorkflow} detail='Out of 4.0' changeIndicator={getWorkflowChange()} />
                     </div>
                 </div>
             </section>
