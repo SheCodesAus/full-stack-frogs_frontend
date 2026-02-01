@@ -27,22 +27,24 @@ function formatDate(timestampLocal) {
 export default function UserCheckins({ firstName, loggedPulses }) {
     if (!loggedPulses?.length) {
         return (
-            <section className="user-section">
-                <div className="user-section-header">
-                    <h2>All check-ins</h2>
-                    <p>
-                        Once you start checking in weekly, you’ll see a gentle timeline of
-                        your mood and workflow here.
-                    </p>
-                </div>
-                <div className="user-dashboard-empty-card">
-                    <p>
-                        {firstName
-                            ? `${firstName}, your first check-in is the starting point of your story.`
-                            : "Your first check-in is the starting point of your story."}
-                    </p>
-                </div>
-            </section>
+            <div className="user-dashboard-layout">
+                <section className="user-section">
+                    <div className="user-section-header">
+                        <h2>All check-ins</h2>
+                        <p>
+                            Once you start checking in weekly, you’ll see a gentle timeline of
+                            your mood and workflow here.
+                        </p>
+                    </div>
+                    <div className="user-dashboard-empty-card">
+                        <p>
+                            {firstName
+                                ? `${firstName}, your first check-in is the starting point of your story.`
+                                : "Your first check-in is the starting point of your story."}
+                        </p>
+                    </div>
+                </section>
+            </div>
         );
     }
 
@@ -51,39 +53,40 @@ export default function UserCheckins({ firstName, loggedPulses }) {
     );
 
     return (
-        <section className="user-section">
-            <div className="user-section-header">
-                <h2>All check-ins</h2>
+        <div className="user-dashboard-layout">
+            <section className="user-section">
+                <div className="user-section-header">
+                    <h2>All check-ins</h2>
+                </div>
 
-            </div>
+                <div className="user-checkins-list">
+                    {sorted.map((pulse) => {
+                        const mood = MOOD_LABELS[pulse.mood_value ?? pulse.mood];
+                        const workload =
+                            WORKLOAD_LABELS[pulse.workload_value ?? pulse.workload];
 
-            <div className="user-checkins-list">
-                {sorted.map((pulse) => {
-                    const mood = MOOD_LABELS[pulse.mood_value ?? pulse.mood];
-                    const workload =
-                        WORKLOAD_LABELS[pulse.workload_value ?? pulse.workload];
+                        return (
+                            <article key={pulse.id} className="user-checkin-card">
+                                <div className="user-checkin-header">
+                                    <p className="user-checkin-date">
+                                        Week {pulse.week_index} • {formatDate(pulse.timestamp_local)}
+                                    </p>
+                                    <span className="user-checkin-badge">Check-in</span>
+                                </div>
 
-                    return (
-                        <article key={pulse.id} className="user-checkin-card">
-                            <div className="user-checkin-header">
-                                <p className="user-checkin-date">
-                                    Week {pulse.week_index} • {formatDate(pulse.timestamp_local)}
-                                </p>
-                                <span className="user-checkin-badge">Check-in</span>
-                            </div>
+                                <div className="user-checkin-tags">
+                                    <span className="user-chip user-chip--mood">{mood}</span>
+                                    <span className="user-chip user-chip--workload">{workload}</span>
+                                </div>
 
-                            <div className="user-checkin-tags">
-                                <span className="user-chip user-chip--mood">{mood}</span>
-                                <span className="user-chip user-chip--workload">{workload}</span>
-                            </div>
-
-                            {pulse.comment && (
-                                <p className="user-checkin-comment">“{pulse.comment}”</p>
-                            )}
-                        </article>
-                    );
-                })}
-            </div>
-        </section>
+                                {pulse.comment && (
+                                    <p className="user-checkin-comment">“{pulse.comment}”</p>
+                                )}
+                            </article>
+                        );
+                    })}
+                </div>
+            </section>
+        </div>
     );
 }

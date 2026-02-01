@@ -7,6 +7,9 @@ import { motion } from "framer-motion";
 import { createCheckIn } from "../api/post-createcheckin";
 import { useAuth } from "../hooks/use-auth";
 import { useState } from "react";
+import { calculateWeeklyStreak } from "../utils/userPoints";
+import usePoints from "../hooks/use-points";
+import usePostPoint from "../hooks/use-post-point";
 
 export default function CheckInForm() {
     const [mood, setMood] = useState(null);
@@ -17,6 +20,8 @@ export default function CheckInForm() {
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
     const { auth, loading } = useAuth();
+    const { refreshPoints } = usePoints();
+    const { submitPoints } = usePostPoint();
 
     const moodOptions = [
         { id: 4, label: "Empowered", icon: faFaceGrinStars },
@@ -90,7 +95,36 @@ export default function CheckInForm() {
         };
 
         try {
-            await createCheckIn(payload, auth.token);
+            // 1) Create the check-in first (required before any points update).
+            const checkInResponse = await createCheckIn(payload, auth.token);
+            // 2) Fetch current points from backend so we add on top of the latest value.
+            const currentPoints = await refreshPoints(auth.token);
+
+            // 3) Pull the freshest logged_pulses so streak is calculated accurately.
+            const userResponse = await fetch(
+                `${import.meta.env.VITE_API_URL}/users/${auth.user.id}`,
+                {
+                    headers: {
+                        Authorization: `Token ${auth.token}`,
+                    },
+                }
+            );
+
+            if (!userResponse.ok) {
+                throw new Error("Unable to refresh streak data.");
+            }
+
+            const userData = await userResponse.json();
+            // Use the updated pulse list for streak calculation.
+            const freshPulses = userData?.logged_pulses ?? [];
+            // 4) Compute weekly streak and bonus (every 3 streaks -> +20).
+            const streakCount = calculateWeeklyStreak(freshPulses);
+            const bonusPoints = streakCount > 0 && streakCount % 3 === 0 ? 20 : 0;
+            // 5) New total points = current + base 10 + bonus.
+            const nextPoints = currentPoints + 10 + bonusPoints;
+
+            // 6) Post the new points total to backend.
+            await submitPoints({ points: nextPoints }, auth.token);
             setSuccessMessage("Thank you for checking in.");
             setMood(null);
             setWorkload(null);

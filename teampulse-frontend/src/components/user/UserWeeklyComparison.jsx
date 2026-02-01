@@ -73,7 +73,7 @@ export default function UserWeeklyComparison({ loggedPulses }) {
                         }`}
                     onClick={() => setMetric("workload")}
                 >
-                    Workflow
+                    Workload
                 </button>
             </div>
 
@@ -84,7 +84,10 @@ export default function UserWeeklyComparison({ loggedPulses }) {
             ) : (
                 <div className="user-weekly-chart-wrapper">
                     <ResponsiveContainer width="100%" height={220}>
-                        <LineChart data={lastFourWeeksData} margin={{ top: 10, right: 10, bottom: 10, left: 0 }}>
+                        <LineChart
+                            data={lastFourWeeksData}
+                            margin={{ top: 10, right: 12, bottom: 10, left: 8 }}
+                        >
                             <CartesianGrid
                                 strokeDasharray="3 3"
                                 stroke="rgba(0,0,0,0.05)"
@@ -103,7 +106,8 @@ export default function UserWeeklyComparison({ loggedPulses }) {
                                 axisLine={false}
                                 tickLine={false}
                                 tickFormatter={tickFormatter}
-                                tickMargin={12}
+                                tickMargin={8}
+                                width={90}
                                 style={{ fontSize: "0.75rem", fontFamily: "var(--font-body)" }}
                             />
                             <Tooltip
