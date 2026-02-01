@@ -97,7 +97,7 @@ export default function GardenView({ currentPoints = 0, rewards = [] }) {
                                         className="garden-next-unlock-thumb"
                                         src={getRewardImage(nextAsset)}
                                         alt={nextAsset.name}
-                                        loading="lazy"
+                                        loading="eager"
                                         draggable="false"
                                     />
                                 ) : null}
@@ -164,7 +164,7 @@ export default function GardenView({ currentPoints = 0, rewards = [] }) {
                                         src={getRewardImage(asset)}
                                         alt={asset.name}
                                         className={`garden-item-asset garden-item-asset--${asset.category}`}
-                                        loading="lazy"
+                                        loading="eager"
                                         draggable="false"
                                         style={{
                                             left: `${placement.left}%`,
@@ -206,7 +206,7 @@ export default function GardenView({ currentPoints = 0, rewards = [] }) {
                                             className="garden-unlock-thumb"
                                             src={getRewardImage(asset)}
                                             alt={asset.name}
-                                            loading="lazy"
+                                            loading="eager"
                                             draggable="false"
                                         />
                                     ) : (

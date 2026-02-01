@@ -85,7 +85,7 @@ export default function UserDashboardPage() {
                     <DashboardButton
                         text="Dashboard"
                         fontSize="var(--text-sm)"
-                        padding="0.4rem 0.9rem"
+                        padding="0.4rem 0.5rem"
                         letterSpacing="0.5px"
 
                         isActive={view === "dashboard"}
